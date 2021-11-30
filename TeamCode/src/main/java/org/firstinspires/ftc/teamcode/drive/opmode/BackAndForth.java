@@ -26,7 +26,6 @@ import org.firstinspires.ftc.teamcode.drive.Drive13266;
  * is recommended that you use the FollowerPIDTuner opmode for further fine tuning.
  */
 @Config
-@Disabled
 @Autonomous(group = "drive")
 public class BackAndForth extends LinearOpMode {
 
