@@ -71,7 +71,7 @@ public class Hardware13266 {
     public final double INTAKE_VELOCITY = 1000;
 
     // Carousel Speed
-    public final double CAROUSEL_POWER = 0.4;
+    public final double CAROUSEL_POWER = 0.5;
 
     // Box servo positions
     public final double BOX_UP = 0.65;
@@ -82,8 +82,9 @@ public class Hardware13266 {
     public final double ARM_HIGH_POS = 1.5;
     public final double ARM_MID_POS = 0.90;
     public final double ARM_LOW_POS = 0.4;
+    public final double ARM_DOWN_POS = 0;
     public final double ARM_INTAKE_POS = -0.3;
-    public final double ARM_POWER = 0.5;
+    public final double ARM_POWER = 0.8;
 
     public void setArmPosition(double pos){
         armMotor.setTargetPosition((int) (TICKS_PER_REV * pos));
