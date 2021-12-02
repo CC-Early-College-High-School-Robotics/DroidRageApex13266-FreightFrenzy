@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.teamcode.auto.pipeline.duckDetection;
+import org.firstinspires.ftc.teamcode.auto.pipeline.DuckDetection;
 
 import org.firstinspires.ftc.teamcode.hardware.Hardware13266;
 import org.firstinspires.ftc.teamcode.roadrunner.drive.Drive13266;
@@ -22,6 +22,9 @@ public class BlueCarosel extends LinearOpMode {
         Drive13266 drive = new Drive13266(hardwareMap);
         Hardware13266 robot = new Hardware13266();
         robot.init(hardwareMap);
+        robot.cameraServo.setPosition(0.625);
+
+        double armheight = 0;
 
         /* Open CV */
 
@@ -47,15 +50,25 @@ public class BlueCarosel extends LinearOpMode {
                 // Start camera stream with 1280x720 resolution
                 camera.startStreaming(1280,720, OpenCvCameraRotation.UPRIGHT);
 
-                camera.setPipeline(new duckDetection());
+                camera.setPipeline(new DuckDetection());
             }
             @Override
             public void onError(int errorCode) {
-                /*
-                 * This will be called if the camera could not be opened
-                 */
+                telemetry.addData("Camera status", "Camera failed :(");
             }
         });
+
+        if (new DuckDetection().getAnalysis().equals(DuckDetection.DuckPosition.LEFT)) {
+            armheight = robot.ARM_HIGH_POS;
+        }
+
+        if (new DuckDetection().getAnalysis().equals(DuckDetection.DuckPosition.CENTER)) {
+            armheight = robot.ARM_MID_POS;
+        }
+
+        if (new DuckDetection().getAnalysis().equals(DuckDetection.DuckPosition.LEFT)) {
+            armheight = robot.ARM_LOW_POS;
+        }
 
 
 
@@ -104,7 +117,7 @@ public class BlueCarosel extends LinearOpMode {
 
         // Lift Arm
         robot.armMotor.setPower(robot.ARM_POWER);
-        robot.setArmPosition(robot.ARM_HIGH_POS);
+        robot.setArmPosition(armheight);
 
         // Run Trajectory 3
         drive.followTrajectorySequence((Trajectory3));

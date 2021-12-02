@@ -106,6 +106,8 @@ public class Hardware13266 {
 
     public Servo boxServo = null;
 
+    public Servo cameraServo = null;
+
     // Constants
     public final double TICKS_PER_REV = 383.6;
 
@@ -146,6 +148,9 @@ public class Hardware13266 {
 
         // Servo Initialization
         boxServo = hwMap.get(Servo.class,"boxServo");
+
+        // Camera servo
+        cameraServo = hwMap.get(Servo.class,"cameraServo");
 
         // Most robots need the motor on one side to be reversed to drive forward
         // Reverse the motor that runs backwards when connected directly to the battery

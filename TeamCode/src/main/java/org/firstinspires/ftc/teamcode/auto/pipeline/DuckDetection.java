@@ -8,13 +8,25 @@ import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 import org.openftc.easyopencv.OpenCvPipeline;
 
-public class duckDetection extends OpenCvPipeline {
+public class DuckDetection extends OpenCvPipeline {
+
+    public DuckDetection() {
+    }
+
+    static Point region1 = new Point(200,300);
+    static Point region2 = new Point(500,380);
+    static Point region3 = new Point(800,580);
+    public DuckDetection(Point region1, Point region2, Point region3) {
+        DuckDetection.region1 = region1;
+        DuckDetection.region2 = region2;
+        DuckDetection.region3 = region3;
+    }
+
 
     /*
-     * An enum to define the skystone position
+     * An enum to define the duck position
      */
-    public enum SkystonePosition
-    {
+    public enum DuckPosition {
         LEFT,
         CENTER,
         RIGHT
@@ -29,11 +41,19 @@ public class duckDetection extends OpenCvPipeline {
     /*
      * The core values which define the location and size of the sample regions
      */
-    static final Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(109,98);
-    static final Point REGION2_TOPLEFT_ANCHOR_POINT = new Point(181,98);
-    static final Point REGION3_TOPLEFT_ANCHOR_POINT = new Point(253,98);
-    static final int REGION_WIDTH = 20;
-    static final int REGION_HEIGHT = 20;
+    /*
+    static final Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(200,300);
+    static final Point REGION2_TOPLEFT_ANCHOR_POINT = new Point(500,380);
+    static final Point REGION3_TOPLEFT_ANCHOR_POINT = new Point(800,580);
+
+     */
+    Point REGION1_TOPLEFT_ANCHOR_POINT = region1;
+    Point REGION2_TOPLEFT_ANCHOR_POINT = region2;
+    Point REGION3_TOPLEFT_ANCHOR_POINT = region3;
+
+    static final int REGION_WIDTH = 140;
+    static final int REGION_HEIGHT = 60;
+
 
     /*
      * Points which actually define the sample region rectangles, derived from above values
@@ -80,21 +100,19 @@ public class duckDetection extends OpenCvPipeline {
     int avg1, avg2, avg3;
 
     // Volatile since accessed by OpMode thread w/o synchronization
-    private volatile SkystonePosition position = SkystonePosition.LEFT;
+    private volatile DuckPosition position = DuckPosition.LEFT;
 
     /*
      * This function takes the RGB frame, converts to YCrCb,
      * and extracts the Cb channel to the 'Cb' variable
      */
-    void inputToCb(Mat input)
-    {
+    void inputToCb(Mat input) {
         Imgproc.cvtColor(input, YCrCb, Imgproc.COLOR_RGB2YCrCb);
         Core.extractChannel(YCrCb, Cb, 2);
     }
 
     @Override
-    public void init(Mat firstFrame)
-    {
+    public void init(Mat firstFrame) {
         /*
          * We need to call this in order to make sure the 'Cb'
          * object is initialized, so that the submats we make
@@ -117,8 +135,7 @@ public class duckDetection extends OpenCvPipeline {
     }
 
     @Override
-    public Mat processFrame(Mat input)
-    {
+    public Mat processFrame(Mat input) {
         /*
          * Overview of what we're doing:
          *
@@ -166,9 +183,9 @@ public class duckDetection extends OpenCvPipeline {
          * pixel value of the 3-channel image, and referenced the value
          * at index 2 here.
          */
-        avg1 = (int) Core.mean(region1_Cb).val[0];
-        avg2 = (int) Core.mean(region2_Cb).val[0];
-        avg3 = (int) Core.mean(region3_Cb).val[0];
+        avg1 = -(int) Core.mean(region1_Cb).val[0];
+        avg2 = -(int) Core.mean(region2_Cb).val[0];
+        avg3 = -(int) Core.mean(region3_Cb).val[0];
 
         /*
          * Draw a rectangle showing sample region 1 on the screen.
@@ -194,7 +211,7 @@ public class duckDetection extends OpenCvPipeline {
 
         /*
          * Draw a rectangle showing sample region 3 on the screen.
-         * Simply a visual aid. Serves no functional purpose.
+         * Simply a visual aid. Sjerves no functional purpose.
          */
         Imgproc.rectangle(
                 input, // Buffer to draw on
@@ -216,7 +233,7 @@ public class duckDetection extends OpenCvPipeline {
          */
         if(max == avg1) // Was it from region 1?
         {
-            position = SkystonePosition.LEFT; // Record our analysis
+            position = DuckPosition.LEFT; // Record our analysis
 
             /*
              * Draw a solid rectangle on top of the chosen region.
@@ -231,7 +248,7 @@ public class duckDetection extends OpenCvPipeline {
         }
         else if(max == avg2) // Was it from region 2?
         {
-            position = SkystonePosition.CENTER; // Record our analysis
+            position = DuckPosition.CENTER; // Record our analysis
 
             /*
              * Draw a solid rectangle on top of the chosen region.
@@ -246,7 +263,7 @@ public class duckDetection extends OpenCvPipeline {
         }
         else if(max == avg3) // Was it from region 3?
         {
-            position = SkystonePosition.RIGHT; // Record our analysis
+            position = DuckPosition.RIGHT; // Record our analysis
 
             /*
              * Draw a solid rectangle on top of the chosen region.
@@ -271,7 +288,7 @@ public class duckDetection extends OpenCvPipeline {
     /*
      * Call this from the OpMode thread to obtain the latest analysis
      */
-    public SkystonePosition getAnalysis()
+    public DuckPosition getAnalysis()
     {
         return position;
     }
