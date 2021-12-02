@@ -57,40 +57,40 @@ public class BoxPositionProgrammer extends LinearOpMode {
         waitForStart();
         while(!isStopRequested()) {
             if(gamepad1.dpad_up && gamepad1.x) {
-                y1 -= 0.01;
+                y1 -= 0.05;
             }
             else if(gamepad1.dpad_up && gamepad1.a) {
-                y2 -= 0.01;
+                y2 -= 0.05;
             }
             else if(gamepad1.dpad_up && gamepad1.b) {
-                y3 -= 0.01;
+                y3 -= 0.05;
             }
             else if(gamepad1.dpad_right && gamepad1.x) {
-                x1 += 0.01;
+                x1 += 0.05;
             }
             else if(gamepad1.dpad_right && gamepad1.a) {
-                x2 += 0.01;
+                x2 += 0.05;
             }
             else if(gamepad1.dpad_right && gamepad1.b) {
-                x3 += 0.01;
+                x3 += 0.05;
             }
             else if(gamepad1.dpad_down && gamepad1.x) {
-                y1 += 0.01;
+                y1 += 0.05;
             }
             else if(gamepad1.dpad_down && gamepad1.a) {
-                y2 += 0.01;
+                y2 += 0.05;
             }
             else if(gamepad1.dpad_down && gamepad1.b) {
                 y3 += 0.01;
             }
             else if(gamepad1.dpad_left && gamepad1.x) {
-                x1 -= 0.01;
+                x1 -= 0.05;
             }
             else if(gamepad1.dpad_left && gamepad1.a) {
-                x2 -= 0.01;
+                x2 -= 0.05;
             }
             else if(gamepad1.dpad_left && gamepad1.b) {
-                x3 -= 0.01;
+                x3 -= 0.05;
             }
 
 
