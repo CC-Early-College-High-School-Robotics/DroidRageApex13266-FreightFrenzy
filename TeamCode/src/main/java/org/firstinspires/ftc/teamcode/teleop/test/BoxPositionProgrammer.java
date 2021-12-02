@@ -15,6 +15,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 public class BoxPositionProgrammer extends LinearOpMode {
     @Override
     public void runOpMode() {
+        telemetry.addData("Tutorial: ", "Hold x, a, or b with a dpad to move the boxes and find the optimal position.");
 
         double x1 = 400;
         double y1 = 400;
@@ -54,7 +55,6 @@ public class BoxPositionProgrammer extends LinearOpMode {
                 telemetry.addData("Camera status", "Camera failed :(");
             }
         });
-        waitForStart();
         while(!isStopRequested()) {
             if(gamepad1.dpad_up && gamepad1.x) {
                 y1 -= 0.05;
@@ -107,6 +107,8 @@ public class BoxPositionProgrammer extends LinearOpMode {
             telemetry.addData("Box 3 Position: ", Region3value);
 
         }
+        waitForStart();
+        telemetry.addData("umm", "you cant see the camera stream on a connected driver hub or phone after pressing start");
 
     }
 }
