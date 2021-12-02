@@ -74,14 +74,14 @@ public class Hardware13266 {
     public final double CAROUSEL_POWER = 0.5;
 
     // Box servo positions
-    public final double BOX_UP = 0.65;
-    public final double BOX_INTAKE = 1.0;
-    public final double BOX_DROP = 0.19;
+    public final double BOX_UP = 0.641;
+    public final double BOX_INTAKE = 0.929;
+    public final double BOX_DROP = 0.213;
 
     // Arm Positions
-    public final double ARM_HIGH_POS = 1.5;
-    public final double ARM_MID_POS = 0.90;
-    public final double ARM_LOW_POS = 0.4;
+    public final double ARM_HIGH_POS = 1.19;
+    public final double ARM_MID_POS = 0.75;
+    public final double ARM_LOW_POS = 0.41;
     public final double ARM_DOWN_POS = 0;
     public final double ARM_INTAKE_POS = -0.1;
     public final double ARM_POWER = 0.8;
