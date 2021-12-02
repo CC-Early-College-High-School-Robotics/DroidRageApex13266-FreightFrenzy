@@ -83,7 +83,7 @@ public class Hardware13266 {
     public final double ARM_MID_POS = 0.90;
     public final double ARM_LOW_POS = 0.4;
     public final double ARM_DOWN_POS = 0;
-    public final double ARM_INTAKE_POS = -0.3;
+    public final double ARM_INTAKE_POS = -0.1;
     public final double ARM_POWER = 0.8;
 
     public void setArmPosition(double pos){

@@ -2,23 +2,31 @@ package org.firstinspires.ftc.teamcode.teleop.test;
 
 import static android.os.SystemClock.sleep;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 
+@Config
 @TeleOp(name="Servo Position Programmer", group="test")
 public class ServoPositionProgrammer extends OpMode {
     //hardware initialization
     Servo servo;
-    double pos = 0.5;
+    double pos;
+    boolean initialPos = false;
+    String servoName = "cameraServo";
 
     @Override
     public void init() {
-        servo = hardwareMap.get(Servo.class, "cameraServo");
+        servo = hardwareMap.get(Servo.class, servoName);
     }
 
     @Override
     public void loop() {
+        if (!initialPos) {
+            pos = servo.getPosition();
+            initialPos = true;
+        }
 
 
         if(gamepad1.a){

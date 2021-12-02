@@ -16,6 +16,7 @@ public class DuckDetection extends OpenCvPipeline {
     static Point region1 = new Point(200,300);
     static Point region2 = new Point(500,380);
     static Point region3 = new Point(800,580);
+
     public DuckDetection(Point region1, Point region2, Point region3) {
         DuckDetection.region1 = region1;
         DuckDetection.region2 = region2;
@@ -40,12 +41,6 @@ public class DuckDetection extends OpenCvPipeline {
 
     /*
      * The core values which define the location and size of the sample regions
-     */
-    /*
-    static final Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(200,300);
-    static final Point REGION2_TOPLEFT_ANCHOR_POINT = new Point(500,380);
-    static final Point REGION3_TOPLEFT_ANCHOR_POINT = new Point(800,580);
-
      */
     Point REGION1_TOPLEFT_ANCHOR_POINT = region1;
     Point REGION2_TOPLEFT_ANCHOR_POINT = region2;
