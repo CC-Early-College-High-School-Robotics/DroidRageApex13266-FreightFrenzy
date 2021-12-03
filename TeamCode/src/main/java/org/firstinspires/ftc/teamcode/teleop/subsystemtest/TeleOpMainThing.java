@@ -1,9 +1,11 @@
 package org.firstinspires.ftc.teamcode.teleop.subsystemtest;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.teleop.main.TeleOpMain;
 
+@TeleOp(name="TeleOP Main test thing")
 public class TeleOpMainThing extends OpMode {
     TeleOpMain teleOpMain = new TeleOpMain();
     @Override
