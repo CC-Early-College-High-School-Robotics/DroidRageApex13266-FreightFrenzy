@@ -63,7 +63,7 @@ public class Drivetrain {
     public double rightPower;
 
     // Slow mode variable
-    public double slowMode = 1;
+    public double slowMode;
 
     // Drivetrain
     public DcMotorEx leftFront = null;

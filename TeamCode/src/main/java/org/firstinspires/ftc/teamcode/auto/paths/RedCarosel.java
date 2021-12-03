@@ -7,7 +7,6 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.auto.pipeline.DuckDetection;
-
 import org.firstinspires.ftc.teamcode.hardware.Devices;
 import org.firstinspires.ftc.teamcode.roadrunner.drive.MechanumDriveRoadRunner;
 import org.firstinspires.ftc.teamcode.roadrunner.trajectorysequence.TrajectorySequence;
@@ -16,7 +15,7 @@ import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
 @Autonomous(name="Blue Carosel Road Runner Path", group="Road Runner Paths")
-public class BlueCarosel extends LinearOpMode {
+public class RedCarosel extends LinearOpMode {
     @Override
     public void runOpMode() {
         MechanumDriveRoadRunner drive = new MechanumDriveRoadRunner(hardwareMap);
@@ -95,17 +94,17 @@ public class BlueCarosel extends LinearOpMode {
 
         TrajectorySequence Trajectory1 = drive.trajectorySequenceBuilder(startPose)
                 .forward(10)
-                .turn(Math.toRadians(30)) // heading = 300
+                .turn(Math.toRadians(-45)) // changed from blue
                 .back(6.5)
                 .build();
 
         TrajectorySequence Trajectory2 = drive.trajectorySequenceBuilder(Trajectory1.end())
                 .forward(6.5)
-                .turn(Math.toRadians(60)) // heading = 0
+                .turn(Math.toRadians(-45)) // changed from blue
                 .back(10)
-                .turn(Math.toRadians(90)) // heading = 900
+                .turn(Math.toRadians(-90)) // inverted from blue
                 .back(27)
-                .turn(Math.toRadians(90)) // heading = 180
+                .turn(Math.toRadians(-90)) // inverted from blue
                 .build();
 
         TrajectorySequence Trajectory3 = drive.trajectorySequenceBuilder(Trajectory2.end())
@@ -117,7 +116,7 @@ public class BlueCarosel extends LinearOpMode {
                 .build();
 
         TrajectorySequence Trajectory5 = drive.trajectorySequenceBuilder(Trajectory4.end())
-                .turn(Math.toRadians(-90))
+                .turn(Math.toRadians(90)) // inverted from blue
                 .build();
 
         TrajectorySequence Trajectory6 = drive.trajectorySequenceBuilder(Trajectory5.end())
@@ -126,7 +125,7 @@ public class BlueCarosel extends LinearOpMode {
 
         TrajectorySequence Trajectory7 = drive.trajectorySequenceBuilder(Trajectory6.end())
                 .back(10)
-                .turn(Math.toRadians(90))
+                .turn(Math.toRadians(-90)) // inverted from blue
                 .back(intakeAmount)
                 .build();
 
