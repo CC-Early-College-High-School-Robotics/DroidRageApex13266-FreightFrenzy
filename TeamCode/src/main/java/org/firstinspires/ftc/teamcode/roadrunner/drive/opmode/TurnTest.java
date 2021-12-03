@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.teamcode.roadrunner.drive.Drive13266;
+import org.firstinspires.ftc.teamcode.roadrunner.drive.MechanumDriveRoadRunner;
 
 /*
  * This is a simple routine to test turning capabilities.
@@ -18,7 +18,7 @@ public class TurnTest extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        Drive13266 drive = new Drive13266(hardwareMap);
+        MechanumDriveRoadRunner drive = new MechanumDriveRoadRunner(hardwareMap);
 
         waitForStart();
 

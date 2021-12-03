@@ -1,12 +1,15 @@
-package org.firstinspires.ftc.teamcode.teleop;
+// This code is completely independent from everything else
+package org.firstinspires.ftc.teamcode.teleop.testing;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@TeleOp(name="TeleOP drive train only", group="Beta")
-public class TeleOpDriveTrain extends OpMode {
+@TeleOp(name="TeleOP Drive Train Only")
+@Disabled
+public class TeleOpDriveTrainOnly extends OpMode {
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
 
@@ -30,13 +33,13 @@ public class TeleOpDriveTrain extends OpMode {
         leftRear.setDirection(DcMotorEx.Direction.REVERSE);
         rightFront.setDirection(DcMotorEx.Direction.FORWARD);
         rightRear.setDirection(DcMotorEx.Direction.FORWARD);
+
+        telemetry.addData("Info: ", "This is a special mode for TeleOp for exclusively the drive train to help diagnose problems");
     }
 
     @Override
     public void loop() {
         // Drive Train Code
-
-        // Setup a variable for each drive wheel to save power level for telemetry
         double leftPower;
         double rightPower;
 

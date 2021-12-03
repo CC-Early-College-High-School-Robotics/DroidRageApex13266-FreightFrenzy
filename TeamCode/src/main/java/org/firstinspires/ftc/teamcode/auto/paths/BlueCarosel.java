@@ -8,8 +8,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.auto.pipeline.DuckDetection;
 
-import org.firstinspires.ftc.teamcode.hardware.Hardware13266;
-import org.firstinspires.ftc.teamcode.roadrunner.drive.Drive13266;
+import org.firstinspires.ftc.teamcode.hardware.Devices;
+import org.firstinspires.ftc.teamcode.roadrunner.drive.MechanumDriveRoadRunner;
 import org.firstinspires.ftc.teamcode.roadrunner.trajectorysequence.TrajectorySequence;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
@@ -19,8 +19,8 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 public class BlueCarosel extends LinearOpMode {
     @Override
     public void runOpMode() {
-        Drive13266 drive = new Drive13266(hardwareMap);
-        Hardware13266 robot = new Hardware13266();
+        MechanumDriveRoadRunner drive = new MechanumDriveRoadRunner(hardwareMap);
+        Devices robot = new Devices();
         robot.init(hardwareMap);
         robot.cameraServo.setPosition(0.625);
 
@@ -128,7 +128,7 @@ public class BlueCarosel extends LinearOpMode {
 
         // Put arm down
         robot.boxServo.setPosition(robot.BOX_INTAKE);
-        robot.setArmPosition(robot.ARM_DOWN_POS);
+        robot.setArmPosition(robot.ARM_NEUTRAL_POS);
         sleep(2000);
     }
 }

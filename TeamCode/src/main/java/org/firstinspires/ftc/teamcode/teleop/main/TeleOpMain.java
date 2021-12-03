@@ -27,14 +27,15 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode.teleop;
+package org.firstinspires.ftc.teamcode.teleop.main;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.teamcode.hardware.Hardware13266;
+import org.firstinspires.ftc.teamcode.hardware.Devices;
+import org.firstinspires.ftc.teamcode.hardware.Drivetrain;
 
 /**
  * This file contains an example of an iterative (Non-Linear) "OpMode".
@@ -50,10 +51,11 @@ import org.firstinspires.ftc.teamcode.hardware.Hardware13266;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@TeleOp(name="TeleOP 13266")
-public class TeleOp13266 extends OpMode {
+@TeleOp(name="TeleOP Main")
+public class TeleOpMain extends OpMode {
 
-    Hardware13266 robot = new Hardware13266();
+    Devices robot = new Devices();
+    Drivetrain drive = new Drivetrain();
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -64,9 +66,10 @@ public class TeleOp13266 extends OpMode {
         // to 'get' must correspond to the names assigned during the robot configuration
         // step (using the FTC Robot Controller app on the phone).
         robot.init(hardwareMap);
+        drive.init(hardwareMap);
 
         // Tell the driver (by printing a message on the driver station) that initialization is complete.
-        telemetry.addData("Sup", "Initialized");
+        telemetry.addData("GL", "You better win!");
     }
 
 
@@ -100,45 +103,22 @@ public class TeleOp13266 extends OpMode {
 
         // POV Mode uses left stick to go forward, and right stick to turn.
         // - This uses basic math to combine motions and is easier to drive straight.
-        double drive = -gamepad1.left_stick_y;
+        double forward = -gamepad1.left_stick_y;
         double turn  =  gamepad1.right_stick_x;
         if (gamepad1.left_bumper) {
-            robot.slowMode = 1;
+            drive.slowMode = drive.FULL_SPEED;
         } else {
-            robot.slowMode = 0.6;
+            drive.slowMode = drive.SLOW_SPEED;
         }
 
-        leftPower    = Range.clip(drive + turn, -1.0, 1.0);
-        rightPower   = Range.clip(drive - turn, -1.0, 1.0);
+        leftPower    = Range.clip(forward + turn, -1.0, 1.0);
+        rightPower   = Range.clip(forward - turn, -1.0, 1.0);
 
         // Send calculated power to wheels
-        robot.leftFront.setPower(leftPower * robot.slowMode);
-        robot.leftRear.setPower(leftPower * robot.slowMode);
-        robot.rightFront.setPower(rightPower * robot.slowMode);
-        robot.rightRear.setPower(rightPower * robot.slowMode);
-/*
-      if (gamepad1.b) {
-            robot.armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            robot.armMotor.setPower(0.5);
-        }
-
- */
-      /*
-        if (gamepad1.dpad_up) {
-            //robot.armMotor.setPower(0.5);
-            robot.armMotor.setTargetPosition(armMotor.getCurrentPosition()+1);
-        }
-
-        if (gamepad1.dpad_down) {
-            //robot.armMotor.setPower(-0.5);
-            robot.armMotor.setTargetPosition(armMotor.getCurrentPosition()-1);
-        }
-
-        if (gamepad1.x) {
-            //robot.armMotor.setPower(0);
-            robot.armMotor.setTargetPosition(0);
-        }
-        */
+        drive.leftFront.setPower(leftPower * drive.slowMode);
+        drive.leftRear.setPower(leftPower * drive.slowMode);
+        drive.rightFront.setPower(rightPower * drive.slowMode);
+        drive.rightRear.setPower(rightPower * drive.slowMode);
 
         // Carousel Code
 
@@ -153,20 +133,13 @@ public class TeleOp13266 extends OpMode {
         }
 
        // box servo code
-        /*
-        if (gamepad2.left_trigger >= 0.1) {
-            robot.boxServo.setPosition(0);
-        } else {
-            robot.boxServo.setPosition(0.5);
-        }
-*/
 
         // Change motors between BRAKE and FLOAT zero power modes
         if (gamepad1.a) {
-            robot.leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            robot.leftRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            robot.rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            robot.rightRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            drive.leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            drive.leftRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            drive.rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            drive.rightRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
             robot.armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
@@ -174,10 +147,10 @@ public class TeleOp13266 extends OpMode {
         }
 
         if (gamepad1.b) {
-            robot.leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-            robot.leftRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-            robot.rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-            robot.rightRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+            drive.leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+            drive.leftRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+            drive.rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+            drive.rightRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 
             robot.armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 
@@ -199,13 +172,12 @@ public class TeleOp13266 extends OpMode {
             robot.armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             robot.boxServo.setPosition(robot.BOX_UP);
         }
-        // Lower
+        // Shared hub
         if (gamepad2.dpad_down) {
             robot.armMotor.setPower(robot.ARM_POWER);
-            robot.setArmPosition(robot.ARM_LOW_POS);
+            robot.setArmPosition(robot.ARM_SHARED_HUB_POS);
             robot.armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             robot.boxServo.setPosition(robot.BOX_UP);
-
 
         }
         // intake/reset position
@@ -213,6 +185,7 @@ public class TeleOp13266 extends OpMode {
             robot.setArmPosition(robot.ARM_INTAKE_POS);
             robot.boxServo.setPosition(robot.BOX_INTAKE);
         }
+
         if (gamepad2.a) {
             robot.boxServo.setPosition(robot.BOX_INTAKE);
         }
@@ -234,21 +207,11 @@ public class TeleOp13266 extends OpMode {
             robot.intakeMotor.setVelocity(0);
         }
 
-
-
-
-
-
         // Show the elapsed game time and wheel power.
 
         telemetry.addData("Status", "Run Time: " + robot.runtime.toString());
         robot.cycles++;
         telemetry.addData("Frequency", (int) (robot.cycles / robot.runtime.seconds()) + "hz");
-        telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
-        telemetry.addData("duck motor position", robot.carouselMotor.getCurrentPosition());
-        telemetry.addData("arm motor position", robot.armMotor.getCurrentPosition());
-        telemetry.addData("box position", robot.boxServo.getPosition());
-        telemetry.addData("arm motor position divided by tick per rev", robot.armMotor.getCurrentPosition()/383.6);
 
     }
 
