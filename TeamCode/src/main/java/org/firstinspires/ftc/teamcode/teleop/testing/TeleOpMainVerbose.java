@@ -27,7 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode.teleop.main;
+package org.firstinspires.ftc.teamcode.teleop.testing;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -37,8 +37,8 @@ import com.qualcomm.robotcore.util.Range;
 import org.firstinspires.ftc.teamcode.hardware.Devices;
 import org.firstinspires.ftc.teamcode.hardware.Drivetrain;
 
-@TeleOp(name="TeleOP Main")
-public class TeleOpMain extends OpMode {
+@TeleOp(name="TeleOP Main Verbose")
+public class TeleOpMainVerbose extends OpMode {
 
     // Create references to
     Devices robot = new Devices();
@@ -186,6 +186,6 @@ public class TeleOpMain extends OpMode {
         telemetry.addData("Status", "Run Time: " + robot.runtime.toString());
         robot.cycles++;
         telemetry.addData("Frequency", (int) (robot.cycles / robot.runtime.seconds()) + "hz");
-
+        telemetry.addData("arm pos: ", robot.getArmPosition());
     }
 }

@@ -56,25 +56,24 @@ public class Devices {
     /* Constants */
 
     // Lower positions
-    public final double ARM_INTAKE_POS = -0.1;
+    public final double ARM_INTAKE_POS = -0.001;
     public final double ARM_NEUTRAL_POS = 0;
-    public final double ARM_SHARED_HUB_POS = 0.198;
 
     // Higher Positions
-    public final double ARM_LOW_POS = 0.568;
-    public final double ARM_MID_POS = 0.716;
-    public final double ARM_HIGH_POS = 1.087;
+    public final double ARM_LOW_POS = 0.138;
+    public final double ARM_MID_POS = 0.22;
+    public final double ARM_HIGH_POS = 0.32;
 
     // Box servo positions
     public final double BOX_UP = 0.641;
-    public final double BOX_INTAKE = 0.929;
+    public final double BOX_INTAKE = 0.925;
     public final double BOX_DROP = 0.213;
 
     // Motor constants
     public final double INTAKE_VELOCITY = 1000;
     public final double CAROUSEL_POWER = 0.5;
     public final double ARM_POWER = 0.8;
-    public final double ARM_TICKS_PER_REV = 383.6;
+    public final double ARM_TICKS_PER_REV = 1425.06;
 
     // Cycles variable (to calculate loop time)
     public int cycles = 0;
@@ -150,8 +149,8 @@ public class Devices {
         intakeMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
 
         // Arm Encoders
-        armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         armMotor.setTargetPosition(0);
+        armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
     }
 }

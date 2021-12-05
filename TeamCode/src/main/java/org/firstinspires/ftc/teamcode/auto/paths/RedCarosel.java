@@ -14,7 +14,7 @@ import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
-@Autonomous(name="Blue Carosel Road Runner Path", group="Road Runner Paths")
+@Autonomous(name="Red Carousel Roadrunner Path", group="Roadrunner Paths")
 public class RedCarosel extends LinearOpMode {
     @Override
     public void runOpMode() {

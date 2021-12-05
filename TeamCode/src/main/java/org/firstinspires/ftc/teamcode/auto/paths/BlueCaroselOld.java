@@ -1,14 +1,13 @@
 package org.firstinspires.ftc.teamcode.auto.paths;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.acmerobotics.roadrunner.geometry.Vector2d;
-import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.auto.pipeline.DuckDetection;
+
 import org.firstinspires.ftc.teamcode.hardware.Devices;
 import org.firstinspires.ftc.teamcode.roadrunner.drive.MechanumDriveRoadRunner;
 import org.firstinspires.ftc.teamcode.roadrunner.trajectorysequence.TrajectorySequence;
@@ -16,18 +15,18 @@ import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
-import java.util.Vector;
-
-@Autonomous(name="Blue Carousel Roadrunner Path", group="Roadrunner Paths")
-public class BlueCarosel extends LinearOpMode {
+@Autonomous(name="Old Blue Carousel Roadrunner Path", group="Roadrunner Paths")
+public class BlueCaroselOld extends LinearOpMode {
     @Override
     public void runOpMode() {
         MechanumDriveRoadRunner drive = new MechanumDriveRoadRunner(hardwareMap);
         Devices robot = new Devices();
         robot.init(hardwareMap);
 
-        double armHeight = 0;
-        String duckPos = "RIGHT";
+        double armHeight = 0.27;
+        double backAmount = 0;
+        double intakeAmount = 0;
+
 
         /* Open CV */
 
@@ -51,34 +50,45 @@ public class BlueCarosel extends LinearOpMode {
                 camera.setViewportRenderer(OpenCvCamera.ViewportRenderer.GPU_ACCELERATED);
 
                 // Start camera stream with 1280x720 resolution
-                camera.startStreaming(1280, 720, OpenCvCameraRotation.UPRIGHT);
+                camera.startStreaming(1280,720, OpenCvCameraRotation.UPRIGHT);
 
                 camera.setPipeline(new DuckDetection());
             }
-
             @Override
             public void onError(int errorCode) {
                 telemetry.addData("Camera status", "Camera failed :(");
             }
         });
 
+        // camera dection print
+        telemetry.addData("Duck position", new DuckDetection().getAnalysis());
+        telemetry.addData("hi", "hi");
+
         if (new DuckDetection().getAnalysis().equals(DuckDetection.DuckPosition.RIGHT)) {
             armHeight = robot.ARM_HIGH_POS;
-            duckPos = "RIGHT";
-
+            backAmount = 33;
+            intakeAmount = 20;
         }
 
         if (new DuckDetection().getAnalysis().equals(DuckDetection.DuckPosition.CENTER)) {
             armHeight = robot.ARM_MID_POS;
-            duckPos = "RIGHT";
+            backAmount = 33;
+            intakeAmount = 11.5;
         }
 
         if (new DuckDetection().getAnalysis().equals(DuckDetection.DuckPosition.LEFT)) {
             armHeight = robot.ARM_LOW_POS;
-            duckPos = "RIGHT";
-
+            backAmount = 31;
+            intakeAmount = 1;
 
         }
+
+
+
+
+
+
+
 
 
         Pose2d startPose = new Pose2d(-47, 60, Math.toRadians(270));
@@ -88,22 +98,25 @@ public class BlueCarosel extends LinearOpMode {
 
         TrajectorySequence Trajectory1 = drive.trajectorySequenceBuilder(startPose)
                 .forward(10)
-                .turn(Math.toRadians(45))
+                .turn(Math.toRadians(30)) // heading = 300
                 .back(6.5)
                 .build();
 
         TrajectorySequence Trajectory2 = drive.trajectorySequenceBuilder(Trajectory1.end())
                 .forward(6.5)
-                .turn(Math.toRadians(180))
+                .turn(Math.toRadians(60)) // heading = 0
+                .back(10)
+                .turn(Math.toRadians(90)) // heading = 900
+                .back(27)
+                .turn(Math.toRadians(90)) // heading = 180
                 .build();
 
-
-        Trajectory Trajectory3 = drive.trajectoryBuilder(Trajectory2.end(), true)
-                .splineTo(new Vector2d(-25, 35), Math.toRadians(135))
+        TrajectorySequence Trajectory3 = drive.trajectorySequenceBuilder(Trajectory2.end())
+                .back(backAmount)
                 .build();
 
-        Trajectory Trajectory4 = drive.trajectoryBuilder(Trajectory3.end())
-                .splineTo(new Vector2d(-60, 35), Math.toRadians(180))
+        TrajectorySequence Trajectory4 = drive.trajectorySequenceBuilder(Trajectory3.end())
+                .forward(intakeAmount)
                 .build();
 
         TrajectorySequence Trajectory5 = drive.trajectorySequenceBuilder(Trajectory4.end())
@@ -117,7 +130,7 @@ public class BlueCarosel extends LinearOpMode {
         TrajectorySequence Trajectory7 = drive.trajectorySequenceBuilder(Trajectory6.end())
                 .back(10)
                 .turn(Math.toRadians(90))
-                //.back(intakeAmount)
+                .back(intakeAmount)
                 .build();
 
         // Before start
@@ -128,12 +141,16 @@ public class BlueCarosel extends LinearOpMode {
         // Lift box up
         robot.boxServo.setPosition(robot.BOX_UP);
 
-        telemetry.addData("Duck position", new DuckDetection().getAnalysis());
+
+
 
         // On start
-        waitForStart();
 
-        if (isStopRequested()) return;
+        waitForStart();
+        telemetry.addData("hi", "hi");
+        if(isStopRequested()) return;
+        telemetry.addData("hi", "hi");
+
 
 
         // Run trajectory 1
@@ -150,17 +167,17 @@ public class BlueCarosel extends LinearOpMode {
         // Lift Arm
         robot.armMotor.setPower(robot.ARM_POWER);
         robot.setArmPosition(armHeight);
+        sleep(2000);
 
         // Run Trajectory 3
-        drive.followTrajectory((Trajectory3));
+        drive.followTrajectorySequence((Trajectory3));
 
         // Drop freight
         robot.boxServo.setPosition(robot.BOX_DROP);
         sleep(1000);
-        /*
-
+/*
         // Run Trajectory 4
-        drive.followTrajectory((Trajectory4));
+        drive.followTrajectorySequence((Trajectory4));
 
         // Put arm down
         robot.boxServo.setPosition(robot.BOX_INTAKE);
@@ -190,12 +207,12 @@ public class BlueCarosel extends LinearOpMode {
         // Drop freight
         robot.boxServo.setPosition(robot.BOX_DROP);
         sleep(1000);
-*/
+
         // Put arm down for TeleOp
         robot.boxServo.setPosition(robot.BOX_INTAKE);
         robot.setArmPosition(robot.ARM_NEUTRAL_POS);
 
-
+ */
     }
 }
 
