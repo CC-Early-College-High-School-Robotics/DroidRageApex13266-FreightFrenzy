@@ -14,7 +14,7 @@ public class DuckDetection extends OpenCvPipeline {
     }
 
     static Point region1 = new Point(200,300);
-    static Point region2 = new Point(500,380);
+    static Point region2 = new Point(450,380);
     static Point region3 = new Point(800,580);
 
     public DuckDetection(Point region1, Point region2, Point region3) {
@@ -46,8 +46,8 @@ public class DuckDetection extends OpenCvPipeline {
     Point REGION2_TOPLEFT_ANCHOR_POINT = region2;
     Point REGION3_TOPLEFT_ANCHOR_POINT = region3;
 
-    static final int REGION_WIDTH = 140;
-    static final int REGION_HEIGHT = 60;
+    static final int REGION_WIDTH = 200;
+    static final int REGION_HEIGHT = 100;
 
 
     /*
@@ -285,6 +285,6 @@ public class DuckDetection extends OpenCvPipeline {
      */
     public DuckPosition getAnalysis()
     {
-        return position;
+        return this.position;
     }
 }

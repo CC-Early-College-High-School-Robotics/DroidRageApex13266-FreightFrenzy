@@ -80,7 +80,7 @@ public class BoxPositionProgrammer extends LinearOpMode {
                 y2 += 0.05;
             }
             else if(gamepad1.dpad_down && gamepad1.b) {
-                y3 += 0.01;
+                y3 += 0.05;
             }
             else if(gamepad1.dpad_left && gamepad1.x) {
                 x1 -= 0.05;

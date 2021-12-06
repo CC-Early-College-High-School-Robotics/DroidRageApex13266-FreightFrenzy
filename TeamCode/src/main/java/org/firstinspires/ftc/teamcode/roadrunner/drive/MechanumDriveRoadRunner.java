@@ -90,7 +90,7 @@ public class MechanumDriveRoadRunner extends TankDrive {
 
 
         follower = new TankPIDVAFollower(AXIAL_PID, CROSS_TRACK_PID,
-                new Pose2d(0.5, 0.5, Math.toRadians(5.0)), 1.0);
+                new Pose2d(0.5, 0.5, Math.toRadians(5.0)), 0.7);
 
         LynxModuleUtil.ensureMinimumFirmwareVersion(hardwareMap);
 
