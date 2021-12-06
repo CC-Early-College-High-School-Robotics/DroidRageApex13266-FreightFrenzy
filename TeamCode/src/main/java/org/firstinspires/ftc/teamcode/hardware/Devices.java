@@ -58,25 +58,25 @@ public class Devices {
     /* Constants */
 
     // Lower positions
-    public static double ARM_INTAKE_POS = -0.01; // 0.04 //-0.09
-    public static double ARM_NEUTRAL_POS = 0;
+    public final double ARM_INTAKE_POS = -0.01; // 0.04 //-0.09
+    public final double ARM_NEUTRAL_POS = 0;
 
     // Higher Positions
-    public static double ARM_LOW_POS = 0.132; //0.132 //0.035
-    public static double ARM_MID_POS = 0.25; //0.25 //0.17
-    public static double ARM_HIGH_POS = 0.36; //0.36 //0.27
+    public final double ARM_LOW_POS = 0.132; //0.132 //0.035
+    public final double ARM_MID_POS = 0.25; //0.25 //0.17
+    public final double ARM_HIGH_POS = 0.36; //0.36 //0.27
 
     // Box servo positions
-    public static double BOX_UP = 0.641;
-    public static double BOX_FORWARD = 0.319;
-    public static double BOX_INTAKE = 0.925;
-    public static double BOX_DROP = 0.213;
+    public final double BOX_UP = 0.641;
+    public final double BOX_FORWARD = 0.319;
+    public final double BOX_INTAKE = 0.925;
+    public final double BOX_DROP = 0.213;
 
     // Motor constants
-    public static double INTAKE_VELOCITY = 1000;
-    public static double CAROUSEL_POWER = 0.5;
-    public static double ARM_POWER = 0.6;
-    public static double ARM_TICKS_PER_REV = 1425.06;
+    public final double INTAKE_VELOCITY = 1000;
+    public final double CAROUSEL_POWER = 0.5;
+    public final double ARM_POWER = 0.6;
+    public final double ARM_TICKS_PER_REV = 1425.06;
 
     // Cycles variable (to calculate loop time)
     public int cycles = 0;

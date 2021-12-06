@@ -177,7 +177,7 @@ public class TeleOpMain extends OpMode {
             robot.boxServo.setPosition(robot.BOX_DROP);
         }
         if (gamepad2.y) {
-            robot.boxServo.setPosition(Devices.BOX_UP);
+            robot.boxServo.setPosition(robot.BOX_UP);
         }
 
         // Intake Motor
