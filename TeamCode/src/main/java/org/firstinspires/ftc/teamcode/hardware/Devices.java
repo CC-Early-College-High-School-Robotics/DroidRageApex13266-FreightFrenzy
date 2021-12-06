@@ -29,6 +29,7 @@
 
 package org.firstinspires.ftc.teamcode.hardware;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -52,32 +53,34 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Servo channel:  Servo to open left claw:  "left_hand"
  * Servo channel:  Servo to open right claw: "right_hand"
  */
+@Config
 public class Devices {
     /* Constants */
 
     // Lower positions
-    public final double ARM_INTAKE_POS = -0.01; // 0.04 //-0.09
-    public final double ARM_NEUTRAL_POS = 0;
+    public static double ARM_INTAKE_POS = -0.01; // 0.04 //-0.09
+    public static double ARM_NEUTRAL_POS = 0;
 
     // Higher Positions
-    public final double ARM_LOW_POS = 0.132; //0.132 //0.035
-    public final double ARM_MID_POS = 0.25; //0.25 //0.17
-    public final double ARM_HIGH_POS = 0.36; //0.36 //0.27
+    public static double ARM_LOW_POS = 0.132; //0.132 //0.035
+    public static double ARM_MID_POS = 0.25; //0.25 //0.17
+    public static double ARM_HIGH_POS = 0.36; //0.36 //0.27
 
     // Box servo positions
-    public final double BOX_UP = 0.641;
-    public final double BOX_FORWARD = 0.319;
-    public final double BOX_INTAKE = 0.925;
-    public final double BOX_DROP = 0.213;
+    public static double BOX_UP = 0.641;
+    public static double BOX_FORWARD = 0.319;
+    public static double BOX_INTAKE = 0.925;
+    public static double BOX_DROP = 0.213;
 
     // Motor constants
-    public final double INTAKE_VELOCITY = 1000;
-    public final double CAROUSEL_POWER = 0.5;
-    public final double ARM_POWER = 0.6;
-    public final double ARM_TICKS_PER_REV = 1425.06;
+    public static double INTAKE_VELOCITY = 1000;
+    public static double CAROUSEL_POWER = 0.5;
+    public static double ARM_POWER = 0.6;
+    public static double ARM_TICKS_PER_REV = 1425.06;
 
     // Cycles variable (to calculate loop time)
     public int cycles = 0;
+    public int capServoPos = 0;
 
     /* Create hardware variables */
     // Motor variables
@@ -88,6 +91,7 @@ public class Devices {
     // Servo variables
     public Servo boxServo = null;
     public Servo cameraServo = null;
+    public Servo capServo = null;
 
     // Arm methods to get and set the posiition
     public void setArmPosition(double pos) {
@@ -125,6 +129,7 @@ public class Devices {
         // Servo Initialization
         boxServo = hwMap.get(Servo.class,"boxServo");
         cameraServo = hwMap.get(Servo.class,"cameraServo");
+        capServo = hwMap.get(Servo.class, "capServo");
 
         // Motor Directions
         armMotor.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -135,6 +140,7 @@ public class Devices {
         // Servo Directions
         boxServo.setDirection(Servo.Direction.FORWARD);
         cameraServo.setDirection(Servo.Direction.FORWARD);
+        capServo.setDirection(Servo.Direction.FORWARD);
 
         // Adjusting the Zero Power Behavior changes how the motors behaved when a
         // Power of 0 is applied.
@@ -148,6 +154,10 @@ public class Devices {
         // Turn on Run Using Encoder to use the built in PID controller
         intakeMotor.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
         intakeMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+
+        // Turn on Run Using Encoder to use the built in PID controller
+        armMotor.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        armMotor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
 
         // Arm Encoders
         armMotor.setTargetPosition(0);

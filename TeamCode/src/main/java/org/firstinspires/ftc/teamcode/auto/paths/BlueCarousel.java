@@ -81,7 +81,6 @@ public class BlueCarousel extends LinearOpMode {
             hubDistance = 26.25;
 
         }
-        camera.stopStreaming();
 
 
 
@@ -102,15 +101,15 @@ public class BlueCarousel extends LinearOpMode {
                 .build();
 
         TrajectorySequence Trajectory2 = drive.trajectorySequenceBuilder(Trajectory1.end())
-                .back(6.5)
+                .back(7.25)
                 .build();
 
         TrajectorySequence Trajectory3 = drive.trajectorySequenceBuilder(Trajectory2.end())
-                .forward(6.5)
+                .forward(7.25)
                 .turn(Math.toRadians(60))
                 .back(8)
                 .turn(Math.toRadians(90))
-                .back(27)
+                .back(28)
                 .turn(Math.toRadians(90))
                 .build();
 
@@ -124,7 +123,7 @@ public class BlueCarousel extends LinearOpMode {
                 .build();
 
         TrajectorySequence Trajectory6 = drive.trajectorySequenceBuilder(Trajectory5.end())
-                .forward(9.5)
+                .forward(10.5)
                 .build();
         // Before start
 
@@ -132,7 +131,7 @@ public class BlueCarousel extends LinearOpMode {
         robot.cameraServo.setPosition(0.25);
 
         // Lift box up
-        robot.boxServo.setPosition(robot.BOX_FORWARD);
+        robot.boxServo.setPosition(robot.BOX_UP);
 
 
 
@@ -141,6 +140,8 @@ public class BlueCarousel extends LinearOpMode {
 
         waitForStart();
         if(isStopRequested()) return;
+
+        camera.stopStreaming();
 
 
 
@@ -163,6 +164,10 @@ public class BlueCarousel extends LinearOpMode {
         // Lift Arm
         robot.armMotor.setPower(robot.ARM_POWER);
         robot.setArmPosition(armHeight);
+
+        // Lift box forward
+        robot.boxServo.setPosition(robot.BOX_FORWARD);
+
 
         // Run Trajectory 4
         drive.followTrajectorySequence((Trajectory4));

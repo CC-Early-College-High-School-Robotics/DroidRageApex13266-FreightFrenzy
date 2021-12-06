@@ -31,8 +31,7 @@ public class ServoPositionProgrammer extends LinearOpMode {
             } else if (gamepad1.b) {
                 pos += 0.001;
             }
-            pos = Math.min(Math.max(pos, 0), 1);
-            servo.setPosition(Math.min(Math.max(pos, 0), 1));
+            servo.setPosition(pos);
             telemetry.addData("servo pos", servo.getPosition());
             telemetry.addData("desired pos", pos);
             telemetry.update();

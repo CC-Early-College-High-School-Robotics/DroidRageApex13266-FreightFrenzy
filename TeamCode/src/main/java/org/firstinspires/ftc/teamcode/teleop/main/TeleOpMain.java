@@ -160,6 +160,16 @@ public class TeleOpMain extends OpMode {
             robot.boxServo.setPosition(robot.BOX_INTAKE);
         }
 
+        // cap servo psoitions
+        if (gamepad2.right_bumper) {
+            robot.capServoPos += 0.001;
+            robot.capServo.setPosition(robot.capServoPos);
+        }
+        if (gamepad2.left_bumper) {
+            robot.capServoPos -= 0.001;
+            robot.capServo.setPosition(robot.capServoPos);
+        }
+
         if (gamepad2.a) {
             robot.boxServo.setPosition(robot.BOX_INTAKE);
         }
@@ -167,7 +177,7 @@ public class TeleOpMain extends OpMode {
             robot.boxServo.setPosition(robot.BOX_DROP);
         }
         if (gamepad2.y) {
-            robot.boxServo.setPosition(robot.BOX_UP);
+            robot.boxServo.setPosition(Devices.BOX_UP);
         }
 
         // Intake Motor
@@ -186,6 +196,6 @@ public class TeleOpMain extends OpMode {
         telemetry.addData("Status", "Run Time: " + robot.runtime.toString());
         robot.cycles++;
         telemetry.addData("Frequency", (int) (robot.cycles / robot.runtime.seconds()) + "hz");
-
+        telemetry.addData("Cap servo positon", robot.capServoPos);
     }
 }

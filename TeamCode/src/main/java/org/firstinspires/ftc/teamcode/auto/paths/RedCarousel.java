@@ -67,7 +67,7 @@ public class RedCarousel extends LinearOpMode {
 
         if (detector.getAnalysis() == DuckDetection.DuckPosition.RIGHT) {
             armHeight = robot.ARM_HIGH_POS;
-            hubDistance = 27;
+            hubDistance = 28;
         }
 
         if (detector.getAnalysis() == DuckDetection.DuckPosition.CENTER) {
@@ -80,7 +80,6 @@ public class RedCarousel extends LinearOpMode {
             hubDistance = 26.25;
 
         }
-        camera.stopStreaming();
 
 
 
@@ -109,7 +108,7 @@ public class RedCarousel extends LinearOpMode {
                 .turn(Math.toRadians(-45)) // Both turns must add up to -90
                 .back(8)
                 .turn(Math.toRadians(-90))
-                .back(27)
+                .back(28)
                 .turn(Math.toRadians(-90))
                 .build();
 
@@ -131,7 +130,7 @@ public class RedCarousel extends LinearOpMode {
         robot.cameraServo.setPosition(0.25);
 
         // Lift box up
-        robot.boxServo.setPosition(robot.BOX_FORWARD);
+        robot.boxServo.setPosition(robot.BOX_UP);
 
 
 
@@ -140,6 +139,8 @@ public class RedCarousel extends LinearOpMode {
 
         waitForStart();
         if(isStopRequested()) return;
+
+        camera.stopStreaming();
 
 
 
@@ -162,6 +163,10 @@ public class RedCarousel extends LinearOpMode {
         // Lift Arm
         robot.armMotor.setPower(robot.ARM_POWER);
         robot.setArmPosition(armHeight);
+
+
+        // Lift box forward
+        robot.boxServo.setPosition(robot.BOX_FORWARD);
 
         // Run Trajectory 4
         drive.followTrajectorySequence((Trajectory4));
