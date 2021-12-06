@@ -7,7 +7,6 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.auto.pipeline.DuckDetection;
-
 import org.firstinspires.ftc.teamcode.hardware.Devices;
 import org.firstinspires.ftc.teamcode.roadrunner.drive.MechanumDriveRoadRunner;
 import org.firstinspires.ftc.teamcode.roadrunner.trajectorysequence.TrajectorySequence;
@@ -15,8 +14,8 @@ import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
-@Autonomous(name="Blue Carousel Roadrunner Path", group="Roadrunner Paths")
-public class BlueCaroselOld extends LinearOpMode {
+@Autonomous(name="Red Carousel (Bottom) Roadrunner Path", group="Roadrunner Paths")
+public class RedCarousel extends LinearOpMode {
     @Override
     public void runOpMode() {
         MechanumDriveRoadRunner drive = new MechanumDriveRoadRunner(hardwareMap);
@@ -24,8 +23,7 @@ public class BlueCaroselOld extends LinearOpMode {
         robot.init(hardwareMap);
 
         double armHeight = 0;
-        double backAmount = 0;
-        double intakeAmount = 0;
+        double hubDistance = 0;
 
         DuckDetection detector = new DuckDetection();
 
@@ -69,20 +67,17 @@ public class BlueCaroselOld extends LinearOpMode {
 
         if (detector.getAnalysis() == DuckDetection.DuckPosition.RIGHT) {
             armHeight = robot.ARM_HIGH_POS;
-            backAmount = 27;
-            intakeAmount = 20;
+            hubDistance = 27;
         }
 
         if (detector.getAnalysis() == DuckDetection.DuckPosition.CENTER) {
             armHeight = robot.ARM_MID_POS;
-            backAmount = 24;
-            intakeAmount = 11.5;
+            hubDistance = 24;
         }
 
         if (detector.getAnalysis() == DuckDetection.DuckPosition.LEFT) {
             armHeight = robot.ARM_LOW_POS;
-            backAmount = 26.25;
-            intakeAmount = 1;
+            hubDistance = 26.25;
 
         }
         camera.stopStreaming();
@@ -95,14 +90,14 @@ public class BlueCaroselOld extends LinearOpMode {
 
 
 
-        Pose2d startPose = new Pose2d(-47, 60, Math.toRadians(270));
+        Pose2d startPose = new Pose2d(-47, -60, Math.toRadians(90));
         ElapsedTime timer = new ElapsedTime();
 
         drive.setPoseEstimate(startPose);
 
         TrajectorySequence Trajectory1 = drive.trajectorySequenceBuilder(startPose)
                 .forward(10)
-                .turn(Math.toRadians(30))
+                .turn(Math.toRadians(-45))
                 .build();
 
         TrajectorySequence Trajectory2 = drive.trajectorySequenceBuilder(Trajectory1.end())
@@ -111,40 +106,25 @@ public class BlueCaroselOld extends LinearOpMode {
 
         TrajectorySequence Trajectory3 = drive.trajectorySequenceBuilder(Trajectory2.end())
                 .forward(6.5)
-                .turn(Math.toRadians(60))
+                .turn(Math.toRadians(-45)) // Both turns must add up to -90
                 .back(8)
-                .turn(Math.toRadians(90))
+                .turn(Math.toRadians(-90))
                 .back(27)
-                .turn(Math.toRadians(90))
+                .turn(Math.toRadians(-90))
                 .build();
 
         TrajectorySequence Trajectory4 = drive.trajectorySequenceBuilder(Trajectory3.end())
-                .back(backAmount)
+                .back(hubDistance)
                 .build();
 
         TrajectorySequence Trajectory5 = drive.trajectorySequenceBuilder(Trajectory4.end())
-                .forward(backAmount)
-                .turn(Math.toRadians(-90))
+                .forward(hubDistance)
+                .turn(Math.toRadians(90))
                 .build();
 
         TrajectorySequence Trajectory6 = drive.trajectorySequenceBuilder(Trajectory5.end())
                 .forward(9.5)
                 .build();
-/*
-        TrajectorySequence Trajectory5 = drive.trajectorySequenceBuilder(Trajectory4.end())
-                .turn(Math.toRadians(-90))
-                .build();
-
-        TrajectorySequence Trajectory6 = drive.trajectorySequenceBuilder(Trajectory5.end())
-                .forward(10)
-                .build();
-
-        TrajectorySequence Trajectory7 = drive.trajectorySequenceBuilder(Trajectory6.end())
-                .back(10)
-                .turn(Math.toRadians(90))
-                .back(intakeAmount)
-                .build();
-*/
         // Before start
 
         // Move camera
@@ -182,7 +162,6 @@ public class BlueCaroselOld extends LinearOpMode {
         // Lift Arm
         robot.armMotor.setPower(robot.ARM_POWER);
         robot.setArmPosition(armHeight);
-        sleep(2000);
 
         // Run Trajectory 4
         drive.followTrajectorySequence((Trajectory4));
@@ -207,44 +186,6 @@ public class BlueCaroselOld extends LinearOpMode {
         //return arm
         robot.setArmPosition(robot.ARM_INTAKE_POS);
         sleep(2000);
-/*
-        // Run Trajectory 4
-        drive.followTrajectorySequence((Trajectory4));
-
-        // Put arm down
-        robot.boxServo.setPosition(robot.BOX_INTAKE);
-        robot.setArmPosition(robot.ARM_NEUTRAL_POS);
-
-
-
-        // Run Trajectory 5
-        drive.followTrajectorySequence((Trajectory5));
-
-        // Turn on intake
-        robot.intakeMotor.setVelocity(robot.INTAKE_VELOCITY);
-
-        // Run Trajectory 6
-        drive.followTrajectorySequence((Trajectory6));
-
-        // Turn on intake
-        robot.intakeMotor.setVelocity(0);
-
-        // Lift Arm
-        robot.armMotor.setPower(robot.ARM_POWER);
-        robot.setArmPosition(armHeight);
-
-        // Run Trajectory 7
-        drive.followTrajectorySequence((Trajectory7));
-
-        // Drop freight
-        robot.boxServo.setPosition(robot.BOX_DROP);
-        sleep(1000);
-
-        // Put arm down for TeleOp
-        robot.boxServo.setPosition(robot.BOX_INTAKE);
-        robot.setArmPosition(robot.ARM_NEUTRAL_POS);
-
- */
     }
 }
 

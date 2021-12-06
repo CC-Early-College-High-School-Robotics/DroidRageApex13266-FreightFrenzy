@@ -14,8 +14,8 @@ import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
-@Autonomous(name="Blue Warehouse (Top) Roadrunner Path", group="Roadrunner Paths")
-public class BlueWarehouse extends LinearOpMode {
+@Autonomous(name="Red Warehouse (Top) Roadrunner Path", group="Roadrunner Paths")
+public class RedWarehouse extends LinearOpMode {
     @Override
     public void runOpMode() {
         MechanumDriveRoadRunner drive = new MechanumDriveRoadRunner(hardwareMap);
@@ -90,7 +90,7 @@ public class BlueWarehouse extends LinearOpMode {
 
 
 
-        Pose2d startPose = new Pose2d(-11, 60, Math.toRadians(90));
+        Pose2d startPose = new Pose2d(-11, -60, Math.toRadians(270));
         ElapsedTime timer = new ElapsedTime();
 
         drive.setPoseEstimate(startPose);
@@ -104,7 +104,7 @@ public class BlueWarehouse extends LinearOpMode {
                 .build();
 
         TrajectorySequence Trajectory3 = drive.trajectorySequenceBuilder(Trajectory2.end())
-                .turn(Math.toRadians(-80))
+                .turn(Math.toRadians(80))
                 .build();
 
         TrajectorySequence Trajectory4 = drive.trajectorySequenceBuilder(Trajectory3.end())
