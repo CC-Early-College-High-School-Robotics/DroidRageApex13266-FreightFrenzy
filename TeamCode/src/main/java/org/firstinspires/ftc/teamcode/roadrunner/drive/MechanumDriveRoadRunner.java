@@ -90,7 +90,7 @@ public class MechanumDriveRoadRunner extends TankDrive {
 
 
         follower = new TankPIDVAFollower(AXIAL_PID, CROSS_TRACK_PID,
-                new Pose2d(0.5, 0.5, Math.toRadians(5.0)), 0.7);
+                new Pose2d(0.5, 0.5, Math.toRadians(5.0)), 1.1);
 
         LynxModuleUtil.ensureMinimumFirmwareVersion(hardwareMap);
 
@@ -122,7 +122,7 @@ public class MechanumDriveRoadRunner extends TankDrive {
 
         for (DcMotorEx motor : motors) {
             MotorConfigurationType motorConfigurationType = motor.getMotorType().clone();
-            motorConfigurationType.setAchieveableMaxRPMFraction(1.0);
+            motorConfigurationType.setAchieveableMaxRPMFraction(1.2);
             motor.setMotorType(motorConfigurationType);
         }
 

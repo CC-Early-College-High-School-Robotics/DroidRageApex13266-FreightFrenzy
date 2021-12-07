@@ -6,11 +6,12 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.teamcode.auto.pipeline.DuckDetection;
+import org.firstinspires.ftc.teamcode.auto.pipeline.BlueCarouselDuckDetection;
 
 import org.firstinspires.ftc.teamcode.hardware.Devices;
 import org.firstinspires.ftc.teamcode.roadrunner.drive.MechanumDriveRoadRunner;
 import org.firstinspires.ftc.teamcode.roadrunner.trajectorysequence.TrajectorySequence;
+import org.opencv.core.Point;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
@@ -26,7 +27,10 @@ public class BlueCarousel extends LinearOpMode {
         double armHeight = 0;
         double hubDistance = 0;
 
-        DuckDetection detector = new DuckDetection();
+        // move camera
+        robot.cameraServo.setPosition(0.29);
+
+        BlueCarouselDuckDetection detector = new BlueCarouselDuckDetection();
 
 
         /* Open CV */
@@ -66,19 +70,19 @@ public class BlueCarousel extends LinearOpMode {
         telemetry.addData("Duck position", detector.getAnalysis());
         telemetry.addData("hi", "hi");
 
-        if (detector.getAnalysis() == DuckDetection.DuckPosition.RIGHT) {
+        if (detector.getAnalysis() == BlueCarouselDuckDetection.DuckPosition.RIGHT) {
             armHeight = robot.ARM_HIGH_POS;
-            hubDistance = 27;
+            hubDistance = 25;
         }
 
-        if (detector.getAnalysis() == DuckDetection.DuckPosition.CENTER) {
+        if (detector.getAnalysis() == BlueCarouselDuckDetection.DuckPosition.CENTER) {
             armHeight = robot.ARM_MID_POS;
-            hubDistance = 24;
+            hubDistance = 20.5;
         }
 
-        if (detector.getAnalysis() == DuckDetection.DuckPosition.LEFT) {
+        if (detector.getAnalysis() == BlueCarouselDuckDetection.DuckPosition.LEFT) {
             armHeight = robot.ARM_LOW_POS;
-            hubDistance = 26.25;
+            hubDistance = 23.5;
 
         }
 
@@ -101,13 +105,13 @@ public class BlueCarousel extends LinearOpMode {
                 .build();
 
         TrajectorySequence Trajectory2 = drive.trajectorySequenceBuilder(Trajectory1.end())
-                .back(7.25)
+                .back(7.5)
                 .build();
 
         TrajectorySequence Trajectory3 = drive.trajectorySequenceBuilder(Trajectory2.end())
-                .forward(7.25)
+                .forward(7.5)
                 .turn(Math.toRadians(60))
-                .back(8)
+                .back(6)
                 .turn(Math.toRadians(90))
                 .back(28)
                 .turn(Math.toRadians(90))
@@ -123,18 +127,12 @@ public class BlueCarousel extends LinearOpMode {
                 .build();
 
         TrajectorySequence Trajectory6 = drive.trajectorySequenceBuilder(Trajectory5.end())
-                .forward(10.5)
+                .forward(12)
                 .build();
         // Before start
 
-        // Move camera
-        robot.cameraServo.setPosition(0.25);
-
         // Lift box up
         robot.boxServo.setPosition(robot.BOX_UP);
-
-
-
 
         // On start
 
@@ -144,12 +142,11 @@ public class BlueCarousel extends LinearOpMode {
         camera.stopStreaming();
 
 
-
         // Run trajectory 1
         drive.followTrajectorySequence((Trajectory1));
 
         // Run carousel
-        robot.carouselMotor.setPower(robot.CAROUSEL_POWER);
+        robot.carouselMotor.setPower(robot.CAROUSEL_SLOW_POWER);
 
 
         // Run trajectory 2
@@ -162,12 +159,11 @@ public class BlueCarousel extends LinearOpMode {
         drive.followTrajectorySequence((Trajectory3));
 
         // Lift Arm
-        robot.armMotor.setPower(robot.ARM_POWER);
+        robot.armMotor.setPower(robot.ARM_SLOW_POWER);
         robot.setArmPosition(armHeight);
 
         // Lift box forward
         robot.boxServo.setPosition(robot.BOX_FORWARD);
-
 
         // Run Trajectory 4
         drive.followTrajectorySequence((Trajectory4));

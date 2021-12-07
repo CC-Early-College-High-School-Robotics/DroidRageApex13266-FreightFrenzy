@@ -58,7 +58,7 @@ public class Devices {
     /* Constants */
 
     // Lower positions
-    public final double ARM_INTAKE_POS = -0.01; // 0.04 //-0.09
+    public final double ARM_INTAKE_POS = 0; // 0.04 //-0.09
     public final double ARM_NEUTRAL_POS = 0;
 
     // Higher Positions
@@ -70,12 +70,14 @@ public class Devices {
     public final double BOX_UP = 0.641;
     public final double BOX_FORWARD = 0.319;
     public final double BOX_INTAKE = 0.925;
-    public final double BOX_DROP = 0.213;
+    public final double BOX_DROP = 0.180;
 
     // Motor constants
     public final double INTAKE_VELOCITY = 1000;
     public final double CAROUSEL_POWER = 0.5;
+    public final double CAROUSEL_SLOW_POWER = 0.4;
     public final double ARM_POWER = 0.6;
+    public final double ARM_SLOW_POWER = 0.3;
     public final double ARM_TICKS_PER_REV = 1425.06;
 
     // Cycles variable (to calculate loop time)

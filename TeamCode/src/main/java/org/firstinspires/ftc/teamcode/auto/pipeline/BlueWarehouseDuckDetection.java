@@ -8,21 +8,14 @@ import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 import org.openftc.easyopencv.OpenCvPipeline;
 
-public class DuckDetection extends OpenCvPipeline {
+public class BlueWarehouseDuckDetection extends OpenCvPipeline {
 
-    public DuckDetection() {
+    public BlueWarehouseDuckDetection() {
     }
 
-    static Point region1 = new Point(200,300);
-    static Point region2 = new Point(450,380);
-    static Point region3 = new Point(800,580);
-
-    public DuckDetection(Point region1, Point region2, Point region3) {
-        DuckDetection.region1 = region1;
-        DuckDetection.region2 = region2;
-        DuckDetection.region3 = region3;
-    }
-
+    private final Point region1 = new Point(300,50);
+    private final Point region2 = new Point(500,200);
+    private final Point region3 = new Point(750,350);
 
     /*
      * An enum to define the duck position
@@ -47,7 +40,7 @@ public class DuckDetection extends OpenCvPipeline {
     Point REGION3_TOPLEFT_ANCHOR_POINT = region3;
 
     static final int REGION_WIDTH = 200;
-    static final int REGION_HEIGHT = 100;
+    static final int REGION_HEIGHT = 300;
 
 
     /*
