@@ -10,8 +10,8 @@ import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
-@TeleOp(name="Box Position Programmer", group="test")
-public class BoxPositionProgrammer extends LinearOpMode {
+@TeleOp(name="Vision Box Position Programmer", group="test")
+public class VisionBoxPositionProgrammer extends LinearOpMode {
     @Override
     public void runOpMode() {
         telemetry.addData("Tutorial: ", "Hold x, a, or b with a dpad to move the boxes and find the optimal position.");

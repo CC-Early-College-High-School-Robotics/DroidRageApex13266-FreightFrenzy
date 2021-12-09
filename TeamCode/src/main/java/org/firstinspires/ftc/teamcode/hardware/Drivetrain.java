@@ -57,8 +57,9 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 public class Drivetrain {
     /* Constants */
     // Drivetrain speeds
-    public final double SLOW_SPEED = 0.6;
-    public final double FULL_SPEED = 1;
+    public static double NORMAL_SPEED = 0.6;
+    public static double FULL_SPEED = 1;
+    public static double SLOW_SPEED = 0.3;
 
     // Setup a variable for power of each side of drivetrain
     public double leftPower;

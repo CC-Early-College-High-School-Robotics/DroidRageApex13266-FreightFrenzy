@@ -28,7 +28,6 @@
  */
 
 package org.firstinspires.ftc.teamcode.teleop.testing;
-
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -80,9 +79,11 @@ public class TeleOpMainVerbose extends OpMode {
         double forward = -gamepad1.left_stick_y;
         double turn  =  gamepad1.right_stick_x;
         if (gamepad1.left_bumper) {
-            drive.slowMode = drive.FULL_SPEED;
+            drive.slowMode = Drivetrain.FULL_SPEED;
+        } else if (gamepad1.right_bumper) {
+            drive.slowMode = Drivetrain.SLOW_SPEED;
         } else {
-            drive.slowMode = drive.SLOW_SPEED;
+            drive.slowMode = Drivetrain.NORMAL_SPEED;
         }
 
         leftPower    = Range.clip(forward + turn, -1.0, 1.0);
@@ -96,17 +97,17 @@ public class TeleOpMainVerbose extends OpMode {
 
         // Carousel Code
 
-        if (gamepad2.right_bumper) {
-            robot.carouselMotor.setPower(robot.CAROUSEL_POWER);
+        if (gamepad2.right_trigger >= Devices.TRIGGER_THRESHOLD) {
+            robot.carouselMotor.setPower(Devices.CAROUSEL_POWER);
         }
-        if (gamepad2.left_bumper) {
-            robot.carouselMotor.setPower(-robot.CAROUSEL_POWER);
+        if (gamepad2.left_trigger >= Devices.TRIGGER_THRESHOLD) {
+            robot.carouselMotor.setPower(-Devices.CAROUSEL_POWER);
         }
-        if (!gamepad2.right_bumper && !gamepad2.left_bumper) {
+        if (gamepad2.right_trigger < Devices.TRIGGER_THRESHOLD && gamepad2.left_trigger < Devices.TRIGGER_THRESHOLD) {
             robot.carouselMotor.setPower(0);
         }
 
-       // box servo code
+        // box servo code
 
         // Change motors between BRAKE and FLOAT zero power modes
         if (gamepad1.a) {
@@ -134,50 +135,88 @@ public class TeleOpMainVerbose extends OpMode {
 
         // High
         if (gamepad2.dpad_up) {
-            robot.armMotor.setPower(robot.ARM_POWER);
-            robot.setArmPosition(robot.ARM_HIGH_POS);
+            robot.armMotor.setPower(Devices.ARM_POWER);
+            robot.setArmPosition(Devices.ARM_HIGH_POS);
             robot.armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            robot.boxServo.setPosition(robot.BOX_UP);
+            robot.boxServo.setPosition(Devices.BOX_UP);
         }
         // Mid
         if (gamepad2.dpad_right) {
-            robot.armMotor.setPower(robot.ARM_POWER);
-            robot.setArmPosition(robot.ARM_MID_POS);
+            robot.armMotor.setPower(Devices.ARM_POWER);
+            robot.setArmPosition(Devices.ARM_MID_POS);
             robot.armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            robot.boxServo.setPosition(robot.BOX_UP);
+            robot.boxServo.setPosition(Devices.BOX_UP);
         }
         // Shared hub
         if (gamepad2.dpad_down) {
-            robot.armMotor.setPower(robot.ARM_POWER);
-            robot.setArmPosition(robot.ARM_LOW_POS);
+            robot.armMotor.setPower(Devices.ARM_POWER);
+            robot.setArmPosition(Devices.ARM_LOW_POS);
             robot.armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            robot.boxServo.setPosition(robot.BOX_UP);
+            robot.boxServo.setPosition(Devices.BOX_UP);
 
         }
         // intake/reset position
         if (gamepad2.dpad_left) {
-            robot.setArmPosition(robot.ARM_INTAKE_POS);
-            robot.boxServo.setPosition(robot.BOX_INTAKE);
+            robot.setArmPosition(Devices.ARM_INTAKE_POS);
+            robot.boxServo.setPosition(Devices.BOX_INTAKE);
         }
 
+        // Alliance Marker Servo Positions
+
+        // Picking up Alliance Marker
+        if (gamepad2.left_bumper) {
+            robot.allianceMarkerServoPos = Devices.ALLIANCE_MARKER_STANDING_POS; //
+            robot.leftBumperButtonPressed = true;
+        }
+        if (!gamepad2.left_bumper && robot.leftBumperButtonPressed) {
+            robot.allianceMarkerServoPos = Devices.ALLIANCE_MARKER_KNOCKED_OVER_POS;
+            robot.leftBumperButtonPressed = false;
+        }
+
+
+        // Capping at hub
+        if (gamepad2.right_bumper) {
+            robot.allianceMarkerServoPos = Devices.ALLIANCE_MARKER_APPROACHING_HUB_POS;
+            robot.rightBumperButtonPressed = true;
+            robot.leftBumperButtonPressed = false;
+        }
+        if (!gamepad2.right_bumper && robot.rightBumperButtonPressed) {
+            robot.allianceMarkerServoPos = Devices.ALLIANCE_MARKER_CAPPED_HUB_POS;
+            robot.rightBumperButtonPressed = false;
+            robot.leftBumperButtonPressed = false;
+        }
+        if (gamepad2.b && !gamepad2.left_bumper && !gamepad2.right_bumper) {
+            robot.allianceMarkerServoPos = Devices.ALLIANCE_MARKER_RESET_POS;
+        }
+
+        if (-gamepad2.left_stick_y > Devices.TRIGGER_THRESHOLD) {
+            robot.allianceMarkerServoPos += Devices.ALLIANCE_MARKER_SERVO_SPEED;
+        }
+        if (-gamepad2.left_stick_y < -Devices.TRIGGER_THRESHOLD) {
+            robot.allianceMarkerServoPos -= Devices.ALLIANCE_MARKER_SERVO_SPEED;
+        }
+
+        robot.allianceMarkerServo.setPosition(robot.allianceMarkerServoPos);
+
+
         if (gamepad2.a) {
-            robot.boxServo.setPosition(robot.BOX_INTAKE);
+            robot.boxServo.setPosition(Devices.BOX_INTAKE);
         }
         if (gamepad2.x) {
-            robot.boxServo.setPosition(robot.BOX_DROP);
+            robot.boxServo.setPosition(Devices.BOX_DROP);
         }
         if (gamepad2.y) {
-            robot.boxServo.setPosition(robot.BOX_UP);
+            robot.boxServo.setPosition(Devices.BOX_UP);
         }
 
         // Intake Motor
-        if (gamepad1.right_trigger >= 0.1) {
-            robot.intakeMotor.setVelocity(-robot.INTAKE_VELOCITY);
+        if (gamepad1.right_trigger >= Devices.TRIGGER_THRESHOLD) {
+            robot.intakeMotor.setVelocity(-Devices.INTAKE_VELOCITY);
         }
-        if (gamepad1.left_trigger >= 0.1) {
-            robot.intakeMotor.setVelocity(robot.INTAKE_VELOCITY);
+        if (gamepad1.left_trigger >= Devices.TRIGGER_THRESHOLD) {
+            robot.intakeMotor.setVelocity(Devices.INTAKE_VELOCITY);
         }
-        if (gamepad1.right_trigger < 0.1 && gamepad1.left_trigger < 0.1) {
+        if (gamepad1.right_trigger < Devices.TRIGGER_THRESHOLD && gamepad1.left_trigger < Devices.TRIGGER_THRESHOLD) {
             robot.intakeMotor.setVelocity(0);
         }
 
@@ -186,6 +225,7 @@ public class TeleOpMainVerbose extends OpMode {
         telemetry.addData("Status", "Run Time: " + robot.runtime.toString());
         robot.cycles++;
         telemetry.addData("Frequency", (int) (robot.cycles / robot.runtime.seconds()) + "hz");
-        telemetry.addData("arm pos: ", robot.getArmPosition());
+        telemetry.addData("Alliance Marker Servo pPosition", robot.allianceMarkerServoPos);
+        telemetry.addData("Arm Position", robot.getArmPosition());
     }
 }

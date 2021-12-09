@@ -58,31 +58,46 @@ public class Devices {
     /* Constants */
 
     // Lower positions
-    public final double ARM_INTAKE_POS = 0; // 0.04 //-0.09
-    public final double ARM_NEUTRAL_POS = 0;
+    public static double ARM_INTAKE_POS = 0; // 0.04 //-0.09
+    public static double ARM_NEUTRAL_POS = 0;
 
     // Higher Positions
-    public final double ARM_LOW_POS = 0.132; //0.132 //0.035
-    public final double ARM_MID_POS = 0.25; //0.25 //0.17
-    public final double ARM_HIGH_POS = 0.36; //0.36 //0.27
+    public static double ARM_LOW_POS = 0.132; //0.132 //0.035
+    public static double ARM_MID_POS = 0.25; //0.25 //0.17
+    public static double ARM_HIGH_POS = 0.36; //0.36 //0.27
 
-    // Box servo positions
-    public final double BOX_UP = 0.641;
-    public final double BOX_FORWARD = 0.319;
-    public final double BOX_INTAKE = 0.925;
-    public final double BOX_DROP = 0.180;
+    // Box Servo Positions
+    public static double BOX_UP = 0.641;
+    public static double BOX_AUTO_APPROACH_HUB = 0.319;
+    public static double BOX_INTAKE = 0.925;
+    public static double BOX_DROP = 0.180;
+
+    // Alliance Marker Servo Positions
+    public static double ALLIANCE_MARKER_SERVO_SPEED = 0.003;
+    public static double ALLIANCE_MARKER_RESET_POS = 0;
+    public static double ALLIANCE_MARKER_STANDING_POS = 0.797;
+    public static double ALLIANCE_MARKER_KNOCKED_OVER_POS = 0.893;
+    public static double ALLIANCE_MARKER_APPROACHING_HUB_POS = 0.455;
+    public static double ALLIANCE_MARKER_CAPPED_HUB_POS = 0.532;
 
     // Motor constants
-    public final double INTAKE_VELOCITY = 1000;
-    public final double CAROUSEL_POWER = 0.5;
-    public final double CAROUSEL_SLOW_POWER = 0.4;
-    public final double ARM_POWER = 0.6;
-    public final double ARM_SLOW_POWER = 0.3;
-    public final double ARM_TICKS_PER_REV = 1425.06;
+    public static double INTAKE_VELOCITY = 1000;
+    public static double CAROUSEL_POWER = 0.5;
+    public static double CAROUSEL_SLOW_POWER = 0.4;
+    public static double ARM_POWER = 0.6;
+    public static double ARM_SLOW_POWER = 0.3;
+    public static double ARM_TICKS_PER_REV = 1425.06;
+
+    // Trigger threshold
+    public static double TRIGGER_THRESHOLD = 0.2;
 
     // Cycles variable (to calculate loop time)
     public int cycles = 0;
-    public int capServoPos = 0;
+
+    // Alliance Marker servo double and boolean
+    public double allianceMarkerServoPos = 0;
+    public boolean leftBumperButtonPressed = false;
+    public boolean rightBumperButtonPressed = false;
 
     /* Create hardware variables */
     // Motor variables
@@ -93,9 +108,9 @@ public class Devices {
     // Servo variables
     public Servo boxServo = null;
     public Servo cameraServo = null;
-    public Servo capServo = null;
+    public Servo allianceMarkerServo = null;
 
-    // Arm methods to get and set the posiition
+    // Arm methods to get and set the position
     public void setArmPosition(double pos) {
         armMotor.setTargetPosition((int) (ARM_TICKS_PER_REV * pos));
     }
@@ -131,7 +146,7 @@ public class Devices {
         // Servo Initialization
         boxServo = hwMap.get(Servo.class,"boxServo");
         cameraServo = hwMap.get(Servo.class,"cameraServo");
-        capServo = hwMap.get(Servo.class, "capServo");
+        allianceMarkerServo = hwMap.get(Servo.class, "allianceMarkerServo");
 
         // Motor Directions
         armMotor.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -142,7 +157,7 @@ public class Devices {
         // Servo Directions
         boxServo.setDirection(Servo.Direction.FORWARD);
         cameraServo.setDirection(Servo.Direction.FORWARD);
-        capServo.setDirection(Servo.Direction.FORWARD);
+        allianceMarkerServo.setDirection(Servo.Direction.FORWARD);
 
         // Adjusting the Zero Power Behavior changes how the motors behaved when a
         // Power of 0 is applied.
@@ -164,6 +179,9 @@ public class Devices {
         // Arm Encoders
         armMotor.setTargetPosition(0);
         armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        // Servo initialization
+        allianceMarkerServo.setPosition(allianceMarkerServoPos);
 
     }
 }

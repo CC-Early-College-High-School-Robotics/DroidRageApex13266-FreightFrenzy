@@ -6,7 +6,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.teamcode.auto.pipeline.BlueCarouselDuckDetection;
 import org.firstinspires.ftc.teamcode.auto.pipeline.RedWarehouseDuckDetection;
 import org.firstinspires.ftc.teamcode.hardware.Devices;
 import org.firstinspires.ftc.teamcode.roadrunner.drive.MechanumDriveRoadRunner;
@@ -70,17 +69,17 @@ public class RedWarehouse extends LinearOpMode {
         telemetry.addData("hi", "hi");
 
         if (detector.getAnalysis() == RedWarehouseDuckDetection.DuckPosition.RIGHT) {
-            armHeight = robot.ARM_HIGH_POS;
+            armHeight = Devices.ARM_HIGH_POS;
             hubDistance = 14;
         }
 
         if (detector.getAnalysis() == RedWarehouseDuckDetection.DuckPosition.CENTER) {
-            armHeight = robot.ARM_MID_POS;
+            armHeight = Devices.ARM_MID_POS;
             hubDistance = 10;
         }
 
         if (detector.getAnalysis() == RedWarehouseDuckDetection.DuckPosition.LEFT) {
-            armHeight = robot.ARM_LOW_POS;
+            armHeight = Devices.ARM_LOW_POS;
             hubDistance = 12.5;
 
         }
@@ -123,7 +122,7 @@ public class RedWarehouse extends LinearOpMode {
         // Before start
 
         // Lift box up
-        robot.boxServo.setPosition(robot.BOX_UP);
+        robot.boxServo.setPosition(Devices.BOX_UP);
 
         // On start
 
@@ -137,30 +136,30 @@ public class RedWarehouse extends LinearOpMode {
         drive.followTrajectorySequence((Trajectory1));
 
         // Lift box up
-        robot.boxServo.setPosition(robot.BOX_FORWARD);
+        robot.boxServo.setPosition(Devices.BOX_AUTO_APPROACH_HUB);
 
         // Lift Arm
-        robot.armMotor.setPower(robot.ARM_SLOW_POWER);
+        robot.armMotor.setPower(Devices.ARM_SLOW_POWER);
         robot.setArmPosition(armHeight);
 
         // Run trajectory 2
         drive.followTrajectorySequence((Trajectory2));
 
         // Drop freight
-        robot.boxServo.setPosition(robot.BOX_DROP);
+        robot.boxServo.setPosition(Devices.BOX_DROP);
         sleep(1000);
 
         // Run trajectory 3
         drive.followTrajectorySequence((Trajectory3));
 
         // Return box
-        robot.boxServo.setPosition(robot.BOX_INTAKE);
+        robot.boxServo.setPosition(Devices.BOX_INTAKE);
 
         // Run trajectory 4
         drive.followTrajectorySequence((Trajectory4));
 
         //return arm
-        robot.setArmPosition(robot.ARM_INTAKE_POS);
+        robot.setArmPosition(Devices.ARM_INTAKE_POS);
 
         // Run trajectory 5
         drive.followTrajectorySequence((Trajectory5));

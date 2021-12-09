@@ -11,7 +11,6 @@ import org.firstinspires.ftc.teamcode.auto.pipeline.BlueCarouselDuckDetection;
 import org.firstinspires.ftc.teamcode.hardware.Devices;
 import org.firstinspires.ftc.teamcode.roadrunner.drive.MechanumDriveRoadRunner;
 import org.firstinspires.ftc.teamcode.roadrunner.trajectorysequence.TrajectorySequence;
-import org.opencv.core.Point;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
@@ -71,17 +70,17 @@ public class BlueCarousel extends LinearOpMode {
         telemetry.addData("hi", "hi");
 
         if (detector.getAnalysis() == BlueCarouselDuckDetection.DuckPosition.RIGHT) {
-            armHeight = robot.ARM_HIGH_POS;
+            armHeight = Devices.ARM_HIGH_POS;
             hubDistance = 25;
         }
 
         if (detector.getAnalysis() == BlueCarouselDuckDetection.DuckPosition.CENTER) {
-            armHeight = robot.ARM_MID_POS;
+            armHeight = Devices.ARM_MID_POS;
             hubDistance = 20.5;
         }
 
         if (detector.getAnalysis() == BlueCarouselDuckDetection.DuckPosition.LEFT) {
-            armHeight = robot.ARM_LOW_POS;
+            armHeight = Devices.ARM_LOW_POS;
             hubDistance = 23.5;
 
         }
@@ -132,7 +131,7 @@ public class BlueCarousel extends LinearOpMode {
         // Before start
 
         // Lift box up
-        robot.boxServo.setPosition(robot.BOX_UP);
+        robot.boxServo.setPosition(Devices.BOX_UP);
 
         // On start
 
@@ -146,7 +145,7 @@ public class BlueCarousel extends LinearOpMode {
         drive.followTrajectorySequence((Trajectory1));
 
         // Run carousel
-        robot.carouselMotor.setPower(robot.CAROUSEL_SLOW_POWER);
+        robot.carouselMotor.setPower(Devices.CAROUSEL_SLOW_POWER);
 
 
         // Run trajectory 2
@@ -159,17 +158,17 @@ public class BlueCarousel extends LinearOpMode {
         drive.followTrajectorySequence((Trajectory3));
 
         // Lift Arm
-        robot.armMotor.setPower(robot.ARM_SLOW_POWER);
+        robot.armMotor.setPower(Devices.ARM_SLOW_POWER);
         robot.setArmPosition(armHeight);
 
         // Lift box forward
-        robot.boxServo.setPosition(robot.BOX_FORWARD);
+        robot.boxServo.setPosition(Devices.BOX_AUTO_APPROACH_HUB);
 
         // Run Trajectory 4
         drive.followTrajectorySequence((Trajectory4));
 
         // Drop freight
-        robot.boxServo.setPosition(robot.BOX_DROP);
+        robot.boxServo.setPosition(Devices.BOX_DROP);
         sleep(1000);
 
 
@@ -179,14 +178,14 @@ public class BlueCarousel extends LinearOpMode {
         drive.followTrajectorySequence((Trajectory5));
 
         // Return box
-        robot.boxServo.setPosition(robot.BOX_INTAKE);
+        robot.boxServo.setPosition(Devices.BOX_INTAKE);
 
 
         // Run Trajectory 6
         drive.followTrajectorySequence((Trajectory6));
 
         //return arm
-        robot.setArmPosition(robot.ARM_INTAKE_POS);
+        robot.setArmPosition(Devices.ARM_INTAKE_POS);
         sleep(2000);
     }
 }
