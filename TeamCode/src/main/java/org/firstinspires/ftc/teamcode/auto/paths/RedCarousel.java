@@ -26,7 +26,7 @@ public class RedCarousel extends LinearOpMode {
         double hubDistance = 0;
 
         // move camera
-        robot.cameraServo.setPosition(0.60);
+        robot.cameraServo.setPosition(Devices.RED_CAROUSEL_CAMERA_POS);
 
         RedCarouselDuckDetection detector = new RedCarouselDuckDetection();
 
@@ -63,7 +63,7 @@ public class RedCarousel extends LinearOpMode {
                 telemetry.addData("Camera status", "Camera failed :(");
             }
         });
-        sleep(4000);
+        sleep(Devices.CAMERA_WAIT_TIME);
         // camera dection print
         telemetry.addData("Duck position", detector.getAnalysis());
         telemetry.addData("hi", "hi");

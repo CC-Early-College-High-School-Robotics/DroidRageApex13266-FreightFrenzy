@@ -37,22 +37,6 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-/**
- * This is NOT an opmode.
- *
- * This class can be used to define all the specific hardware for a single robot.
- * In this case that robot is a Pushbot.
- * See PushbotTeleopTank_Iterative and others classes starting with "Pushbot" for usage examples.
- *
- * This hardware class assumes the following device names have been configured on the robot:
- * Note:  All names are lower case and some have single spaces between words.
- *
- * Motor channel:  Left  drive motor:        "left_drive"
- * Motor channel:  Right drive motor:        "right_drive"
- * Motor channel:  Manipulator drive motor:  "left_arm"
- * Servo channel:  Servo to open left claw:  "left_hand"
- * Servo channel:  Servo to open right claw: "right_hand"
- */
 @Config
 public class Devices {
     /* Constants */
@@ -80,6 +64,12 @@ public class Devices {
     public static double ALLIANCE_MARKER_APPROACHING_HUB_POS = 0.455;
     public static double ALLIANCE_MARKER_CAPPED_HUB_POS = 0.532;
 
+    // Camera Servo Positions
+    public static double BLUE_CAROUSEL_CAMERA_POS = 0.29;
+    public static double BLUE_WAREHOUSE_CAMERA_POS = 0.24;
+    public static double RED_CAROUSEL_CAMERA_POS = 0.60;
+    public static double RED_WAREHOUSE_CAMERA_POS = 0.65;
+
     // Motor constants
     public static double INTAKE_VELOCITY = 1000;
     public static double CAROUSEL_POWER = 0.5;
@@ -87,6 +77,9 @@ public class Devices {
     public static double ARM_POWER = 0.6;
     public static double ARM_SLOW_POWER = 0.3;
     public static double ARM_TICKS_PER_REV = 1425.06;
+
+    // Camera / OpenCv Wait time
+    public static long CAMERA_WAIT_TIME = 4000;
 
     // Trigger threshold
     public static double TRIGGER_THRESHOLD = 0.2;

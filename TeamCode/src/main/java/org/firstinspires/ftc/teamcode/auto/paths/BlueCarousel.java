@@ -27,7 +27,7 @@ public class BlueCarousel extends LinearOpMode {
         double hubDistance = 0;
 
         // move camera
-        robot.cameraServo.setPosition(0.29);
+        robot.cameraServo.setPosition(Devices.BLUE_CAROUSEL_CAMERA_POS);
 
         BlueCarouselDuckDetection detector = new BlueCarouselDuckDetection();
 
@@ -64,7 +64,7 @@ public class BlueCarousel extends LinearOpMode {
                 telemetry.addData("Camera status", "Camera failed :(");
             }
         });
-        sleep(4000);
+        sleep(Devices.CAMERA_WAIT_TIME);
         // camera dection print
         telemetry.addData("Duck position", detector.getAnalysis());
         telemetry.addData("hi", "hi");

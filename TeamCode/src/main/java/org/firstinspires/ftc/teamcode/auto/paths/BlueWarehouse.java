@@ -26,7 +26,7 @@ public class BlueWarehouse extends LinearOpMode {
         double hubDistance = 0;
 
         // move camera
-        robot.cameraServo.setPosition(0.24);
+        robot.cameraServo.setPosition(Devices.BLUE_WAREHOUSE_CAMERA_POS);
 
         BlueWarehouseDuckDetection detector = new BlueWarehouseDuckDetection();
 
@@ -63,7 +63,7 @@ public class BlueWarehouse extends LinearOpMode {
                 telemetry.addData("Camera status", "Camera failed :(");
             }
         });
-        sleep(4000);
+        sleep(Devices.CAMERA_WAIT_TIME);
         // camera dection print
         telemetry.addData("Duck position", detector.getAnalysis());
         telemetry.addData("hi", "hi");
