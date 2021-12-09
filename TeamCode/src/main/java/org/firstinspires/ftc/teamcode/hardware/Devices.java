@@ -43,7 +43,7 @@ public class Devices {
 
     // Lower positions
     public static double ARM_INTAKE_POS = 0; // 0.04 //-0.09
-    public static double ARM_NEUTRAL_POS = 0;
+    public static double ARM_NEUTRAL_POS = -0.01;
 
     // Higher Positions
     public static double ARM_LOW_POS = 0.132; //0.132 //0.035
@@ -52,12 +52,12 @@ public class Devices {
 
     // Box Servo Positions
     public static double BOX_UP = 0.641;
-    public static double BOX_AUTO_APPROACH_HUB = 0.319;
+    public static double BOX_AUTO_APPROACH_HUB = 0.500;
     public static double BOX_INTAKE = 0.925;
     public static double BOX_DROP = 0.180;
 
     // Alliance Marker Servo Positions
-    public static double ALLIANCE_MARKER_SERVO_SPEED = 0.003;
+    public static double ALLIANCE_MARKER_SERVO_SPEED = 0.001;
     public static double ALLIANCE_MARKER_RESET_POS = 0;
     public static double ALLIANCE_MARKER_STANDING_POS = 0.797;
     public static double ALLIANCE_MARKER_KNOCKED_OVER_POS = 0.893;
@@ -65,10 +65,10 @@ public class Devices {
     public static double ALLIANCE_MARKER_CAPPED_HUB_POS = 0.532;
 
     // Camera Servo Positions
-    public static double BLUE_CAROUSEL_CAMERA_POS = 0.29;
-    public static double BLUE_WAREHOUSE_CAMERA_POS = 0.24;
-    public static double RED_CAROUSEL_CAMERA_POS = 0.60;
-    public static double RED_WAREHOUSE_CAMERA_POS = 0.65;
+    public static double CAMERA_BLUE_CAROUSEL_POS = 0.29;
+    public static double CAMERA_BLUE_WAREHOUSE_POS = 0.24;
+    public static double CAMERA_RED_CAROUSEL_POS = 0.60;
+    public static double CAMERA_RED_WAREHOUSE_POS = 0.65;
 
     // Motor constants
     public static double INTAKE_VELOCITY = 1000;
@@ -79,7 +79,8 @@ public class Devices {
     public static double ARM_TICKS_PER_REV = 1425.06;
 
     // Camera / OpenCv Wait time
-    public static long CAMERA_WAIT_TIME = 4000;
+    public static double WAIT_CAMERA_LENGTH = 3000;
+    public long CAMERA_WAIT_TIME = (long) WAIT_CAMERA_LENGTH;
 
     // Trigger threshold
     public static double TRIGGER_THRESHOLD = 0.2;
@@ -90,7 +91,9 @@ public class Devices {
     // Alliance Marker servo double and boolean
     public double allianceMarkerServoPos = 0;
     public boolean leftBumperButtonPressed = false;
+    public boolean disableLeftBumper = true;
     public boolean rightBumperButtonPressed = false;
+    public boolean allianceMarkerServoReset = true;
 
     /* Create hardware variables */
     // Motor variables
@@ -171,7 +174,7 @@ public class Devices {
 
         // Arm Encoders
         armMotor.setTargetPosition(0);
-        armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        armMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
 
         // Servo initialization
         allianceMarkerServo.setPosition(allianceMarkerServoPos);

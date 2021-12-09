@@ -13,9 +13,9 @@ public class RedWarehouseDuckDetection extends OpenCvPipeline {
     public RedWarehouseDuckDetection() {
     }
 
-    private final Point region1 = new Point(0,0);
-    private final Point region2 = new Point(426,0);
-    private final Point region3 = new Point(853,0);
+    private final Point region1 = new Point(250,200);
+    private final Point region2 = new Point(550,0);
+    private final Point region3 = new Point(750,0);
 
     /*
      * An enum to define the duck position

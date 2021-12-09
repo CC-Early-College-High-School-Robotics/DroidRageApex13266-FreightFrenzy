@@ -162,39 +162,78 @@ public class TeleOpMain extends OpMode {
             robot.boxServo.setPosition(Devices.BOX_INTAKE);
         }
 
+/*
+        if (-gamepad2.right_stick_y >= Devices.TRIGGER_THRESHOLD && gamepad2.dpad_up) {
+            Devices.ARM_HIGH_POS += 0.001;
+        } else if (-gamepad2.right_stick_y < Devices.TRIGGER_THRESHOLD && gamepad2.dpad_up) {
+            Devices.ARM_HIGH_POS -= 0.001;
+        }
+        if (-gamepad2.right_stick_y >= Devices.TRIGGER_THRESHOLD && gamepad2.dpad_left) {
+            Devices.ARM_INTAKE_POS += 0.001;
+        } else if (-gamepad2.right_stick_y < Devices.TRIGGER_THRESHOLD && gamepad2.dpad_left) {
+            Devices.ARM_INTAKE_POS -= 0.001;
+        }
+        if (-gamepad2.right_stick_y >= Devices.TRIGGER_THRESHOLD && gamepad2.dpad_down) {
+            Devices.ARM_LOW_POS += 0.001;
+        } else if (-gamepad2.right_stick_y < Devices.TRIGGER_THRESHOLD && gamepad2.dpad_down) {
+            Devices.ARM_LOW_POS -= 0.001;
+        }
+
+
+        if (-gamepad2.right_stick_y >= Devices.TRIGGER_THRESHOLD && !gamepad2.dpad_up && !gamepad2.dpad_down && !gamepad2.dpad_left && !gamepad2.dpad_right) {
+            telemetry.addData("arm going up", "yay");
+            robot.setArmPosition(robot.getArmPosition() + 0.001);
+        }
+
+        if (-gamepad2.right_stick_y < -Devices.TRIGGER_THRESHOLD && !gamepad2.dpad_up && !gamepad2.dpad_down && !gamepad2.dpad_left && !gamepad2.dpad_right) {
+            telemetry.addData("arm going down", "yay");
+
+            robot.setArmPosition(robot.getArmPosition() - 0.001);
+        }
+
+ */
+
         // Alliance Marker Servo Positions
 
+        // Allow Picking Alliance Marker again if cap is not being used
+        if (!gamepad2.left_bumper && !gamepad2.right_bumper && !robot.rightBumperButtonPressed) {
+            robot.allianceMarkerServoReset = true;
+        }
+
         // Picking up Alliance Marker
-        if (gamepad2.left_bumper) {
+        if (gamepad2.left_bumper && !robot.leftBumperButtonPressed && robot.allianceMarkerServoReset) {
             robot.allianceMarkerServoPos = Devices.ALLIANCE_MARKER_STANDING_POS; //
             robot.leftBumperButtonPressed = true;
         }
-        if (!gamepad2.left_bumper && robot.leftBumperButtonPressed) {
+        if (!gamepad2.left_bumper && robot.leftBumperButtonPressed && robot.allianceMarkerServoReset) {
             robot.allianceMarkerServoPos = Devices.ALLIANCE_MARKER_KNOCKED_OVER_POS;
             robot.leftBumperButtonPressed = false;
         }
 
-
         // Capping at hub
-        if (gamepad2.right_bumper) {
+        if (gamepad2.right_bumper && !robot.rightBumperButtonPressed) {
             robot.allianceMarkerServoPos = Devices.ALLIANCE_MARKER_APPROACHING_HUB_POS;
             robot.rightBumperButtonPressed = true;
-            robot.leftBumperButtonPressed = false;
+            robot.allianceMarkerServoReset = false;
         }
         if (!gamepad2.right_bumper && robot.rightBumperButtonPressed) {
             robot.allianceMarkerServoPos = Devices.ALLIANCE_MARKER_CAPPED_HUB_POS;
             robot.rightBumperButtonPressed = false;
-            robot.leftBumperButtonPressed = false;
+            robot.allianceMarkerServoReset = false;
         }
+
+
+
         if (gamepad2.b && !gamepad2.left_bumper && !gamepad2.right_bumper) {
             robot.allianceMarkerServoPos = Devices.ALLIANCE_MARKER_RESET_POS;
+            robot.allianceMarkerServoReset = true;
         }
 
         if (-gamepad2.left_stick_y > Devices.TRIGGER_THRESHOLD) {
-            robot.allianceMarkerServoPos += Devices.ALLIANCE_MARKER_SERVO_SPEED;
+            robot.allianceMarkerServoPos -= Devices.ALLIANCE_MARKER_SERVO_SPEED;
         }
         if (-gamepad2.left_stick_y < -Devices.TRIGGER_THRESHOLD) {
-            robot.allianceMarkerServoPos -= Devices.ALLIANCE_MARKER_SERVO_SPEED;
+            robot.allianceMarkerServoPos += Devices.ALLIANCE_MARKER_SERVO_SPEED;
         }
 
         robot.allianceMarkerServo.setPosition(robot.allianceMarkerServoPos);

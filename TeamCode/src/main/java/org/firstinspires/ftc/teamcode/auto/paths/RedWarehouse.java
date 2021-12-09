@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.auto.pipeline.RedWarehouseDuckDetection;
+import org.firstinspires.ftc.teamcode.hardware.AutoValues;
 import org.firstinspires.ftc.teamcode.hardware.Devices;
 import org.firstinspires.ftc.teamcode.roadrunner.drive.MechanumDriveRoadRunner;
 import org.firstinspires.ftc.teamcode.roadrunner.trajectorysequence.TrajectorySequence;
@@ -26,7 +27,7 @@ public class RedWarehouse extends LinearOpMode {
         double hubDistance = 0;
 
         // move camera
-        robot.cameraServo.setPosition(Devices.RED_WAREHOUSE_CAMERA_POS);
+        robot.cameraServo.setPosition(Devices.CAMERA_RED_WAREHOUSE_POS);
 
         RedWarehouseDuckDetection detector = new RedWarehouseDuckDetection();
 
@@ -63,24 +64,36 @@ public class RedWarehouse extends LinearOpMode {
                 telemetry.addData("Camera status", "Camera failed :(");
             }
         });
-        sleep(Devices.CAMERA_WAIT_TIME);
+        sleep(robot.CAMERA_WAIT_TIME);
         // camera dection print
         telemetry.addData("Duck position", detector.getAnalysis());
         telemetry.addData("hi", "hi");
 
+
+
+        // Before start
+
+        // Lift box up
+        robot.boxServo.setPosition(Devices.BOX_UP);
+
+        // On start
+
+        waitForStart();
+        if(isStopRequested()) return;
+
         if (detector.getAnalysis() == RedWarehouseDuckDetection.DuckPosition.RIGHT) {
             armHeight = Devices.ARM_HIGH_POS;
-            hubDistance = 14;
+            hubDistance = AutoValues.RED_WAREHOUSE_HIGH;
         }
 
         if (detector.getAnalysis() == RedWarehouseDuckDetection.DuckPosition.CENTER) {
             armHeight = Devices.ARM_MID_POS;
-            hubDistance = 10;
+            hubDistance = AutoValues.RED_WAREHOUSE_MID;
         }
 
         if (detector.getAnalysis() == RedWarehouseDuckDetection.DuckPosition.LEFT) {
             armHeight = Devices.ARM_LOW_POS;
-            hubDistance = 12.5;
+            hubDistance = AutoValues.RED_WAREHOUSE_LOW;
 
         }
 
@@ -113,21 +126,12 @@ public class RedWarehouse extends LinearOpMode {
 
         TrajectorySequence Trajectory4 = drive.trajectorySequenceBuilder(Trajectory3.end())
                 .turn(Math.toRadians(80))
+
                 .build();
 
         TrajectorySequence Trajectory5 = drive.trajectorySequenceBuilder(Trajectory4.end())
-                .forward(48)
+                .forward(55)
                 .build();
-
-        // Before start
-
-        // Lift box up
-        robot.boxServo.setPosition(Devices.BOX_UP);
-
-        // On start
-
-        waitForStart();
-        if(isStopRequested()) return;
 
         camera.stopStreaming();
 
@@ -159,7 +163,7 @@ public class RedWarehouse extends LinearOpMode {
         drive.followTrajectorySequence((Trajectory4));
 
         //return arm
-        robot.setArmPosition(Devices.ARM_INTAKE_POS);
+        robot.setArmPosition(Devices.ARM_NEUTRAL_POS);
 
         // Run trajectory 5
         drive.followTrajectorySequence((Trajectory5));

@@ -14,7 +14,7 @@ public class BlueWarehouseDuckDetection extends OpenCvPipeline {
     }
 
     private final Point region1 = new Point(300,50);
-    private final Point region2 = new Point(500,200);
+    private final Point region2 = new Point(520,150);
     private final Point region3 = new Point(750,350);
 
     /*

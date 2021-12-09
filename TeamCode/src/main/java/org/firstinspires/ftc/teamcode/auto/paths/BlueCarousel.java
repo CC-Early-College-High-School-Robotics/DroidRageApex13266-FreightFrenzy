@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.auto.pipeline.BlueCarouselDuckDetection;
 
+import org.firstinspires.ftc.teamcode.hardware.AutoValues;
 import org.firstinspires.ftc.teamcode.hardware.Devices;
 import org.firstinspires.ftc.teamcode.roadrunner.drive.MechanumDriveRoadRunner;
 import org.firstinspires.ftc.teamcode.roadrunner.trajectorysequence.TrajectorySequence;
@@ -27,7 +28,7 @@ public class BlueCarousel extends LinearOpMode {
         double hubDistance = 0;
 
         // move camera
-        robot.cameraServo.setPosition(Devices.BLUE_CAROUSEL_CAMERA_POS);
+        robot.cameraServo.setPosition(Devices.CAMERA_BLUE_CAROUSEL_POS);
 
         BlueCarouselDuckDetection detector = new BlueCarouselDuckDetection();
 
@@ -64,24 +65,35 @@ public class BlueCarousel extends LinearOpMode {
                 telemetry.addData("Camera status", "Camera failed :(");
             }
         });
-        sleep(Devices.CAMERA_WAIT_TIME);
+        sleep(robot.CAMERA_WAIT_TIME);
         // camera dection print
         telemetry.addData("Duck position", detector.getAnalysis());
         telemetry.addData("hi", "hi");
 
+
+        // Before start
+
+        // Lift box up
+        robot.boxServo.setPosition(Devices.BOX_UP);
+
+        // On start
+
+        waitForStart();
+        if(isStopRequested()) return;
+
         if (detector.getAnalysis() == BlueCarouselDuckDetection.DuckPosition.RIGHT) {
             armHeight = Devices.ARM_HIGH_POS;
-            hubDistance = 25;
+            hubDistance = AutoValues.BLUE_CAROUSEL_HIGH;
         }
 
         if (detector.getAnalysis() == BlueCarouselDuckDetection.DuckPosition.CENTER) {
             armHeight = Devices.ARM_MID_POS;
-            hubDistance = 20.5;
+            hubDistance = AutoValues.BLUE_CAROUSEL_MID;
         }
 
         if (detector.getAnalysis() == BlueCarouselDuckDetection.DuckPosition.LEFT) {
             armHeight = Devices.ARM_LOW_POS;
-            hubDistance = 23.5;
+            hubDistance = AutoValues.BLUE_CAROUSEL_LOW;;
 
         }
 
@@ -100,16 +112,16 @@ public class BlueCarousel extends LinearOpMode {
 
         TrajectorySequence Trajectory1 = drive.trajectorySequenceBuilder(startPose)
                 .forward(10)
-                .turn(Math.toRadians(30))
+                .turn(Math.toRadians(30), 4, 4)
                 .build();
 
         TrajectorySequence Trajectory2 = drive.trajectorySequenceBuilder(Trajectory1.end())
-                .back(7.5)
+                .back(7)
                 .build();
 
         TrajectorySequence Trajectory3 = drive.trajectorySequenceBuilder(Trajectory2.end())
-                .forward(7.5)
-                .turn(Math.toRadians(60))
+                .forward(7)
+                .turn(Math.toRadians(60), 4, 4)
                 .back(6)
                 .turn(Math.toRadians(90))
                 .back(28)
@@ -128,15 +140,6 @@ public class BlueCarousel extends LinearOpMode {
         TrajectorySequence Trajectory6 = drive.trajectorySequenceBuilder(Trajectory5.end())
                 .forward(12)
                 .build();
-        // Before start
-
-        // Lift box up
-        robot.boxServo.setPosition(Devices.BOX_UP);
-
-        // On start
-
-        waitForStart();
-        if(isStopRequested()) return;
 
         camera.stopStreaming();
 
@@ -185,7 +188,7 @@ public class BlueCarousel extends LinearOpMode {
         drive.followTrajectorySequence((Trajectory6));
 
         //return arm
-        robot.setArmPosition(Devices.ARM_INTAKE_POS);
+        robot.setArmPosition(Devices.ARM_NEUTRAL_POS);
         sleep(2000);
     }
 }

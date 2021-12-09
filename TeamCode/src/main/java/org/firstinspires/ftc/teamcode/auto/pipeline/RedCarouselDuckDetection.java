@@ -39,7 +39,7 @@ public class RedCarouselDuckDetection extends OpenCvPipeline {
     Point REGION2_TOPLEFT_ANCHOR_POINT = region2;
     Point REGION3_TOPLEFT_ANCHOR_POINT = region3;
 
-    static final int REGION_WIDTH = 200;
+    static final int REGION_WIDTH = 300;
     static final int REGION_HEIGHT = 500;
 
 
