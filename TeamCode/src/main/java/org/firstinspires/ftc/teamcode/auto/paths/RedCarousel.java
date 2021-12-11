@@ -111,16 +111,16 @@ public class RedCarousel extends LinearOpMode {
 
         TrajectorySequence Trajectory1 = drive.trajectorySequenceBuilder(startPose)
                 .forward(10)
-                .turn(Math.toRadians(-65), 4, 4)
+                .turn(Math.toRadians(-75), 3, 3)
                 .build();
 
         TrajectorySequence Trajectory2 = drive.trajectorySequenceBuilder(Trajectory1.end())
-                .back(8)
+                .back(10)
                 .build();
 
         TrajectorySequence Trajectory3 = drive.trajectorySequenceBuilder(Trajectory2.end())
-                .forward(8)
-                .turn(Math.toRadians(-25), 3, 3) // Both turns must add up to -90
+                .forward(10)
+                .turn(Math.toRadians(-15), 3, 3) // Both turns must add up to -90
                 .back(6)
                 .turn(Math.toRadians(-90))
                 .back(31)

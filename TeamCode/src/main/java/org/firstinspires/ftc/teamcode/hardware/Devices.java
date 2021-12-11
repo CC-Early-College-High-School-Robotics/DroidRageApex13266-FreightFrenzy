@@ -43,7 +43,7 @@ public class Devices {
 
     // Lower positions
     public static double ARM_INTAKE_POS = 0; // 0.04 //-0.09
-    public static double ARM_NEUTRAL_POS = -0.01;
+    public static double ARM_NEUTRAL_POS = -0.015;
 
     // Higher Positions
     public static double ARM_LOW_POS = 0.132; //0.132 //0.035
@@ -67,8 +67,8 @@ public class Devices {
     // Camera Servo Positions
     public static double CAMERA_BLUE_CAROUSEL_POS = 0.29;
     public static double CAMERA_BLUE_WAREHOUSE_POS = 0.24;
-    public static double CAMERA_RED_CAROUSEL_POS = 0.60;
-    public static double CAMERA_RED_WAREHOUSE_POS = 0.65;
+    public static double CAMERA_RED_CAROUSEL_POS = 0.55;
+    public static double CAMERA_RED_WAREHOUSE_POS = 0.60;
 
     // Motor constants
     public static double INTAKE_VELOCITY = 1000;

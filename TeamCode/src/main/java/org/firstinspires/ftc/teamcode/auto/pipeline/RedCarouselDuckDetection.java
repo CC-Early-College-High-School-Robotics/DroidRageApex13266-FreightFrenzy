@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.auto.pipeline;
 
+import com.acmerobotics.dashboard.config.Config;
+
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
@@ -8,14 +10,27 @@ import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 import org.openftc.easyopencv.OpenCvPipeline;
 
+@Config
 public class RedCarouselDuckDetection extends OpenCvPipeline {
 
     public RedCarouselDuckDetection() {
     }
 
-    Point region1 = new Point(250,220);
-    Point region2 = new Point(650,80);
-    Point region3 = new Point(950,0);
+    public static int point1x = 200;
+    public static int point1y = 220;
+
+    public static int point2x = 650;
+    public static int point2y = 80;
+
+    public static int point3x = 950;
+    public static int point3y = 0;
+
+    public static int boxWidth = 300;
+    public static int boxHeight = 500;
+
+    Point region1 = new Point(point1x,point1y);
+    Point region2 = new Point(point2x,point2y);
+    Point region3 = new Point(point3x,point3y);
 
     /*
      * An enum to define the duck position
@@ -39,8 +54,8 @@ public class RedCarouselDuckDetection extends OpenCvPipeline {
     Point REGION2_TOPLEFT_ANCHOR_POINT = region2;
     Point REGION3_TOPLEFT_ANCHOR_POINT = region3;
 
-    static final int REGION_WIDTH = 300;
-    static final int REGION_HEIGHT = 500;
+    static final int REGION_WIDTH = boxWidth;
+    static final int REGION_HEIGHT = boxHeight;
 
 
     /*
