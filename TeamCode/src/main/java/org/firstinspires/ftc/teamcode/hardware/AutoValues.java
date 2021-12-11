@@ -5,7 +5,7 @@ import com.acmerobotics.dashboard.config.Config;
 @Config
 public class AutoValues {
     public static double BLUE_CAROUSEL_HIGH = 26;
-    public static double BLUE_CAROUSEL_MID = 21;
+    public static double BLUE_CAROUSEL_MID = 22;
     public static double BLUE_CAROUSEL_LOW = 23.5;
 
     public static double BLUE_WAREHOUSE_HIGH = 14;

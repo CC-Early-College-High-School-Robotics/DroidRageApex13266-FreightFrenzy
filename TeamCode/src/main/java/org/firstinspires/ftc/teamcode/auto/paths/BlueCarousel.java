@@ -116,15 +116,15 @@ public class BlueCarousel extends LinearOpMode {
                 .build();
 
         TrajectorySequence Trajectory2 = drive.trajectorySequenceBuilder(Trajectory1.end())
-                .back(7)
+                .back(9)
                 .build();
 
         TrajectorySequence Trajectory3 = drive.trajectorySequenceBuilder(Trajectory2.end())
-                .forward(7)
+                .forward(9)
                 .turn(Math.toRadians(60), 4, 4)
                 .back(6)
                 .turn(Math.toRadians(90))
-                .back(28)
+                .back(31)
                 .turn(Math.toRadians(90))
                 .build();
 
@@ -133,12 +133,12 @@ public class BlueCarousel extends LinearOpMode {
                 .build();
 
         TrajectorySequence Trajectory5 = drive.trajectorySequenceBuilder(Trajectory4.end())
-                .forward(hubDistance)
+                .forward(hubDistance + 4)
                 .turn(Math.toRadians(-90))
                 .build();
 
         TrajectorySequence Trajectory6 = drive.trajectorySequenceBuilder(Trajectory5.end())
-                .forward(12)
+                .forward(15)
                 .build();
 
         camera.stopStreaming();

@@ -76,25 +76,24 @@ public class TeleOpMain extends OpMode {
         double rightPower;
 
         // POV Mode uses left stick to go forward, and right stick to turn.
-        // - This uses basic math to combine motions and is easier to drive straight.
         double forward = -gamepad1.left_stick_y;
         double turn  =  gamepad1.right_stick_x;
         if (gamepad1.left_bumper) {
-            drive.slowMode = Drivetrain.FULL_SPEED;
+            drive.speedMultiplier = Drivetrain.FULL_SPEED;
         } else if (gamepad1.right_bumper) {
-            drive.slowMode = Drivetrain.SLOW_SPEED;
+            drive.speedMultiplier = Drivetrain.SLOW_SPEED;
         } else {
-            drive.slowMode = Drivetrain.NORMAL_SPEED;
+            drive.speedMultiplier = Drivetrain.NORMAL_SPEED;
         }
 
         leftPower    = Range.clip(forward + turn, -1.0, 1.0);
         rightPower   = Range.clip(forward - turn, -1.0, 1.0);
 
         // Send calculated power to wheels
-        drive.leftFront.setPower(leftPower * drive.slowMode);
-        drive.leftRear.setPower(leftPower * drive.slowMode);
-        drive.rightFront.setPower(rightPower * drive.slowMode);
-        drive.rightRear.setPower(rightPower * drive.slowMode);
+        drive.leftFront.setPower(leftPower * drive.speedMultiplier);
+        drive.leftRear.setPower(leftPower * drive.speedMultiplier);
+        drive.rightFront.setPower(rightPower * drive.speedMultiplier);
+        drive.rightRear.setPower(rightPower * drive.speedMultiplier);
 
         // Carousel Code
 
@@ -108,9 +107,9 @@ public class TeleOpMain extends OpMode {
             robot.carouselMotor.setPower(0);
         }
 
-       // box servo code
+       // Box servo code
 
-        // Change motors between BRAKE and FLOAT zero power modes
+        // Change drive train motors between BRAKE and FLOAT zero power modes
         if (gamepad1.a) {
             drive.leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             drive.leftRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);

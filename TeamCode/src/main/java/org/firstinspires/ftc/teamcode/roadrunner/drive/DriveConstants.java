@@ -45,7 +45,7 @@ public class DriveConstants {
      */
     public static double WHEEL_RADIUS = 2.36; // in
     public static double GEAR_RATIO = 1; // output (wheel) speed / input (motor) speed
-    public static double TRACK_WIDTH = 24; // in //19.95
+    public static double TRACK_WIDTH = 23; // in //19.95
 
     /*
      * These are the feedforward parameters used to model the drive motor behavior. If you are using
@@ -66,8 +66,8 @@ public class DriveConstants {
      */
     public static double MAX_VEL = 30;
     public static double MAX_ACCEL = 30;
-    public static double MAX_ANG_VEL = 4; // Measured in radians
-    public static double MAX_ANG_ACCEL = 4; // Measured in radians
+    public static double MAX_ANG_VEL = 3.5; // Measured in radians
+    public static double MAX_ANG_ACCEL = 3.5; // Measured in radians
 
 
     public static double encoderTicksToInches(double ticks) {

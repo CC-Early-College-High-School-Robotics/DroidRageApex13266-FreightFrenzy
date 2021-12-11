@@ -58,7 +58,7 @@ import static org.firstinspires.ftc.teamcode.roadrunner.drive.DriveConstants.kV;
  */
 @Config
 public class MechanumDriveRoadRunner extends TankDrive {
-    public static PIDCoefficients AXIAL_PID = new PIDCoefficients(30, 0, .8);
+    public static PIDCoefficients AXIAL_PID = new PIDCoefficients(9, 0, .5);
     public static PIDCoefficients CROSS_TRACK_PID = new PIDCoefficients(0.0099, 0, .0003);
     public static PIDCoefficients HEADING_PID = new PIDCoefficients(19, 0, .778);
 
@@ -90,7 +90,7 @@ public class MechanumDriveRoadRunner extends TankDrive {
 
 
         follower = new TankPIDVAFollower(AXIAL_PID, CROSS_TRACK_PID,
-                new Pose2d(0.5, 0.5, Math.toRadians(5.0)), 1.1);
+                new Pose2d(0.5, 0.5, Math.toRadians(5.0)), 0.9);
 
         LynxModuleUtil.ensureMinimumFirmwareVersion(hardwareMap);
 

@@ -79,7 +79,7 @@ public class Devices {
     public static double ARM_TICKS_PER_REV = 1425.06;
 
     // Camera / OpenCv Wait time
-    public static double WAIT_CAMERA_LENGTH = 3000;
+    public static double WAIT_CAMERA_LENGTH = 4000;
     public long CAMERA_WAIT_TIME = (long) WAIT_CAMERA_LENGTH;
 
     // Trigger threshold
