@@ -10,7 +10,6 @@ import com.acmerobotics.roadrunner.profile.MotionProfileGenerator;
 import com.acmerobotics.roadrunner.profile.MotionState;
 import com.acmerobotics.roadrunner.util.NanoClock;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.RobotLog;
 
@@ -23,7 +22,7 @@ import static org.firstinspires.ftc.teamcode.roadrunner.drive.DriveConstants.kA;
 import static org.firstinspires.ftc.teamcode.roadrunner.drive.DriveConstants.kStatic;
 import static org.firstinspires.ftc.teamcode.roadrunner.drive.DriveConstants.kV;
 
-import org.firstinspires.ftc.teamcode.roadrunner.drive.MechanumDriveRoadRunner;
+import org.firstinspires.ftc.teamcode.roadrunner.drive.TankDriveRoadRunner;
 
 /*
  * This routine is designed to tune the open-loop feedforward coefficients. Although it may seem unnecessary,
@@ -47,7 +46,7 @@ public class ManualFeedforwardTuner extends LinearOpMode {
 
     private FtcDashboard dashboard = FtcDashboard.getInstance();
 
-    private MechanumDriveRoadRunner drive;
+    private TankDriveRoadRunner drive;
 
     enum Mode {
         DRIVER_MODE,
@@ -71,7 +70,7 @@ public class ManualFeedforwardTuner extends LinearOpMode {
 
         telemetry = new MultipleTelemetry(telemetry, dashboard.getTelemetry());
 
-        drive = new MechanumDriveRoadRunner(hardwareMap);
+        drive = new TankDriveRoadRunner(hardwareMap);
 
         mode = Mode.TUNING_MODE;
 

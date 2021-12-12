@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.auto.pipeline.BlueCarouselDuckDetection;
 
 import org.firstinspires.ftc.teamcode.hardware.AutoValues;
 import org.firstinspires.ftc.teamcode.hardware.Devices;
-import org.firstinspires.ftc.teamcode.roadrunner.drive.MechanumDriveRoadRunner;
+import org.firstinspires.ftc.teamcode.roadrunner.drive.TankDriveRoadRunner;
 import org.firstinspires.ftc.teamcode.roadrunner.trajectorysequence.TrajectorySequence;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
@@ -20,7 +20,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 public class BlueCarousel extends LinearOpMode {
     @Override
     public void runOpMode() {
-        MechanumDriveRoadRunner drive = new MechanumDriveRoadRunner(hardwareMap);
+        TankDriveRoadRunner drive = new TankDriveRoadRunner(hardwareMap);
         Devices robot = new Devices();
         robot.init(hardwareMap);
 
@@ -124,7 +124,7 @@ public class BlueCarousel extends LinearOpMode {
                 .turn(Math.toRadians(60), 4, 4)
                 .back(6)
                 .turn(Math.toRadians(90))
-                .back(31)
+                .back(30)
                 .turn(Math.toRadians(90))
                 .build();
 

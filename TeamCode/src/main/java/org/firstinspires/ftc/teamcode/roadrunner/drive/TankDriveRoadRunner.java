@@ -57,10 +57,10 @@ import static org.firstinspires.ftc.teamcode.roadrunner.drive.DriveConstants.kV;
  * Simple tank drive hardware implementation for REV hardware.
  */
 @Config
-public class MechanumDriveRoadRunner extends TankDrive {
+public class TankDriveRoadRunner extends TankDrive {
     public static PIDCoefficients AXIAL_PID = new PIDCoefficients(9, 0, .5);
     public static PIDCoefficients CROSS_TRACK_PID = new PIDCoefficients(0.0099, 0, .0003);
-    public static PIDCoefficients HEADING_PID = new PIDCoefficients(19, 0, .778);
+    public static PIDCoefficients HEADING_PID = new PIDCoefficients(18, 0, .778);
 
     public static PIDCoefficients LEFT_DRIVE_PID = new PIDCoefficients(0.000020, 0, 0);
     public static PIDCoefficients RIGHT_DRIVE_PID = new PIDCoefficients(0.000020, 0, 0);
@@ -83,7 +83,7 @@ public class MechanumDriveRoadRunner extends TankDrive {
 
     private VoltageSensor batteryVoltageSensor;
 
-    public MechanumDriveRoadRunner(HardwareMap hardwareMap) {
+    public TankDriveRoadRunner(HardwareMap hardwareMap) {
         super(kV, kA, kStatic, TRACK_WIDTH);
         leftDriveVeloPID = new PIDController(LEFT_DRIVE_PID.kP, LEFT_DRIVE_PID.kI, LEFT_DRIVE_PID.kD);
         rightDriveVeloPID = new PIDController(RIGHT_DRIVE_PID.kP, RIGHT_DRIVE_PID.kI, RIGHT_DRIVE_PID.kD);

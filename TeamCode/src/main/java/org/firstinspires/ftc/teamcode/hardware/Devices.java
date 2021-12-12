@@ -59,10 +59,10 @@ public class Devices {
     // Alliance Marker Servo Positions
     public static double ALLIANCE_MARKER_SERVO_SPEED = 0.001;
     public static double ALLIANCE_MARKER_RESET_POS = 0;
-    public static double ALLIANCE_MARKER_STANDING_POS = 0.797;
-    public static double ALLIANCE_MARKER_KNOCKED_OVER_POS = 0.893;
-    public static double ALLIANCE_MARKER_APPROACHING_HUB_POS = 0.455;
-    public static double ALLIANCE_MARKER_CAPPED_HUB_POS = 0.532;
+    public static double ALLIANCE_MARKER_STANDING_POS = 0.787;
+    public static double ALLIANCE_MARKER_KNOCKED_OVER_POS = 0.890;
+    public static double ALLIANCE_MARKER_APPROACHING_HUB_POS = 0.443;
+    public static double ALLIANCE_MARKER_CAPPED_HUB_POS = 0.550;
 
     // Camera Servo Positions
     public static double CAMERA_BLUE_CAROUSEL_POS = 0.29;
@@ -72,11 +72,12 @@ public class Devices {
 
     // Motor constants
     public static double INTAKE_VELOCITY = 1000;
-    public static double CAROUSEL_POWER = 0.5;
+    public static double CAROUSEL_POWER = 0.4;
     public static double CAROUSEL_SLOW_POWER = 0.4;
-    public static double ARM_POWER = 0.6;
+    public static double ARM_POWER = 0.55;
     public static double ARM_SLOW_POWER = 0.3;
     public static double ARM_TICKS_PER_REV = 1425.06;
+    public static double ARM_POS_CHANGE_SPEED = 0.0005;
 
     // Camera / OpenCv Wait time
     public static double WAIT_CAMERA_LENGTH = 4000;
@@ -84,6 +85,9 @@ public class Devices {
 
     // Trigger threshold
     public static double TRIGGER_THRESHOLD = 0.2;
+
+    // Arm Current position
+    public static double ARM_CURRENT_POS = 0;
 
     // Cycles variable (to calculate loop time)
     public int cycles = 0;

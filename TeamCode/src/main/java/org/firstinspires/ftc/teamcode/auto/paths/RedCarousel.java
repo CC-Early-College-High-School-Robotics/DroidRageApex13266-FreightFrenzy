@@ -9,7 +9,7 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.auto.pipeline.RedCarouselDuckDetection;
 import org.firstinspires.ftc.teamcode.hardware.AutoValues;
 import org.firstinspires.ftc.teamcode.hardware.Devices;
-import org.firstinspires.ftc.teamcode.roadrunner.drive.MechanumDriveRoadRunner;
+import org.firstinspires.ftc.teamcode.roadrunner.drive.TankDriveRoadRunner;
 import org.firstinspires.ftc.teamcode.roadrunner.trajectorysequence.TrajectorySequence;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
@@ -19,7 +19,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 public class RedCarousel extends LinearOpMode {
     @Override
     public void runOpMode() {
-        MechanumDriveRoadRunner drive = new MechanumDriveRoadRunner(hardwareMap);
+        TankDriveRoadRunner drive = new TankDriveRoadRunner(hardwareMap);
         Devices robot = new Devices();
         robot.init(hardwareMap);
 
@@ -111,7 +111,7 @@ public class RedCarousel extends LinearOpMode {
 
         TrajectorySequence Trajectory1 = drive.trajectorySequenceBuilder(startPose)
                 .forward(10)
-                .turn(Math.toRadians(-75), 3, 3)
+                .turn(Math.toRadians(-70), 3, 3)
                 .build();
 
         TrajectorySequence Trajectory2 = drive.trajectorySequenceBuilder(Trajectory1.end())
@@ -120,7 +120,7 @@ public class RedCarousel extends LinearOpMode {
 
         TrajectorySequence Trajectory3 = drive.trajectorySequenceBuilder(Trajectory2.end())
                 .forward(10)
-                .turn(Math.toRadians(-15), 3, 3) // Both turns must add up to -90
+                .turn(Math.toRadians(-20), 3, 3) // Both turns must add up to -90
                 .back(6)
                 .turn(Math.toRadians(-90))
                 .back(31)

@@ -22,7 +22,7 @@ import static org.firstinspires.ftc.teamcode.roadrunner.drive.DriveConstants.MOT
 import static org.firstinspires.ftc.teamcode.roadrunner.drive.DriveConstants.RUN_USING_ENCODER;
 import static org.firstinspires.ftc.teamcode.roadrunner.drive.DriveConstants.kV;
 
-import org.firstinspires.ftc.teamcode.roadrunner.drive.MechanumDriveRoadRunner;
+import org.firstinspires.ftc.teamcode.roadrunner.drive.TankDriveRoadRunner;
 
 /*
  * This routine is designed to tune the PID coefficients used by the REV Expansion Hubs for closed-
@@ -74,7 +74,7 @@ public class DriveVelocityPIDTuner extends LinearOpMode {
 
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
-        MechanumDriveRoadRunner drive = new MechanumDriveRoadRunner(hardwareMap);
+        TankDriveRoadRunner drive = new TankDriveRoadRunner(hardwareMap);
 
         Mode mode = Mode.TUNING_MODE;
 

@@ -9,7 +9,7 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.auto.pipeline.RedWarehouseDuckDetection;
 import org.firstinspires.ftc.teamcode.hardware.AutoValues;
 import org.firstinspires.ftc.teamcode.hardware.Devices;
-import org.firstinspires.ftc.teamcode.roadrunner.drive.MechanumDriveRoadRunner;
+import org.firstinspires.ftc.teamcode.roadrunner.drive.TankDriveRoadRunner;
 import org.firstinspires.ftc.teamcode.roadrunner.trajectorysequence.TrajectorySequence;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
@@ -19,7 +19,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 public class RedWarehouse extends LinearOpMode {
     @Override
     public void runOpMode() {
-        MechanumDriveRoadRunner drive = new MechanumDriveRoadRunner(hardwareMap);
+        TankDriveRoadRunner drive = new TankDriveRoadRunner(hardwareMap);
         Devices robot = new Devices();
         robot.init(hardwareMap);
 
@@ -121,7 +121,7 @@ public class RedWarehouse extends LinearOpMode {
                 .build();
 
         TrajectorySequence Trajectory3 = drive.trajectorySequenceBuilder(Trajectory2.end())
-                .forward(hubDistance)
+                .forward(hubDistance + 2)
                 .build();
 
         TrajectorySequence Trajectory4 = drive.trajectorySequenceBuilder(Trajectory3.end())

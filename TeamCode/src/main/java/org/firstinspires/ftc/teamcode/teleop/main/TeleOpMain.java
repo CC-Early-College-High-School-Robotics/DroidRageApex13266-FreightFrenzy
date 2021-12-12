@@ -136,31 +136,80 @@ public class TeleOpMain extends OpMode {
         // High
         if (gamepad2.dpad_up) {
             robot.armMotor.setPower(Devices.ARM_POWER);
-            robot.setArmPosition(Devices.ARM_HIGH_POS);
+            Devices.ARM_CURRENT_POS = Devices.ARM_HIGH_POS;
             robot.armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             robot.boxServo.setPosition(Devices.BOX_UP);
         }
         // Mid
         if (gamepad2.dpad_right) {
             robot.armMotor.setPower(Devices.ARM_POWER);
-            robot.setArmPosition(Devices.ARM_MID_POS);
+            Devices.ARM_CURRENT_POS = Devices.ARM_MID_POS;
             robot.armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             robot.boxServo.setPosition(Devices.BOX_UP);
         }
         // Shared hub
         if (gamepad2.dpad_down) {
             robot.armMotor.setPower(Devices.ARM_POWER);
-            robot.setArmPosition(Devices.ARM_LOW_POS);
+            Devices.ARM_CURRENT_POS = Devices.ARM_LOW_POS;
             robot.armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             robot.boxServo.setPosition(Devices.BOX_UP);
 
         }
+
+
         // intake/reset position
         if (gamepad2.dpad_left) {
-            robot.setArmPosition(Devices.ARM_INTAKE_POS);
+            Devices.ARM_CURRENT_POS = Devices.ARM_INTAKE_POS;
             robot.boxServo.setPosition(Devices.BOX_INTAKE);
         }
+        if (-gamepad2.right_stick_y > Devices.TRIGGER_THRESHOLD) {
+            Devices.ARM_CURRENT_POS += Devices.ARM_POS_CHANGE_SPEED;
+        }
+        if (-gamepad2.right_stick_y < -Devices.TRIGGER_THRESHOLD) {
+            Devices.ARM_CURRENT_POS -= Devices.ARM_POS_CHANGE_SPEED;
+        }
 
+
+
+        if (-gamepad2.right_stick_y > Devices.TRIGGER_THRESHOLD && gamepad2.dpad_left) {
+            Devices.ARM_INTAKE_POS+= Devices.ARM_POS_CHANGE_SPEED;
+        }
+        if (-gamepad2.right_stick_y < -Devices.TRIGGER_THRESHOLD && gamepad2.dpad_left) {
+            Devices.ARM_INTAKE_POS -= Devices.ARM_POS_CHANGE_SPEED;
+        }
+
+
+
+        if (-gamepad2.right_stick_y > Devices.TRIGGER_THRESHOLD && gamepad2.dpad_up) {
+            Devices.ARM_HIGH_POS+= Devices.ARM_POS_CHANGE_SPEED;
+        }
+        if (-gamepad2.right_stick_y < -Devices.TRIGGER_THRESHOLD && gamepad2.dpad_up) {
+            Devices.ARM_HIGH_POS -= Devices.ARM_POS_CHANGE_SPEED;
+        }
+
+
+
+        if (-gamepad2.right_stick_y > Devices.TRIGGER_THRESHOLD && gamepad2.dpad_right) {
+            Devices.ARM_MID_POS+= Devices.ARM_POS_CHANGE_SPEED;
+        }
+        if (-gamepad2.right_stick_y < -Devices.TRIGGER_THRESHOLD && gamepad2.dpad_right) {
+            Devices.ARM_MID_POS -= Devices.ARM_POS_CHANGE_SPEED;
+        }
+
+        if (-gamepad2.right_stick_y > Devices.TRIGGER_THRESHOLD && gamepad2.dpad_down) {
+            Devices.ARM_LOW_POS+= Devices.ARM_POS_CHANGE_SPEED;
+        }
+        if (-gamepad2.right_stick_y < -Devices.TRIGGER_THRESHOLD && gamepad2.dpad_down) {
+            Devices.ARM_LOW_POS -= Devices.ARM_POS_CHANGE_SPEED;
+        }
+
+
+
+
+
+
+
+        robot.setArmPosition(Devices.ARM_CURRENT_POS);
 /*
         if (-gamepad2.right_stick_y >= Devices.TRIGGER_THRESHOLD && gamepad2.dpad_up) {
             Devices.ARM_HIGH_POS += 0.001;
