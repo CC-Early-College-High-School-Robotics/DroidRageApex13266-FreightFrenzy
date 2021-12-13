@@ -42,7 +42,7 @@ public class Devices {
     /* Constants */
 
     // Lower positions
-    public double ARM_INTAKE_POS = 0; // 0.04 //-0.09
+    public static double ARM_INTAKE_POS = 0; // 0.04 //-0.09
     public static double ARM_NEUTRAL_POS = -0.015;
 
     // Higher Positions
