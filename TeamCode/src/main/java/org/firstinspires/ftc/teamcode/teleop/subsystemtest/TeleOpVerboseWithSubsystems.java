@@ -12,8 +12,8 @@ import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.DrivetrainSubs
 import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.TelemetrySubsystem;
 
-@TeleOp(name="TeleOP Main (with subsystems)")
-public class TeleOpMainWithSubsystems extends OpMode {
+@TeleOp(name="TeleOP Verbose (with subsystems)")
+public class TeleOpVerboseWithSubsystems extends OpMode {
     // Declare subsystems
     AllianceMarkerStickSubsystem stick          = new AllianceMarkerStickSubsystem          (gamepad1, gamepad2, hardwareMap, telemetry);
     ArmSubsystem arm                            = new ArmSubsystem                          (gamepad1, gamepad2, hardwareMap, telemetry);
@@ -46,6 +46,6 @@ public class TeleOpMainWithSubsystems extends OpMode {
         drivetrain.defaultCommand();
         intake.defaultCommand();
         breakMode.defaultCommand();
-        telemetrySubsystem.defaultCommand();
+        telemetrySubsystem.verboseCommand();
     }
 }

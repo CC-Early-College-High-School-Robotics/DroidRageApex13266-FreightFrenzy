@@ -1,0 +1,54 @@
+package org.firstinspires.ftc.teamcode.hardware.subsystembase.main;
+
+import com.acmerobotics.dashboard.config.Config;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.hardware.HardwareMap;
+
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.hardware.subsystembase.base.BaseSubsystem;
+
+@Config
+public class CarouselSubsystem extends BaseSubsystem {
+    // Values
+    public static double CAROUSEL_POWER = 0.4;
+    public static double CAROUSEL_SLOW_POWER = 0.4;
+
+    // Create hardware variables
+    public DcMotorEx carouselMotor = null;
+
+    // Constructor
+    public CarouselSubsystem(Gamepad gamepad1, Gamepad gamepad2, HardwareMap hardwareMap, Telemetry telemetry) {
+        super(gamepad1, gamepad2, hardwareMap, telemetry);
+    }
+
+    // Initialize hardware variables
+    public void init() {
+        carouselMotor = hardwareMap.get(DcMotorEx.class,"carouselMotor");
+        carouselMotor.setDirection(DcMotorEx.Direction.FORWARD);
+        carouselMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+    }
+
+    // Default command
+    public void defaultCommand() {
+        if (gamepad2.right_trigger >= TRIGGER_THRESHOLD) {
+            carouselMotor.setPower(CAROUSEL_POWER);
+        }
+        if (gamepad2.left_trigger >= TRIGGER_THRESHOLD) {
+            carouselMotor.setPower(-CAROUSEL_POWER);
+        }
+        if (gamepad2.right_trigger < TRIGGER_THRESHOLD && gamepad2.left_trigger < TRIGGER_THRESHOLD) {
+            carouselMotor.setPower(0);
+        }
+    }
+
+    public void breakMode() {
+        carouselMotor.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+    }
+    public void floatMode() {
+        carouselMotor.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT);
+    }
+}

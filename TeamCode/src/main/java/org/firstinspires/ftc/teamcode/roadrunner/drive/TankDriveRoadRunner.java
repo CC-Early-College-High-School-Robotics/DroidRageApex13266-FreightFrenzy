@@ -334,6 +334,8 @@ public class TankDriveRoadRunner extends TankDrive {
         // Rotate about the z axis is the default assuming your REV Hub/Control Hub is laying
         // flat on a surface
 
+        // TODO: consider messing with this (Justin)
+
         return (double) imu.getAngularVelocity().zRotationRate;
     }
 
