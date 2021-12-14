@@ -31,7 +31,7 @@ public class DriveConstants {
      * If using the built-in motor velocity PID, update MOTOR_VELO_PID with the tuned coefficients
      * from DriveVelocityPIDTuner.
      */
-    public static final boolean RUN_USING_ENCODER = false;
+    public static final boolean RUN_USING_ENCODER = true;
     public static PIDFCoefficients MOTOR_VELO_PID = new PIDFCoefficients(0, 0, 0,
             getMotorVelocityF(MAX_RPM / 60 * TICKS_PER_REV));
 
@@ -53,9 +53,9 @@ public class DriveConstants {
      * motor encoders or have elected not to use them for velocity control, these values should be
      * empirically tuned.
      */
-    public static double kV = 0.0093;
-    public static double kA = 0.004;
-    public static double kStatic = 0.0022;
+    public static double kV = 1.0 / rpmToVelocity(MAX_RPM); // 0.0093
+    public static double kA = 0; // 0.004
+    public static double kStatic = 0; // 0.0022
 
     /*
      * These values are used to generate the trajectories for you robot. To ensure proper operation,
@@ -64,10 +64,13 @@ public class DriveConstants {
      * small and gradually increase them later after everything is working. All distance units are
      * inches.
      */
-    public static double MAX_VEL = 30;
-    public static double MAX_ACCEL = 30;
-    public static double MAX_ANG_VEL = 3.5; // Measured in radians
-    public static double MAX_ANG_ACCEL = 3.5; // Measured in radians
+    public static double MAX_VEL = 30; // 30
+    public static double MAX_ACCEL = 30; // 30
+
+    public static double MAX_ANG_VELOCITY_DEGREES = 60;
+    static double MAX_ANG_VEL = Math.toRadians(MAX_ANG_VELOCITY_DEGREES); // Measured in radians // old value: 3.5 radians or 200 degrees
+    public static double MAX_ANG_ACCEL_DEGREES = 60;
+    static double MAX_ANG_ACCEL = Math.toRadians(MAX_ANG_ACCEL_DEGREES); // Measured in radians // old value: 3.5 radians or 200 degrees
 
 
     public static double encoderTicksToInches(double ticks) {

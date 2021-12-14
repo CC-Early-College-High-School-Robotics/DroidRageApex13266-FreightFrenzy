@@ -12,7 +12,7 @@ import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.DrivetrainSubs
 import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.TelemetrySubsystem;
 
-@TeleOp(name="TeleOP Verbose (with subsystems)")
+@TeleOp(name="TeleOP Verbose")
 public class TeleOpVerboseWithSubsystems extends OpMode {
     // Declare subsystems
     AllianceMarkerStickSubsystem stick          = new AllianceMarkerStickSubsystem          ();
