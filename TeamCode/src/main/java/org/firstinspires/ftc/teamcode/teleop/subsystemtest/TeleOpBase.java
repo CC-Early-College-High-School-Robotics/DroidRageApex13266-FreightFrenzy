@@ -12,16 +12,13 @@ import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.DrivetrainSubs
 import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.TelemetrySubsystem;
 
-@TeleOp(name="TeleOP Main (with subsystems)")
-public class TeleOpMainWithSubsystems extends OpMode {
+public class TeleOpBase extends OpMode {
     // Declare subsystems
     AllianceMarkerStickSubsystem stick          = new AllianceMarkerStickSubsystem          ();
     ArmSubsystem arm                            = new ArmSubsystem                          ();
     BoxSubsystem box                            = new BoxSubsystem                          ();
     CarouselSubsystem carousel                  = new CarouselSubsystem                     ();
-    DrivetrainSubsystem drivetrain              = new DrivetrainSubsystem                   ();
     IntakeSubsystem intake                      = new IntakeSubsystem                       ();
-    BreakModeSubsystem breakMode                = new BreakModeSubsystem                    ();
     TelemetrySubsystem telemetrySubsystem       = new TelemetrySubsystem                    ();
 
     @Override
@@ -31,11 +28,7 @@ public class TeleOpMainWithSubsystems extends OpMode {
         arm.init(hardwareMap, telemetry);
         box.init(hardwareMap, telemetry);
         carousel.init(hardwareMap, telemetry);
-        drivetrain.init(hardwareMap, telemetry);
         intake.init(hardwareMap, telemetry);
-
-        telemetrySubsystem.init(telemetry, stick, arm, box, carousel, drivetrain, intake, breakMode);
-        breakMode.init(gamepad1, gamepad2, arm, carousel, drivetrain);
 
         telemetrySubsystem.initMessage();
     }
@@ -47,9 +40,7 @@ public class TeleOpMainWithSubsystems extends OpMode {
         arm.setArmPosition(gamepad1, gamepad2);
         box.defaultCommand(gamepad1, gamepad2);
         carousel.defaultCommand(gamepad1, gamepad2);
-        drivetrain.defaultCommand(gamepad1, gamepad2);
         intake.defaultCommand(gamepad1, gamepad2);
-        breakMode.defaultCommand();
         telemetrySubsystem.defaultCommand();
     }
 }

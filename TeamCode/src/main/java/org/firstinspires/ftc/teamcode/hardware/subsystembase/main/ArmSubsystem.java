@@ -8,7 +8,6 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.hardware.Devices;
 import org.firstinspires.ftc.teamcode.hardware.subsystembase.base.BaseSubsystem;
 
 @Config
@@ -31,12 +30,13 @@ public class ArmSubsystem extends BaseSubsystem {
     public DcMotorEx armMotor = null;
 
     // Constructor
-    public ArmSubsystem(Gamepad gamepad1, Gamepad gamepad2, HardwareMap hardwareMap, Telemetry telemetry) {
-        super(gamepad1, gamepad2, hardwareMap, telemetry);
+    public ArmSubsystem() {
+
     }
 
     // Initialize hardware variables
-    public void init() {
+    public void init(HardwareMap hardwareMap, Telemetry telemetry) {
+        super.init(hardwareMap, telemetry);
         armMotor = hardwareMap.get(DcMotorEx.class,"armMotor");
         armMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         armMotor.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
@@ -50,11 +50,13 @@ public class ArmSubsystem extends BaseSubsystem {
     }
 
     // Arm Commands
-    public void setArmPosition() {
+    public void setArmPosition(Gamepad gamepad1, Gamepad gamepad2) {
+        super.gamepadInit(gamepad1, gamepad2);
         armMotor.setTargetPosition((int) (ARM_TICKS_PER_REV * armCurrentPos));
     }
 
-    public void findArmPosition() {
+    public void findArmPosition(Gamepad gamepad1, Gamepad gamepad2) {
+        super.gamepadInit(gamepad1, gamepad2);
         // High
         if (gamepad2.dpad_up) {
             armMotor.setPower(ARM_POWER);

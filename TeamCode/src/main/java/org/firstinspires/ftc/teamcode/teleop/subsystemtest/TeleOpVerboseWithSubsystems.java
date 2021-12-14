@@ -15,36 +15,40 @@ import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.TelemetrySubsy
 @TeleOp(name="TeleOP Verbose (with subsystems)")
 public class TeleOpVerboseWithSubsystems extends OpMode {
     // Declare subsystems
-    AllianceMarkerStickSubsystem stick          = new AllianceMarkerStickSubsystem          (gamepad1, gamepad2, hardwareMap, telemetry);
-    ArmSubsystem arm                            = new ArmSubsystem                          (gamepad1, gamepad2, hardwareMap, telemetry);
-    BoxSubsystem box                            = new BoxSubsystem                          (gamepad1, gamepad2, hardwareMap, telemetry);
-    CarouselSubsystem carousel                  = new CarouselSubsystem                     (gamepad1, gamepad2, hardwareMap, telemetry);
-    DrivetrainSubsystem drivetrain              = new DrivetrainSubsystem                   (gamepad1, gamepad2, hardwareMap, telemetry);
-    IntakeSubsystem intake                      = new IntakeSubsystem                       (gamepad1, gamepad2, hardwareMap, telemetry);
-    BreakModeSubsystem breakMode                = new BreakModeSubsystem                    (gamepad1, gamepad2, hardwareMap, telemetry, arm, carousel, drivetrain);
-    TelemetrySubsystem telemetrySubsystem       = new TelemetrySubsystem                    (gamepad1, gamepad2, hardwareMap, telemetry, stick, arm, box, carousel, drivetrain, intake, breakMode);
+    AllianceMarkerStickSubsystem stick          = new AllianceMarkerStickSubsystem          ();
+    ArmSubsystem arm                            = new ArmSubsystem                          ();
+    BoxSubsystem box                            = new BoxSubsystem                          ();
+    CarouselSubsystem carousel                  = new CarouselSubsystem                     ();
+    DrivetrainSubsystem drivetrain              = new DrivetrainSubsystem                   ();
+    IntakeSubsystem intake                      = new IntakeSubsystem                       ();
+    BreakModeSubsystem breakMode                = new BreakModeSubsystem                    ();
+    TelemetrySubsystem telemetrySubsystem       = new TelemetrySubsystem                    ();
+
     @Override
     public void init() {
         // Initialize subsystems
-        stick.init();
-        arm.init();
-        box.init();
-        carousel.init();
-        drivetrain.init();
-        intake.init();
+        stick.init(hardwareMap, telemetry);
+        arm.init(hardwareMap, telemetry);
+        box.init(hardwareMap, telemetry);
+        carousel.init(hardwareMap, telemetry);
+        drivetrain.init(hardwareMap, telemetry);
+        intake.init(hardwareMap, telemetry);
+
+        telemetrySubsystem.init(telemetry, stick, arm, box, carousel, drivetrain, intake, breakMode);
+        breakMode.init(gamepad1, gamepad2, arm, carousel, drivetrain);
 
         telemetrySubsystem.initMessage();
     }
 
     @Override
     public void loop() {
-        stick.defaultCommand();
-        arm.findArmPosition();
-        arm.setArmPosition();
-        box.defaultCommand();
-        carousel.defaultCommand();
-        drivetrain.defaultCommand();
-        intake.defaultCommand();
+        stick.defaultCommand(gamepad1, gamepad2);
+        arm.findArmPosition(gamepad1, gamepad2);
+        arm.setArmPosition(gamepad1, gamepad2);
+        box.defaultCommand(gamepad1, gamepad2);
+        carousel.defaultCommand(gamepad1, gamepad2);
+        drivetrain.defaultCommand(gamepad1, gamepad2);
+        intake.defaultCommand(gamepad1, gamepad2);
         breakMode.defaultCommand();
         telemetrySubsystem.verboseCommand();
     }

@@ -24,11 +24,12 @@ public class CameraStandSubsystem extends BaseSubsystem {
 
     // Constructor
     public CameraStandSubsystem(Gamepad gamepad1, Gamepad gamepad2, HardwareMap hardwareMap, Telemetry telemetry) {
-        super(gamepad1, gamepad2, hardwareMap, telemetry);
+        super(gamepad1, gamepad2);
     }
 
     // Initialize hardware variables
     public void init() {
+        super.init(hardwareMap, telemetry);
         cameraServo = hardwareMap.get(Servo.class,"cameraServo");
         cameraServo.setDirection(Servo.Direction.FORWARD);
     }

@@ -15,11 +15,12 @@ public class SampleSubsystem extends BaseSubsystem {
 
     // Constructor
     public SampleSubsystem(Gamepad gamepad1, Gamepad gamepad2, HardwareMap hardwareMap, Telemetry telemetry) {
-        super(gamepad1, gamepad2, hardwareMap, telemetry);
+        super(gamepad1, gamepad2);
     }
 
     // Initialize hardware variables
     public void init() {
+        super.init(hardwareMap, telemetry);
 
     }
 

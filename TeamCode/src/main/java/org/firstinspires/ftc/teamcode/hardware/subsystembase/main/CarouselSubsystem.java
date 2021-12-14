@@ -20,12 +20,12 @@ public class CarouselSubsystem extends BaseSubsystem {
     public DcMotorEx carouselMotor = null;
 
     // Constructor
-    public CarouselSubsystem(Gamepad gamepad1, Gamepad gamepad2, HardwareMap hardwareMap, Telemetry telemetry) {
-        super(gamepad1, gamepad2, hardwareMap, telemetry);
+    public CarouselSubsystem() {
     }
 
     // Initialize hardware variables
-    public void init() {
+    public void init(HardwareMap hardwareMap, Telemetry telemetry) {
+        super.init(hardwareMap, telemetry);
         carouselMotor = hardwareMap.get(DcMotorEx.class,"carouselMotor");
         carouselMotor.setDirection(DcMotorEx.Direction.FORWARD);
         carouselMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -33,7 +33,8 @@ public class CarouselSubsystem extends BaseSubsystem {
     }
 
     // Default command
-    public void defaultCommand() {
+    public void defaultCommand(Gamepad gamepad1, Gamepad gamepad2) {
+        super.gamepadInit(gamepad1, gamepad2);
         if (gamepad2.right_trigger >= TRIGGER_THRESHOLD) {
             carouselMotor.setPower(CAROUSEL_POWER);
         }

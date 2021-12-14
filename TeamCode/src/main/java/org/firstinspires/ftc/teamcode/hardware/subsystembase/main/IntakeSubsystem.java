@@ -19,12 +19,12 @@ public class IntakeSubsystem extends BaseSubsystem {
     public DcMotorEx intakeMotor = null;
 
     // Constructor
-    public IntakeSubsystem(Gamepad gamepad1, Gamepad gamepad2, HardwareMap hardwareMap, Telemetry telemetry) {
-        super(gamepad1, gamepad2, hardwareMap, telemetry);
+    public IntakeSubsystem() {
     }
 
     // Initialize hardware variables
-    public void init() {
+    public void init(HardwareMap hardwareMap, Telemetry telemetry) {
+        super.init(hardwareMap, telemetry);
 
         // Initialize hardware variables
         intakeMotor = hardwareMap.get(DcMotorEx.class,"intakeMotor");
@@ -36,7 +36,8 @@ public class IntakeSubsystem extends BaseSubsystem {
     }
 
     // Default command
-    public void defaultCommand() {
+    public void defaultCommand(Gamepad gamepad1, Gamepad gamepad2) {
+        super.gamepadInit(gamepad1, gamepad2);
         if (gamepad1.right_trigger >= TRIGGER_THRESHOLD) {
             intakeMotor.setVelocity(-INTAKE_VELOCITY);
         }

@@ -12,18 +12,21 @@ public class BreakModeSubsystem extends BaseSubsystem {
     ArmSubsystem arm;
     CarouselSubsystem carousel;
     DrivetrainSubsystem drivetrain;
-    String breakModeStatus;
+    String breakModeStatus = "On";
 
     // Constructor
-    public BreakModeSubsystem(Gamepad gamepad1, Gamepad gamepad2, HardwareMap hardwareMap, Telemetry telemetry, ArmSubsystem arm, CarouselSubsystem carousel, DrivetrainSubsystem drivetrain) {
-        super(gamepad1, gamepad2, hardwareMap, telemetry);
+    public BreakModeSubsystem() {
+    }
+
+    // Default command
+    public void init(Gamepad gamepad1, Gamepad gamepad2, ArmSubsystem arm, CarouselSubsystem carousel, DrivetrainSubsystem drivetrain) {
+        super.gamepadInit(gamepad1, gamepad2);
         this.arm = arm;
         this.carousel = carousel;
         this.drivetrain = drivetrain;
     }
-
-    // Default command
     public void defaultCommand() {
+
         if (gamepad1.a) {
             arm.breakMode();
             carousel.breakMode();

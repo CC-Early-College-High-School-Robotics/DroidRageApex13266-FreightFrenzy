@@ -6,7 +6,6 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.hardware.Devices;
 import org.firstinspires.ftc.teamcode.hardware.subsystembase.base.BaseSubsystem;
 
 @Config
@@ -28,12 +27,12 @@ public class AllianceMarkerStickSubsystem extends BaseSubsystem {
     public Servo allianceMarkerServo = null;
 
     // Constructor
-    public AllianceMarkerStickSubsystem(Gamepad gamepad1, Gamepad gamepad2, HardwareMap hardwareMap, Telemetry telemetry) {
-        super(gamepad1, gamepad2, hardwareMap, telemetry);
+    public AllianceMarkerStickSubsystem() {
     }
 
     // Initialize hardware variables
-    public void init() {
+    public void init(HardwareMap hardwareMap, Telemetry telemetry) {
+        super.init(hardwareMap, telemetry);
         allianceMarkerServo = hardwareMap.get(Servo.class, "allianceMarkerServo");
         allianceMarkerServo.setDirection(Servo.Direction.FORWARD);
 
@@ -42,7 +41,8 @@ public class AllianceMarkerStickSubsystem extends BaseSubsystem {
     }
 
     // Default command
-    public void defaultCommand() {
+    public void defaultCommand(Gamepad gamepad1, Gamepad gamepad2) {
+        super.gamepadInit(gamepad1, gamepad2);
         // Allow Picking Alliance Marker again if cap is not being used
         if (!gamepad2.left_bumper && !gamepad2.right_bumper && !rightBumperButtonPressed) {
             allianceMarkerServoReset = true;

@@ -22,8 +22,12 @@ public class TelemetrySubsystem extends BaseSubsystem {
     // Create hardware variables
 
     // Constructor
-    public TelemetrySubsystem(Gamepad gamepad1, Gamepad gamepad2, HardwareMap hardwareMap, Telemetry telemetry, AllianceMarkerStickSubsystem stick, ArmSubsystem arm, BoxSubsystem box, CarouselSubsystem carousel, DrivetrainSubsystem drivetrain, IntakeSubsystem intake, BreakModeSubsystem breakMode) {
-        super(gamepad1, gamepad2, hardwareMap, telemetry);
+    public TelemetrySubsystem() {
+    }
+
+    // Initialization
+    public void init(Telemetry telemetry, AllianceMarkerStickSubsystem stick, ArmSubsystem arm, BoxSubsystem box, CarouselSubsystem carousel, DrivetrainSubsystem drivetrain, IntakeSubsystem intake, BreakModeSubsystem breakMode) {
+        this.telemetry = telemetry;
         this.stick = stick;
         this.arm = arm;
         this.box = box;
@@ -33,7 +37,6 @@ public class TelemetrySubsystem extends BaseSubsystem {
         this.breakMode = breakMode;
     }
 
-    // Initialization message
     public void initMessage() {
         telemetry.addData("GL", "You better win!");
     }

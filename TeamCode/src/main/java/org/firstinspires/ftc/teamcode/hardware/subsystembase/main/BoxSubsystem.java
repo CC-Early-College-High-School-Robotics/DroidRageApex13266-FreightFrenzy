@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.hardware.subsystembase.main;
 
 import com.acmerobotics.dashboard.config.Config;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -22,18 +21,20 @@ public class BoxSubsystem extends BaseSubsystem {
     public Servo boxServo = null;
 
     // Constructor
-    public BoxSubsystem(Gamepad gamepad1, Gamepad gamepad2, HardwareMap hardwareMap, Telemetry telemetry) {
-        super(gamepad1, gamepad2, hardwareMap, telemetry);
+    public BoxSubsystem() {
+
     }
 
     // Initialize hardware variables
-    public void init() {
+    public void init(HardwareMap hardwareMap, Telemetry telemetry) {
+        super.init(hardwareMap, telemetry);
         boxServo = hardwareMap.get(Servo.class,"boxServo");
         boxServo.setDirection(Servo.Direction.FORWARD);
     }
 
     // Default command
-    public void defaultCommand() {
+    public void defaultCommand(Gamepad gamepad1, Gamepad gamepad2) {
+        super.gamepadInit(gamepad1, gamepad2);
         // High
         if (gamepad2.dpad_up) {
             boxServo.setPosition(BOX_UP);

@@ -18,13 +18,6 @@ public class BaseSubsystem {
     public ElapsedTime runtime  = new ElapsedTime();
 
     // Constructors
-    public BaseSubsystem(Gamepad gamepad1, Gamepad gamepad2, HardwareMap hardwareMap, Telemetry telemetry) {
-        this.gamepad1 = gamepad1;
-        this.gamepad2 = gamepad2;
-        this.hardwareMap = hardwareMap;
-        this.telemetry = telemetry;
-    }
-
     public BaseSubsystem(Gamepad gamepad1, Gamepad gamepad2) {
         this.gamepad1 = gamepad1;
         this.gamepad2 = gamepad2;
@@ -33,9 +26,18 @@ public class BaseSubsystem {
     public BaseSubsystem(Telemetry telemetry) {
         this.telemetry = telemetry;
     }
+    public BaseSubsystem() {
+
+    }
 
     // Initialize Hardware
-    public void init() {
+    public void init(HardwareMap hardwareMap, Telemetry telemetry) {
+        this.hardwareMap = hardwareMap;
+        this.telemetry = telemetry;
+    }
 
+    public void gamepadInit(Gamepad gamepad1, Gamepad gamepad2) {
+        this.gamepad1 = gamepad1;
+        this.gamepad2 = gamepad2;
     }
 }

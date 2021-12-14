@@ -30,12 +30,12 @@ public class DrivetrainSubsystem extends BaseSubsystem {
     public DcMotorEx rightRear = null;
 
     // Constructor
-    public DrivetrainSubsystem(Gamepad gamepad1, Gamepad gamepad2, HardwareMap hardwareMap, Telemetry telemetry) {
-        super(gamepad1, gamepad2, hardwareMap, telemetry);
+    public DrivetrainSubsystem() {
     }
 
     // Initialize hardware variables
-    public void init() {
+    public void init(HardwareMap hardwareMap, Telemetry telemetry) {
+        super.init(hardwareMap, telemetry);
         leftFront = hardwareMap.get(DcMotorEx.class, "leftFront");
         leftRear = hardwareMap.get(DcMotorEx.class, "leftRear");
         rightFront  = hardwareMap.get(DcMotorEx.class, "rightFront");
@@ -66,7 +66,8 @@ public class DrivetrainSubsystem extends BaseSubsystem {
     }
 
     // Default command
-    public void defaultCommand() {
+    public void defaultCommand(Gamepad gamepad1, Gamepad gamepad2) {
+        super.gamepadInit(gamepad1, gamepad2);
         // Control Drivetrain speed with bumpers
         if (gamepad1.left_bumper) {
             speedMultiplier = Drivetrain.FULL_SPEED;

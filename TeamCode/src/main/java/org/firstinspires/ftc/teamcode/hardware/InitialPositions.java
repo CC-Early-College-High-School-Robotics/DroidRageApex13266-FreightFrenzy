@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode.hardware;
 
 import org.firstinspires.ftc.teamcode.hardware.Devices;
+import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.AllianceMarkerStickSubsystem;
+import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.ArmSubsystem;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -8,7 +10,7 @@ import java.util.List;
 
 public class InitialPositions {
     public static void output() {
-        Field[] doubles = Devices.class.getFields();
+        Field[][] doubles = {Devices.class.getFields(), AllianceMarkerStickSubsystem.class.getFields(), ArmSubsystem.class.getFields()};
         Field[] doubleTwo = Devices.class.getFields();
         Field[] doubleDifference = new Field[1]; //1 is the amount of objects i think maybe im new to this
         boolean hi = Arrays.equals(doubles, doubleTwo);
