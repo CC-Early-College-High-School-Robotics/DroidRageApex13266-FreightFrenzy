@@ -36,7 +36,7 @@ public class BreakModeSubsystem extends BaseSubsystem {
         if (gamepad1.b) {
             arm.floatMode();
             carousel.floatMode();
-            drivetrain.breakMode();
+            drivetrain.floatMode();
             breakModeStatus = "Off";
         }
     }

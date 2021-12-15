@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.teleop.subsystemtest;
+package org.firstinspires.ftc.teamcode.teleop.testing;
 
 import com.acmerobotics.roadrunner.control.PIDCoefficients;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -26,7 +26,7 @@ import java.util.Objects;
 
 @TeleOp(name="Tuning Start")
 public class TuningStart extends OpMode {
-    static Field[][] initialTuning = {
+    public static Field[][] initialTuning = {
             TankDriveRoadRunner.class.getDeclaredFields(),
             DriveConstants.class.getDeclaredFields(),
             AllianceMarkerStickSubsystem.class.getDeclaredFields(),
@@ -41,8 +41,8 @@ public class TuningStart extends OpMode {
             AutoValues.class.getDeclaredFields()
     };
 
-    static List<Double> initialTuningDoubles = new ArrayList<>();
-    static List<String> initialTuningStrings = new ArrayList<>();
+    public static List<Double> initialTuningDoubles = new ArrayList<>();
+    public static List<String> initialTuningStrings = new ArrayList<>();
     static boolean ranOnce = false;
 
     @Override
