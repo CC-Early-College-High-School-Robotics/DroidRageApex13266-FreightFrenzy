@@ -12,8 +12,9 @@ import com.qualcomm.robotcore.util.MovingStatistics;
 import com.qualcomm.robotcore.util.RobotLog;
 
 import org.firstinspires.ftc.robotcore.internal.system.Misc;
-import org.firstinspires.ftc.teamcode.roadrunner.drive.TankDriveRoadRunner;
+import org.firstinspires.ftc.teamcode.roadrunner.drive.RoadrunnerTankDrive;
 import org.firstinspires.ftc.teamcode.roadrunner.drive.StandardTrackingWheelLocalizer;
+import org.firstinspires.ftc.teamcode.teleop.testing.TuningStart;
 
 /**
  * This routine determines the effective forward offset for the lateral tracking wheel.
@@ -37,16 +38,17 @@ import org.firstinspires.ftc.teamcode.roadrunner.drive.StandardTrackingWheelLoca
 @Config
 @Disabled
 @Autonomous(group="drive")
-public class TrackingWheelForwardOffsetTuner extends LinearOpMode {
+public class ￚTrackingWheelForwardOffsetTuner extends LinearOpMode {
     public static double ANGLE = 180; // deg
     public static int NUM_TRIALS = 5;
     public static int DELAY = 1000; // ms
 
     @Override
     public void runOpMode() throws InterruptedException {
+        TuningStart.initializeTuning();
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
-        TankDriveRoadRunner drive = new TankDriveRoadRunner(hardwareMap);
+        RoadrunnerTankDrive drive = new RoadrunnerTankDrive(hardwareMap);
 
         if (!(drive.getLocalizer() instanceof StandardTrackingWheelLocalizer)) {
             RobotLog.setGlobalErrorMsg("StandardTrackingWheelLocalizer is not being set in the "

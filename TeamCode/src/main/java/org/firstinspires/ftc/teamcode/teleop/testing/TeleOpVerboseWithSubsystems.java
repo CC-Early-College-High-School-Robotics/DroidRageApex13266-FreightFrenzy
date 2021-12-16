@@ -37,6 +37,7 @@ public class TeleOpVerboseWithSubsystems extends OpMode {
         telemetrySubsystem.init(telemetry, stick, arm, box, carousel, drivetrain, intake, breakMode);
         breakMode.init(gamepad1, gamepad2, arm, carousel, drivetrain);
 
+        TuningStart.initializeTuning();
         telemetrySubsystem.initMessage();
     }
 

@@ -5,7 +5,7 @@ import org.opencv.core.Mat;
 import org.opencv.imgproc.Imgproc;
 import org.openftc.easyopencv.OpenCvPipeline;
 
-public class ConvertToCbChannel extends OpenCvPipeline {
+public class 一ConvertToCbChannel extends OpenCvPipeline {
     // Notice this is declared as an instance variable (and re-used), not a local variable
     Mat YCrCb = new Mat();
     Mat Cb = new Mat();

@@ -11,6 +11,7 @@ import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.CarouselSubsys
 import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.DrivetrainSubsystem;
 import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.TelemetrySubsystem;
+import org.firstinspires.ftc.teamcode.teleop.testing.TuningStart;
 
 @com.qualcomm.robotcore.eventloop.opmode.TeleOp(name="TeleOP Main")
 public class TeleOpMain extends OpMode {
@@ -37,6 +38,7 @@ public class TeleOpMain extends OpMode {
         telemetrySubsystem.init(telemetry, stick, arm, box, carousel, drivetrain, intake, breakMode);
         breakMode.init(gamepad1, gamepad2, arm, carousel, drivetrain);
 
+        TuningStart.initializeTuning();
         telemetrySubsystem.initMessage();
     }
 

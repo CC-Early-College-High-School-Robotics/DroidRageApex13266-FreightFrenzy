@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.hardware.subsystembase.sample;
 
 import com.acmerobotics.dashboard.config.Config;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -8,6 +9,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.hardware.subsystembase.base.BaseSubsystem;
 
 @Config
+@Disabled
 public class SampleSubsystem extends BaseSubsystem {
     // Values
 

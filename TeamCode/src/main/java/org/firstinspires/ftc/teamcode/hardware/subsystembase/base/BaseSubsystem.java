@@ -1,15 +1,12 @@
 package org.firstinspires.ftc.teamcode.hardware.subsystembase.base;
 
-import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-@Config
 public class BaseSubsystem {
     // Values
-    public static double TRIGGER_THRESHOLD = 0.2;
 
     // Create local OpMode members
     public Gamepad gamepad1, gamepad2;

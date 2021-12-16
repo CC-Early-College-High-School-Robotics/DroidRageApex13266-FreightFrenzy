@@ -10,8 +10,9 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.MovingStatistics;
 
 import org.firstinspires.ftc.robotcore.internal.system.Misc;
-import org.firstinspires.ftc.teamcode.roadrunner.drive.TankDriveRoadRunner;
-import org.firstinspires.ftc.teamcode.roadrunner.drive.DriveConstants;
+import org.firstinspires.ftc.teamcode.roadrunner.drive.RoadrunnerTankDrive;
+import org.firstinspires.ftc.teamcode.roadrunner.drive.RoadrunnerDriveConstants;
+import org.firstinspires.ftc.teamcode.teleop.testing.TuningStart;
 
 /*
  * This routine determines the effective track width. The procedure works by executing a point turn
@@ -24,16 +25,17 @@ import org.firstinspires.ftc.teamcode.roadrunner.drive.DriveConstants;
  */
 @Config
 @Autonomous(group = "drive")
-public class TrackWidthTuner extends LinearOpMode {
+public class ￚTrackWidthTuner extends LinearOpMode {
     public static double ANGLE = 180; // deg
     public static int NUM_TRIALS = 5;
     public static int DELAY = 1000; // ms
 
     @Override
     public void runOpMode() throws InterruptedException {
+        TuningStart.initializeTuning();
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
-        TankDriveRoadRunner drive = new TankDriveRoadRunner(hardwareMap);
+        RoadrunnerTankDrive drive = new RoadrunnerTankDrive(hardwareMap);
         // TODO: if you haven't already, set the localizer to something that doesn't depend on
         // drive encoders for computing the heading
 
@@ -67,7 +69,7 @@ public class TrackWidthTuner extends LinearOpMode {
                 drive.update();
             }
 
-            double trackWidth = DriveConstants.TRACK_WIDTH * Math.toRadians(ANGLE) / headingAccumulator;
+            double trackWidth = RoadrunnerDriveConstants.TRACK_WIDTH * Math.toRadians(ANGLE) / headingAccumulator;
             trackWidthStats.add(trackWidth);
 
             sleep(DELAY);

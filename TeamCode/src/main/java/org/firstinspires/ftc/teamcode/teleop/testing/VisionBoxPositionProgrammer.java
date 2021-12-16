@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.teamcode.auto.pipeline.BlueCarouselDuckDetection;
+import org.firstinspires.ftc.teamcode.auto.pipeline.一BlueCarouselDuckDetection;
 import org.opencv.core.Point;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
@@ -14,6 +14,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 public class VisionBoxPositionProgrammer extends LinearOpMode {
     @Override
     public void runOpMode() {
+        TuningStart.initializeTuning();
         telemetry.addData("Tutorial: ", "Hold x, a, or b with a dpad to move the boxes and find the optimal position.");
 
         double region1x = 400;
@@ -47,7 +48,7 @@ public class VisionBoxPositionProgrammer extends LinearOpMode {
                 // Start camera stream with 1280x720 resolution
                 camera.startStreaming(1280,720, OpenCvCameraRotation.UPRIGHT);
 
-                camera.setPipeline(new BlueCarouselDuckDetection());
+                camera.setPipeline(new 一BlueCarouselDuckDetection());
             }
             @Override
             public void onError(int errorCode) {
@@ -96,7 +97,7 @@ public class VisionBoxPositionProgrammer extends LinearOpMode {
             Point Region1 = new Point(region1x, region1y);
             Point Region2 = new Point(region2x, region2y);
             Point Region3 = new Point(x3, y3);
-            camera.setPipeline(new BlueCarouselDuckDetection());
+            camera.setPipeline(new 一BlueCarouselDuckDetection());
             String Region1value = region1x + ", " + region1y;
             String Region2value = region2x + ", " + region2y;
             String Region3value = x3 + ", " + y3;

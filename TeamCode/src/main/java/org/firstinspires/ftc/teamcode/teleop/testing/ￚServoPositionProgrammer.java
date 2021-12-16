@@ -7,12 +7,13 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 @Config
 @TeleOp(name="Servo Position Programmer", group="test")
-public class ServoPositionProgrammer extends LinearOpMode {
+public class ￚServoPositionProgrammer extends LinearOpMode {
     public static double pos;
-    public static String servoName = "boxServo";
+    public final static String servoName = "boxServo";
 
     @Override
     public void runOpMode() {
+        TuningStart.initializeTuning();
 
         //hardware initialization
         Servo servo;

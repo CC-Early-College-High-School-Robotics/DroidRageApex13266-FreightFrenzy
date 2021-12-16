@@ -1,12 +1,10 @@
 package org.firstinspires.ftc.teamcode.teleop.testing;
 
 import com.acmerobotics.roadrunner.control.PIDCoefficients;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.hardware.AutoValues;
+import org.firstinspires.ftc.teamcode.hardware.一AutoValues;
 import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.AllianceMarkerStickSubsystem;
 import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.ArmSubsystem;
 import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.BoxSubsystem;
@@ -16,19 +14,18 @@ import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.CarouselSubsys
 import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.DrivetrainSubsystem;
 import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.TelemetrySubsystem;
-import org.firstinspires.ftc.teamcode.roadrunner.drive.DriveConstants;
-import org.firstinspires.ftc.teamcode.roadrunner.drive.TankDriveRoadRunner;
+import org.firstinspires.ftc.teamcode.roadrunner.drive.RoadrunnerDriveConstants;
+import org.firstinspires.ftc.teamcode.roadrunner.drive.RoadrunnerTankDrive;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@TeleOp(name="Tuning Start")
-public class TuningStart extends OpMode {
+public class TuningStart {
     public static Field[][] initialTuning = {
-            TankDriveRoadRunner.class.getDeclaredFields(),
-            DriveConstants.class.getDeclaredFields(),
+            RoadrunnerTankDrive.class.getDeclaredFields(),
+            RoadrunnerDriveConstants.class.getDeclaredFields(),
             AllianceMarkerStickSubsystem.class.getDeclaredFields(),
             ArmSubsystem.class.getDeclaredFields(),
             BoxSubsystem.class.getDeclaredFields(),
@@ -38,16 +35,16 @@ public class TuningStart extends OpMode {
             DrivetrainSubsystem.class.getDeclaredFields(),
             IntakeSubsystem.class.getDeclaredFields(),
             TelemetrySubsystem.class.getDeclaredFields(),
-            AutoValues.class.getDeclaredFields()
+            一AutoValues.class.getDeclaredFields()
     };
 
     public static List<Double> initialTuningDoubles = new ArrayList<>();
     public static List<String> initialTuningStrings = new ArrayList<>();
-    static boolean ranOnce = false;
+    public static boolean ranOnce = false;
 
-    @Override
-    public void init() {
+    public static void initializeTuning() {
         // Initialize subsystems
+        Telemetry telemetry = null;
         if (!ranOnce) {
             for (Field[] fields : initialTuning) {
 
@@ -76,18 +73,14 @@ public class TuningStart extends OpMode {
                     } catch (Exception ignored) {
                     }
                 }
-                telemetry.addData("amount of fields", fields.length);
+                //telemetry.addData("amount of fields", fields.length);
             }
-            telemetry.addData("amount of classes", initialTuning.length);
+            //telemetry.addData("amount of classes", initialTuning.length);
 
             ranOnce = true;
         }
 
-        telemetry.addData("values", initialTuningDoubles);
+//        telemetry.addData("values", initialTuningDoubles);
 
-    }
-
-    @Override
-    public void loop() {
     }
 }

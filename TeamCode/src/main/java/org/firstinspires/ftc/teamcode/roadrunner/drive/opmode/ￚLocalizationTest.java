@@ -5,7 +5,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-import org.firstinspires.ftc.teamcode.roadrunner.drive.TankDriveRoadRunner;
+import org.firstinspires.ftc.teamcode.roadrunner.drive.RoadrunnerTankDrive;
+import org.firstinspires.ftc.teamcode.teleop.testing.TuningStart;
 
 /**
  * This is a simple teleop routine for testing localization. Drive the robot around like a normal
@@ -15,10 +16,11 @@ import org.firstinspires.ftc.teamcode.roadrunner.drive.TankDriveRoadRunner;
  * encoder localizer heading may be significantly off if the track width has not been tuned).
  */
 @TeleOp(group = "drive")
-public class LocalizationTest extends LinearOpMode {
+public class ￚLocalizationTest extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
-        TankDriveRoadRunner drive = new TankDriveRoadRunner(hardwareMap);
+        TuningStart.initializeTuning();
+        RoadrunnerTankDrive drive = new RoadrunnerTankDrive(hardwareMap);
 
         drive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 

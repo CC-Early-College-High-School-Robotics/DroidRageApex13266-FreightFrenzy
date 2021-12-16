@@ -9,20 +9,20 @@ import com.acmerobotics.roadrunner.profile.MotionProfileGenerator;
 import com.acmerobotics.roadrunner.profile.MotionState;
 import com.acmerobotics.roadrunner.util.NanoClock;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.RobotLog;
 
 import java.util.List;
 
-import static org.firstinspires.ftc.teamcode.roadrunner.drive.DriveConstants.MAX_ACCEL;
-import static org.firstinspires.ftc.teamcode.roadrunner.drive.DriveConstants.MAX_VEL;
-import static org.firstinspires.ftc.teamcode.roadrunner.drive.DriveConstants.MOTOR_VELO_PID;
-import static org.firstinspires.ftc.teamcode.roadrunner.drive.DriveConstants.RUN_USING_ENCODER;
-import static org.firstinspires.ftc.teamcode.roadrunner.drive.DriveConstants.kV;
+import static org.firstinspires.ftc.teamcode.roadrunner.drive.RoadrunnerDriveConstants.MAX_ACCEL;
+import static org.firstinspires.ftc.teamcode.roadrunner.drive.RoadrunnerDriveConstants.MAX_VEL;
+import static org.firstinspires.ftc.teamcode.roadrunner.drive.RoadrunnerDriveConstants.MOTOR_VELO_PID;
+import static org.firstinspires.ftc.teamcode.roadrunner.drive.RoadrunnerDriveConstants.RUN_USING_ENCODER;
+import static org.firstinspires.ftc.teamcode.roadrunner.drive.RoadrunnerDriveConstants.kV;
 
-import org.firstinspires.ftc.teamcode.roadrunner.drive.TankDriveRoadRunner;
+import org.firstinspires.ftc.teamcode.roadrunner.drive.RoadrunnerTankDrive;
+import org.firstinspires.ftc.teamcode.teleop.testing.TuningStart;
 
 /*
  * This routine is designed to tune the PID coefficients used by the REV Expansion Hubs for closed-
@@ -50,7 +50,7 @@ import org.firstinspires.ftc.teamcode.roadrunner.drive.TankDriveRoadRunner;
  */
 @Config
 @Autonomous(group = "drive")
-public class DriveVelocityPIDTuner extends LinearOpMode {
+public class ￚDriveVelocityPIDTuner extends LinearOpMode {
     public static double DISTANCE = 72; // in
 
     enum Mode {
@@ -66,6 +66,7 @@ public class DriveVelocityPIDTuner extends LinearOpMode {
 
     @Override
     public void runOpMode() {
+        TuningStart.initializeTuning();
         if (!RUN_USING_ENCODER) {
             RobotLog.setGlobalErrorMsg("%s does not need to be run if the built-in motor velocity" +
                     "PID is not in use", getClass().getSimpleName());
@@ -73,7 +74,7 @@ public class DriveVelocityPIDTuner extends LinearOpMode {
 
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
-        TankDriveRoadRunner drive = new TankDriveRoadRunner(hardwareMap);
+        RoadrunnerTankDrive drive = new RoadrunnerTankDrive(hardwareMap);
 
         Mode mode = Mode.TUNING_MODE;
 

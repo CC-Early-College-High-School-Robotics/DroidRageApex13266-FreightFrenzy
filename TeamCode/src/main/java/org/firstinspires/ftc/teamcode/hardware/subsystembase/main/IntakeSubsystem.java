@@ -38,13 +38,13 @@ public class IntakeSubsystem extends BaseSubsystem {
     // Default command
     public void defaultCommand(Gamepad gamepad1, Gamepad gamepad2) {
         super.gamepadInit(gamepad1, gamepad2);
-        if (gamepad1.right_trigger >= TRIGGER_THRESHOLD) {
+        if (gamepad1.right_trigger >= ControllerSubsystem.TRIGGER_THRESHOLD) {
             intakeMotor.setVelocity(-INTAKE_VELOCITY);
         }
-        else if (gamepad1.left_trigger >= TRIGGER_THRESHOLD) {
+        else if (gamepad1.left_trigger >= ControllerSubsystem.TRIGGER_THRESHOLD) {
             intakeMotor.setVelocity(INTAKE_VELOCITY);
         }
-        else if (gamepad1.right_trigger < TRIGGER_THRESHOLD && gamepad1.left_trigger < TRIGGER_THRESHOLD) {
+        else if (gamepad1.right_trigger < ControllerSubsystem.TRIGGER_THRESHOLD && gamepad1.left_trigger < ControllerSubsystem.TRIGGER_THRESHOLD) {
             intakeMotor.setVelocity(0);
         }
     }

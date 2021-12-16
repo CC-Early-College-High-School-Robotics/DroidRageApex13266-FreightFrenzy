@@ -83,44 +83,44 @@ public class ArmSubsystem extends BaseSubsystem {
         }
 
 
-        if (-gamepad2.right_stick_y > TRIGGER_THRESHOLD) {
+        if (-gamepad2.right_stick_y > ControllerSubsystem.TRIGGER_THRESHOLD) {
             armCurrentPos += ARM_POS_CHANGE_SPEED;
         }
-        if (-gamepad2.right_stick_y < -TRIGGER_THRESHOLD) {
+        if (-gamepad2.right_stick_y < -ControllerSubsystem.TRIGGER_THRESHOLD) {
             armCurrentPos -= ARM_POS_CHANGE_SPEED;
         }
 
 
 
-        if (-gamepad2.right_stick_y > TRIGGER_THRESHOLD && gamepad2.dpad_left) {
+        if (-gamepad2.right_stick_y > ControllerSubsystem.TRIGGER_THRESHOLD && gamepad2.dpad_left) {
             ARM_INTAKE_POS+= ARM_POS_CHANGE_SPEED;
         }
-        if (-gamepad2.right_stick_y < -TRIGGER_THRESHOLD && gamepad2.dpad_left) {
+        if (-gamepad2.right_stick_y < -ControllerSubsystem.TRIGGER_THRESHOLD && gamepad2.dpad_left) {
             ARM_INTAKE_POS -= ARM_POS_CHANGE_SPEED;
         }
 
 
 
-        if (-gamepad2.right_stick_y > TRIGGER_THRESHOLD && gamepad2.dpad_up) {
+        if (-gamepad2.right_stick_y > ControllerSubsystem.TRIGGER_THRESHOLD && gamepad2.dpad_up) {
             ARM_HIGH_POS+= ARM_POS_CHANGE_SPEED;
         }
-        if (-gamepad2.right_stick_y < -TRIGGER_THRESHOLD && gamepad2.dpad_up) {
+        if (-gamepad2.right_stick_y < -ControllerSubsystem.TRIGGER_THRESHOLD && gamepad2.dpad_up) {
             ARM_HIGH_POS -= ARM_POS_CHANGE_SPEED;
         }
 
 
 
-        if (-gamepad2.right_stick_y > TRIGGER_THRESHOLD && gamepad2.dpad_right) {
+        if (-gamepad2.right_stick_y > ControllerSubsystem.TRIGGER_THRESHOLD && gamepad2.dpad_right) {
             ARM_MID_POS+= ARM_POS_CHANGE_SPEED;
         }
-        if (-gamepad2.right_stick_y < -TRIGGER_THRESHOLD && gamepad2.dpad_right) {
+        if (-gamepad2.right_stick_y < -ControllerSubsystem.TRIGGER_THRESHOLD && gamepad2.dpad_right) {
             ARM_MID_POS -= ARM_POS_CHANGE_SPEED;
         }
 
-        if (-gamepad2.right_stick_y > TRIGGER_THRESHOLD && gamepad2.dpad_down) {
+        if (-gamepad2.right_stick_y > ControllerSubsystem.TRIGGER_THRESHOLD && gamepad2.dpad_down) {
             ARM_LOW_POS+= ARM_POS_CHANGE_SPEED;
         }
-        if (-gamepad2.right_stick_y < -TRIGGER_THRESHOLD && gamepad2.dpad_down) {
+        if (-gamepad2.right_stick_y < -ControllerSubsystem.TRIGGER_THRESHOLD && gamepad2.dpad_down) {
             ARM_LOW_POS -= ARM_POS_CHANGE_SPEED;
         }
     }

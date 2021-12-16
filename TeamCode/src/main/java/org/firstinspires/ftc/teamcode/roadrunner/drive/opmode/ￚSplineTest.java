@@ -6,16 +6,18 @@ import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.teamcode.roadrunner.drive.TankDriveRoadRunner;
+import org.firstinspires.ftc.teamcode.roadrunner.drive.RoadrunnerTankDrive;
+import org.firstinspires.ftc.teamcode.teleop.testing.TuningStart;
 
 /*
  * This is an example of a more complex path to really test the tuning.
  */
 @Autonomous(group = "drive")
-public class SplineTest extends LinearOpMode {
+public class ￚSplineTest extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
-        TankDriveRoadRunner drive = new TankDriveRoadRunner(hardwareMap);
+        TuningStart.initializeTuning();
+        RoadrunnerTankDrive drive = new RoadrunnerTankDrive(hardwareMap);
 
         waitForStart();
 

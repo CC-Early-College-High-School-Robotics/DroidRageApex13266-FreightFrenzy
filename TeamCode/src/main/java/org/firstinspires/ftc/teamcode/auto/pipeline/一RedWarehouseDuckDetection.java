@@ -11,22 +11,22 @@ import org.opencv.imgproc.Imgproc;
 import org.openftc.easyopencv.OpenCvPipeline;
 
 @Config
-public class BlueWarehouseDuckDetection extends OpenCvPipeline {
+public class 一RedWarehouseDuckDetection extends OpenCvPipeline {
 
-    public BlueWarehouseDuckDetection() {
+    public 一RedWarehouseDuckDetection() {
     }
 
-    public static int point1x = 230;
-    public static int point1y = 0;
+    public static int point1x = 450;
+    public static int point1y = 200;
 
-    public static int point2x = 430;
-    public static int point2y = 100;
+    public static int point2x = 700;
+    public static int point2y = 0;
 
-    public static int point3x = 700;
-    public static int point3y = 250;
+    public static int point3x = 950;
+    public static int point3y = 0;
 
     public static int boxWidth = 200;
-    public static int boxHeight = 300;
+    public static int boxHeight = 500;
 
     private final Point region1 = new Point(point1x,point1y);
     private final Point region2 = new Point(point2x,point2y);

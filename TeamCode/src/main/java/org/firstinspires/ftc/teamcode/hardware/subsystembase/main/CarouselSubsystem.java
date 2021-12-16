@@ -35,13 +35,13 @@ public class CarouselSubsystem extends BaseSubsystem {
     // Default command
     public void defaultCommand(Gamepad gamepad1, Gamepad gamepad2) {
         super.gamepadInit(gamepad1, gamepad2);
-        if (gamepad2.right_trigger >= TRIGGER_THRESHOLD) {
+        if (gamepad2.right_trigger >= ControllerSubsystem.TRIGGER_THRESHOLD) {
             carouselMotor.setPower(CAROUSEL_POWER);
         }
-        if (gamepad2.left_trigger >= TRIGGER_THRESHOLD) {
+        if (gamepad2.left_trigger >= ControllerSubsystem.TRIGGER_THRESHOLD) {
             carouselMotor.setPower(-CAROUSEL_POWER);
         }
-        if (gamepad2.right_trigger < TRIGGER_THRESHOLD && gamepad2.left_trigger < TRIGGER_THRESHOLD) {
+        if (gamepad2.right_trigger < ControllerSubsystem.TRIGGER_THRESHOLD && gamepad2.left_trigger < ControllerSubsystem.TRIGGER_THRESHOLD) {
             carouselMotor.setPower(0);
         }
     }

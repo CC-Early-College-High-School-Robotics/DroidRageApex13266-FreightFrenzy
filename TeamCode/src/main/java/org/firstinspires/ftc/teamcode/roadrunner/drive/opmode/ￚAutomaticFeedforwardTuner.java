@@ -10,16 +10,17 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.RobotLog;
 
 import org.firstinspires.ftc.robotcore.internal.system.Misc;
-import org.firstinspires.ftc.teamcode.roadrunner.drive.TankDriveRoadRunner;
+import org.firstinspires.ftc.teamcode.roadrunner.drive.RoadrunnerTankDrive;
 import org.firstinspires.ftc.teamcode.roadrunner.util.LoggingUtil;
 import org.firstinspires.ftc.teamcode.roadrunner.util.RegressionUtil;
+import org.firstinspires.ftc.teamcode.teleop.testing.TuningStart;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.firstinspires.ftc.teamcode.roadrunner.drive.DriveConstants.MAX_RPM;
-import static org.firstinspires.ftc.teamcode.roadrunner.drive.DriveConstants.RUN_USING_ENCODER;
-import static org.firstinspires.ftc.teamcode.roadrunner.drive.DriveConstants.rpmToVelocity;
+import static org.firstinspires.ftc.teamcode.roadrunner.drive.RoadrunnerDriveConstants.MAX_RPM;
+import static org.firstinspires.ftc.teamcode.roadrunner.drive.RoadrunnerDriveConstants.RUN_USING_ENCODER;
+import static org.firstinspires.ftc.teamcode.roadrunner.drive.RoadrunnerDriveConstants.rpmToVelocity;
 
 /*
  * Op mode for computing kV, kStatic, and kA from various drive routines. For the curious, here's an
@@ -33,12 +34,13 @@ import static org.firstinspires.ftc.teamcode.roadrunner.drive.DriveConstants.rpm
  */
 @Config
 @Autonomous(group = "drive")
-public class AutomaticFeedforwardTuner extends LinearOpMode {
+public class ￚAutomaticFeedforwardTuner extends LinearOpMode {
     public static double MAX_POWER = 0.7;
     public static double DISTANCE = 100; // in
 
     @Override
     public void runOpMode() throws InterruptedException {
+        TuningStart.initializeTuning();
         if (RUN_USING_ENCODER) {
             RobotLog.setGlobalErrorMsg("Feedforward constants usually don't need to be tuned " +
                     "when using the built-in drive motor velocity PID.");
@@ -46,7 +48,7 @@ public class AutomaticFeedforwardTuner extends LinearOpMode {
 
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
-        TankDriveRoadRunner drive = new TankDriveRoadRunner(hardwareMap);
+        RoadrunnerTankDrive drive = new RoadrunnerTankDrive(hardwareMap);
 
         NanoClock clock = NanoClock.system();
 

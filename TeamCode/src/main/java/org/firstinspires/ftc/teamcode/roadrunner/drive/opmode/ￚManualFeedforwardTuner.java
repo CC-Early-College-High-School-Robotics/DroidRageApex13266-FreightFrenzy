@@ -15,14 +15,15 @@ import com.qualcomm.robotcore.util.RobotLog;
 
 import java.util.Objects;
 
-import static org.firstinspires.ftc.teamcode.roadrunner.drive.DriveConstants.MAX_ACCEL;
-import static org.firstinspires.ftc.teamcode.roadrunner.drive.DriveConstants.MAX_VEL;
-import static org.firstinspires.ftc.teamcode.roadrunner.drive.DriveConstants.RUN_USING_ENCODER;
-import static org.firstinspires.ftc.teamcode.roadrunner.drive.DriveConstants.kA;
-import static org.firstinspires.ftc.teamcode.roadrunner.drive.DriveConstants.kStatic;
-import static org.firstinspires.ftc.teamcode.roadrunner.drive.DriveConstants.kV;
+import static org.firstinspires.ftc.teamcode.roadrunner.drive.RoadrunnerDriveConstants.MAX_ACCEL;
+import static org.firstinspires.ftc.teamcode.roadrunner.drive.RoadrunnerDriveConstants.MAX_VEL;
+import static org.firstinspires.ftc.teamcode.roadrunner.drive.RoadrunnerDriveConstants.RUN_USING_ENCODER;
+import static org.firstinspires.ftc.teamcode.roadrunner.drive.RoadrunnerDriveConstants.kA;
+import static org.firstinspires.ftc.teamcode.roadrunner.drive.RoadrunnerDriveConstants.kStatic;
+import static org.firstinspires.ftc.teamcode.roadrunner.drive.RoadrunnerDriveConstants.kV;
 
-import org.firstinspires.ftc.teamcode.roadrunner.drive.TankDriveRoadRunner;
+import org.firstinspires.ftc.teamcode.roadrunner.drive.RoadrunnerTankDrive;
+import org.firstinspires.ftc.teamcode.teleop.testing.TuningStart;
 
 /*
  * This routine is designed to tune the open-loop feedforward coefficients. Although it may seem unnecessary,
@@ -41,12 +42,12 @@ import org.firstinspires.ftc.teamcode.roadrunner.drive.TankDriveRoadRunner;
  */
 @Config
 @Autonomous(group = "drive")
-public class ManualFeedforwardTuner extends LinearOpMode {
+public class ￚManualFeedforwardTuner extends LinearOpMode {
     public static double DISTANCE = 72; // in
 
     private FtcDashboard dashboard = FtcDashboard.getInstance();
 
-    private TankDriveRoadRunner drive;
+    private RoadrunnerTankDrive drive;
 
     enum Mode {
         DRIVER_MODE,
@@ -63,6 +64,7 @@ public class ManualFeedforwardTuner extends LinearOpMode {
 
     @Override
     public void runOpMode() {
+        TuningStart.initializeTuning();
         if (RUN_USING_ENCODER) {
             RobotLog.setGlobalErrorMsg("Feedforward constants usually don't need to be tuned " +
                     "when using the built-in drive motor velocity PID.");
@@ -70,7 +72,7 @@ public class ManualFeedforwardTuner extends LinearOpMode {
 
         telemetry = new MultipleTelemetry(telemetry, dashboard.getTelemetry());
 
-        drive = new TankDriveRoadRunner(hardwareMap);
+        drive = new RoadrunnerTankDrive(hardwareMap);
 
         mode = Mode.TUNING_MODE;
 

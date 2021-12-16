@@ -6,11 +6,12 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.teamcode.auto.pipeline.RedWarehouseDuckDetection;
-import org.firstinspires.ftc.teamcode.hardware.AutoValues;
+import org.firstinspires.ftc.teamcode.auto.pipeline.一RedWarehouseDuckDetection;
+import org.firstinspires.ftc.teamcode.hardware.一AutoValues;
 import org.firstinspires.ftc.teamcode.hardware.Devices;
-import org.firstinspires.ftc.teamcode.roadrunner.drive.TankDriveRoadRunner;
+import org.firstinspires.ftc.teamcode.roadrunner.drive.RoadrunnerTankDrive;
 import org.firstinspires.ftc.teamcode.roadrunner.trajectorysequence.TrajectorySequence;
+import org.firstinspires.ftc.teamcode.teleop.testing.TuningStart;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
@@ -19,7 +20,8 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 public class RedWarehouse extends LinearOpMode {
     @Override
     public void runOpMode() {
-        TankDriveRoadRunner drive = new TankDriveRoadRunner(hardwareMap);
+        TuningStart.initializeTuning();
+        RoadrunnerTankDrive drive = new RoadrunnerTankDrive(hardwareMap);
         Devices robot = new Devices();
         robot.init(hardwareMap);
 
@@ -29,7 +31,7 @@ public class RedWarehouse extends LinearOpMode {
         // move camera
         robot.cameraServo.setPosition(Devices.CAMERA_RED_WAREHOUSE_POS);
 
-        RedWarehouseDuckDetection detector = new RedWarehouseDuckDetection();
+        一RedWarehouseDuckDetection detector = new 一RedWarehouseDuckDetection();
 
 
         /* Open CV */
@@ -81,19 +83,19 @@ public class RedWarehouse extends LinearOpMode {
         waitForStart();
         if(isStopRequested()) return;
 
-        if (detector.getAnalysis() == RedWarehouseDuckDetection.DuckPosition.RIGHT) {
+        if (detector.getAnalysis() == 一RedWarehouseDuckDetection.DuckPosition.RIGHT) {
             armHeight = Devices.ARM_HIGH_POS;
-            hubDistance = AutoValues.RED_WAREHOUSE_HIGH;
+            hubDistance = 一AutoValues.RED_WAREHOUSE_HIGH;
         }
 
-        if (detector.getAnalysis() == RedWarehouseDuckDetection.DuckPosition.CENTER) {
+        if (detector.getAnalysis() == 一RedWarehouseDuckDetection.DuckPosition.CENTER) {
             armHeight = Devices.ARM_MID_POS;
-            hubDistance = AutoValues.RED_WAREHOUSE_MID;
+            hubDistance = 一AutoValues.RED_WAREHOUSE_MID;
         }
 
-        if (detector.getAnalysis() == RedWarehouseDuckDetection.DuckPosition.LEFT) {
+        if (detector.getAnalysis() == 一RedWarehouseDuckDetection.DuckPosition.LEFT) {
             armHeight = Devices.ARM_LOW_POS;
-            hubDistance = AutoValues.RED_WAREHOUSE_LOW;
+            hubDistance = 一AutoValues.RED_WAREHOUSE_LOW;
 
         }
 

@@ -41,23 +41,23 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.firstinspires.ftc.teamcode.roadrunner.drive.DriveConstants.MAX_ACCEL;
-import static org.firstinspires.ftc.teamcode.roadrunner.drive.DriveConstants.MAX_ANG_ACCEL;
-import static org.firstinspires.ftc.teamcode.roadrunner.drive.DriveConstants.MAX_ANG_VEL;
-import static org.firstinspires.ftc.teamcode.roadrunner.drive.DriveConstants.MAX_VEL;
-import static org.firstinspires.ftc.teamcode.roadrunner.drive.DriveConstants.MOTOR_VELO_PID;
-import static org.firstinspires.ftc.teamcode.roadrunner.drive.DriveConstants.RUN_USING_ENCODER;
-import static org.firstinspires.ftc.teamcode.roadrunner.drive.DriveConstants.TRACK_WIDTH;
-import static org.firstinspires.ftc.teamcode.roadrunner.drive.DriveConstants.encoderTicksToInches;
-import static org.firstinspires.ftc.teamcode.roadrunner.drive.DriveConstants.kA;
-import static org.firstinspires.ftc.teamcode.roadrunner.drive.DriveConstants.kStatic;
-import static org.firstinspires.ftc.teamcode.roadrunner.drive.DriveConstants.kV;
+import static org.firstinspires.ftc.teamcode.roadrunner.drive.RoadrunnerDriveConstants.MAX_ACCEL;
+import static org.firstinspires.ftc.teamcode.roadrunner.drive.RoadrunnerDriveConstants.MAX_ANG_ACCEL;
+import static org.firstinspires.ftc.teamcode.roadrunner.drive.RoadrunnerDriveConstants.MAX_ANG_VEL;
+import static org.firstinspires.ftc.teamcode.roadrunner.drive.RoadrunnerDriveConstants.MAX_VEL;
+import static org.firstinspires.ftc.teamcode.roadrunner.drive.RoadrunnerDriveConstants.MOTOR_VELO_PID;
+import static org.firstinspires.ftc.teamcode.roadrunner.drive.RoadrunnerDriveConstants.RUN_USING_ENCODER;
+import static org.firstinspires.ftc.teamcode.roadrunner.drive.RoadrunnerDriveConstants.TRACK_WIDTH;
+import static org.firstinspires.ftc.teamcode.roadrunner.drive.RoadrunnerDriveConstants.encoderTicksToInches;
+import static org.firstinspires.ftc.teamcode.roadrunner.drive.RoadrunnerDriveConstants.kA;
+import static org.firstinspires.ftc.teamcode.roadrunner.drive.RoadrunnerDriveConstants.kStatic;
+import static org.firstinspires.ftc.teamcode.roadrunner.drive.RoadrunnerDriveConstants.kV;
 
 /*
  * Simple tank drive hardware implementation for REV hardware.
  */
 @Config
-public class TankDriveRoadRunner extends TankDrive {
+public class RoadrunnerTankDrive extends TankDrive {
     public static PIDCoefficients AXIAL_PID = new PIDCoefficients(17, 0, 0.23); // 9, 0, 0.5
     public static PIDCoefficients CROSS_TRACK_PID = new PIDCoefficients(0.02, 0, 0); // 0.0099, 0, 0.0003
     public static PIDCoefficients HEADING_PID = new PIDCoefficients(13, 0, 0.778); // 18, 0, 0.778
@@ -83,7 +83,7 @@ public class TankDriveRoadRunner extends TankDrive {
 
     private VoltageSensor batteryVoltageSensor;
 
-    public TankDriveRoadRunner(HardwareMap hardwareMap) {
+    public RoadrunnerTankDrive(HardwareMap hardwareMap) {
         super(kV, kA, kStatic, TRACK_WIDTH);
         leftDriveVeloPID = new PIDController(LEFT_DRIVE_PID.kP, LEFT_DRIVE_PID.kI, LEFT_DRIVE_PID.kD);
         rightDriveVeloPID = new PIDController(RIGHT_DRIVE_PID.kP, RIGHT_DRIVE_PID.kI, RIGHT_DRIVE_PID.kD);

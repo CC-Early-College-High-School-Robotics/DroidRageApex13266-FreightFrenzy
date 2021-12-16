@@ -6,12 +6,13 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.teamcode.auto.pipeline.BlueCarouselDuckDetection;
+import org.firstinspires.ftc.teamcode.auto.pipeline.一BlueCarouselDuckDetection;
 
-import org.firstinspires.ftc.teamcode.hardware.AutoValues;
+import org.firstinspires.ftc.teamcode.hardware.一AutoValues;
 import org.firstinspires.ftc.teamcode.hardware.Devices;
-import org.firstinspires.ftc.teamcode.roadrunner.drive.TankDriveRoadRunner;
+import org.firstinspires.ftc.teamcode.roadrunner.drive.RoadrunnerTankDrive;
 import org.firstinspires.ftc.teamcode.roadrunner.trajectorysequence.TrajectorySequence;
+import org.firstinspires.ftc.teamcode.teleop.testing.TuningStart;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
@@ -20,7 +21,8 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 public class BlueCarousel extends LinearOpMode {
     @Override
     public void runOpMode() {
-        TankDriveRoadRunner drive = new TankDriveRoadRunner(hardwareMap);
+        TuningStart.initializeTuning();
+        RoadrunnerTankDrive drive = new RoadrunnerTankDrive(hardwareMap);
         Devices robot = new Devices();
         robot.init(hardwareMap);
 
@@ -30,7 +32,7 @@ public class BlueCarousel extends LinearOpMode {
         // move camera
         robot.cameraServo.setPosition(Devices.CAMERA_BLUE_CAROUSEL_POS);
 
-        BlueCarouselDuckDetection detector = new BlueCarouselDuckDetection();
+        一BlueCarouselDuckDetection detector = new 一BlueCarouselDuckDetection();
 
 
         /* Open CV */
@@ -81,19 +83,19 @@ public class BlueCarousel extends LinearOpMode {
         waitForStart();
         if(isStopRequested()) return;
 
-        if (detector.getAnalysis() == BlueCarouselDuckDetection.DuckPosition.RIGHT) {
+        if (detector.getAnalysis() == 一BlueCarouselDuckDetection.DuckPosition.RIGHT) {
             armHeight = Devices.ARM_HIGH_POS;
-            hubDistance = AutoValues.BLUE_CAROUSEL_HIGH;
+            hubDistance = 一AutoValues.BLUE_CAROUSEL_HIGH;
         }
 
-        if (detector.getAnalysis() == BlueCarouselDuckDetection.DuckPosition.CENTER) {
+        if (detector.getAnalysis() == 一BlueCarouselDuckDetection.DuckPosition.CENTER) {
             armHeight = Devices.ARM_MID_POS;
-            hubDistance = AutoValues.BLUE_CAROUSEL_MID;
+            hubDistance = 一AutoValues.BLUE_CAROUSEL_MID;
         }
 
-        if (detector.getAnalysis() == BlueCarouselDuckDetection.DuckPosition.LEFT) {
+        if (detector.getAnalysis() == 一BlueCarouselDuckDetection.DuckPosition.LEFT) {
             armHeight = Devices.ARM_LOW_POS;
-            hubDistance = AutoValues.BLUE_CAROUSEL_LOW;;
+            hubDistance = 一AutoValues.BLUE_CAROUSEL_LOW;;
 
         }
 

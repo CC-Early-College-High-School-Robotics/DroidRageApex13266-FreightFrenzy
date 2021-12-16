@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.teamcode.auto.pipeline.ConvertToCbChannel;
+import org.firstinspires.ftc.teamcode.auto.pipeline.一ConvertToCbChannel;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
@@ -13,6 +13,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 public class VisionVisualizer extends LinearOpMode {
     @Override
     public void runOpMode() {
+        TuningStart.initializeTuning();
 
         /* Open CV */
 
@@ -38,7 +39,7 @@ public class VisionVisualizer extends LinearOpMode {
                 // Start camera stream with 1280x720 resolution
                 camera.startStreaming(1280,720, OpenCvCameraRotation.UPRIGHT);
 
-                camera.setPipeline(new ConvertToCbChannel());
+                camera.setPipeline(new 一ConvertToCbChannel());
             }
             @Override
             public void onError(int errorCode) {

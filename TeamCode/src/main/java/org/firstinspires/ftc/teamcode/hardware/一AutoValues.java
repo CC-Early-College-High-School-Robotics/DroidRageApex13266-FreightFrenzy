@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.hardware;
 import com.acmerobotics.dashboard.config.Config;
 
 @Config
-public class AutoValues {
+public class 一AutoValues {
     public static double BLUE_CAROUSEL_HIGH = 26;
     public static double BLUE_CAROUSEL_MID = 21;
     public static double BLUE_CAROUSEL_LOW = 23.5;

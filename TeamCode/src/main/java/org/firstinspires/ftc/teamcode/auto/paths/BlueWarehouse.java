@@ -6,30 +6,34 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.teamcode.auto.pipeline.BlueWarehouseDuckDetection;
-import org.firstinspires.ftc.teamcode.hardware.AutoValues;
+import org.firstinspires.ftc.teamcode.auto.pipeline.一BlueWarehouseDuckDetection;
+import org.firstinspires.ftc.teamcode.hardware.一AutoValues;
 import org.firstinspires.ftc.teamcode.hardware.Devices;
-import org.firstinspires.ftc.teamcode.roadrunner.drive.TankDriveRoadRunner;
+import org.firstinspires.ftc.teamcode.roadrunner.drive.RoadrunnerTankDrive;
 import org.firstinspires.ftc.teamcode.roadrunner.trajectorysequence.TrajectorySequence;
+import org.firstinspires.ftc.teamcode.teleop.testing.TuningStart;
+import org.firstinspires.ftc.teamcode.teleop.testing.ￚServoPositionProgrammer;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
-@Autonomous(name="Blue Warehouse (Top) Roadrunner Path", group="Roadrunner Paths")
+@Autonomous(name="Blue Warehouse (Top) Roadrunner Path", group="Roadrunner Paths", preselectTeleOp = ￚServoPositionProgrammer.servoName)
 public class BlueWarehouse extends LinearOpMode {
     @Override
     public void runOpMode() {
-        TankDriveRoadRunner drive = new TankDriveRoadRunner(hardwareMap);
+        TuningStart.initializeTuning();
+        RoadrunnerTankDrive drive = new RoadrunnerTankDrive(hardwareMap);
         Devices robot = new Devices();
         robot.init(hardwareMap);
 
         double armHeight = 0;
+
         double hubDistance = 0;
 
         // move camera
         robot.cameraServo.setPosition(Devices.CAMERA_BLUE_WAREHOUSE_POS);
 
-        BlueWarehouseDuckDetection detector = new BlueWarehouseDuckDetection();
+        一BlueWarehouseDuckDetection detector = new 一BlueWarehouseDuckDetection();
 
 
         /* Open CV */
@@ -79,19 +83,19 @@ public class BlueWarehouse extends LinearOpMode {
         waitForStart();
         if(isStopRequested()) return;
 
-        if (detector.getAnalysis() == BlueWarehouseDuckDetection.DuckPosition.RIGHT) {
+        if (detector.getAnalysis() == 一BlueWarehouseDuckDetection.DuckPosition.RIGHT) {
             armHeight = Devices.ARM_HIGH_POS;
-            hubDistance = AutoValues.BLUE_WAREHOUSE_HIGH;
+            hubDistance = 一AutoValues.BLUE_WAREHOUSE_HIGH;
         }
 
-        if (detector.getAnalysis() == BlueWarehouseDuckDetection.DuckPosition.CENTER) {
+        if (detector.getAnalysis() == 一BlueWarehouseDuckDetection.DuckPosition.CENTER) {
             armHeight = Devices.ARM_MID_POS;
-            hubDistance = AutoValues.BLUE_WAREHOUSE_MID;
+            hubDistance = 一AutoValues.BLUE_WAREHOUSE_MID;
         }
 
-        if (detector.getAnalysis() == BlueWarehouseDuckDetection.DuckPosition.LEFT) {
+        if (detector.getAnalysis() == 一BlueWarehouseDuckDetection.DuckPosition.LEFT) {
             armHeight = Devices.ARM_LOW_POS;
-            hubDistance = AutoValues.BLUE_WAREHOUSE_LOW;
+            hubDistance = 一AutoValues.BLUE_WAREHOUSE_LOW;
 
         }
 

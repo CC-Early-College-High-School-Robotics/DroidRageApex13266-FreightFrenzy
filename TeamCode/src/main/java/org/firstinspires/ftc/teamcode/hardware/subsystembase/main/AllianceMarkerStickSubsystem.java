@@ -77,10 +77,10 @@ public class AllianceMarkerStickSubsystem extends BaseSubsystem {
             allianceMarkerServoReset = true;
         }
 
-        if (-gamepad2.left_stick_y > TRIGGER_THRESHOLD) {
+        if (-gamepad2.left_stick_y > ControllerSubsystem.TRIGGER_THRESHOLD) {
             allianceMarkerServoTargetPos -= ALLIANCE_MARKER_SERVO_SPEED;
         }
-        if (-gamepad2.left_stick_y < -TRIGGER_THRESHOLD) {
+        if (-gamepad2.left_stick_y < -ControllerSubsystem.TRIGGER_THRESHOLD) {
             allianceMarkerServoTargetPos += ALLIANCE_MARKER_SERVO_SPEED;
         }
 

@@ -11,9 +11,9 @@ import org.opencv.imgproc.Imgproc;
 import org.openftc.easyopencv.OpenCvPipeline;
 
 @Config
-public class RedCarouselDuckDetection extends OpenCvPipeline {
+public class 一RedCarouselDuckDetection extends OpenCvPipeline {
 
-    public RedCarouselDuckDetection() {
+    public 一RedCarouselDuckDetection() {
     }
 
     public static int point1x = 200;
