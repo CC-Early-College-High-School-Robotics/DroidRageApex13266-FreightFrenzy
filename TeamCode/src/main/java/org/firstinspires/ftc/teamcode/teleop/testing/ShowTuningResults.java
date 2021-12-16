@@ -89,6 +89,7 @@ public class ShowTuningResults extends OpMode {
     List<String> endTuningStrings = new ArrayList<>();
     boolean dataExists = false;
     boolean dataExistsInClass = false;
+    Field tempField;
 
 
     @Override
@@ -145,7 +146,6 @@ public class ShowTuningResults extends OpMode {
                     if (!endTuningDoubles.get(doubleIndexNumber).equals(TuningStart.initialTuningDoubles.get(doubleIndexNumber))) {
                         telemetry.addData(field.getName() + " kI", endTuningDoubles.get(doubleIndexNumber));
                         dataExists = true;
-                        dataExistsInClass = true;
                     }
                     doubleIndexNumber++;
 
@@ -198,13 +198,13 @@ public class ShowTuningResults extends OpMode {
                 } catch (Exception ignored) {
 
                 }
-                if (dataExistsInClass) {
-                    telemetry.addLine(field.toString());
-                    telemetry.addLine(field.getName());
-                    telemetry.addLine(String.valueOf(field.getModifiers()));
-                }
-                dataExistsInClass = false;
+                tempField = field;
             }
+            if (dataExistsInClass) {
+                telemetry.addLine(tempField.getDeclaringClass().getSimpleName());
+                telemetry.addLine();
+            }
+            dataExistsInClass = false;
         }
         if (!dataExists) {
             telemetry.addLine("There is no tuning data that has been changed and recorded :(");
