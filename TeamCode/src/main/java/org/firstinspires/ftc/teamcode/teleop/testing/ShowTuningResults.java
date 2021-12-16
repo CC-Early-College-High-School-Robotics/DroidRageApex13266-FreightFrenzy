@@ -5,6 +5,10 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
+import org.firstinspires.ftc.teamcode.auto.pipeline.一BlueCarouselDuckDetection;
+import org.firstinspires.ftc.teamcode.auto.pipeline.一BlueWarehouseDuckDetection;
+import org.firstinspires.ftc.teamcode.auto.pipeline.一RedCarouselDuckDetection;
+import org.firstinspires.ftc.teamcode.auto.pipeline.一RedWarehouseDuckDetection;
 import org.firstinspires.ftc.teamcode.hardware.一AutoValues;
 import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.AllianceMarkerStickSubsystem;
 import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.ArmSubsystem;
@@ -17,6 +21,20 @@ import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.IntakeSubsyste
 import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.TelemetrySubsystem;
 import org.firstinspires.ftc.teamcode.roadrunner.drive.RoadrunnerDriveConstants;
 import org.firstinspires.ftc.teamcode.roadrunner.drive.RoadrunnerTankDrive;
+import org.firstinspires.ftc.teamcode.roadrunner.drive.opmode.ￚAutomaticFeedforwardTuner;
+import org.firstinspires.ftc.teamcode.roadrunner.drive.opmode.ￚBackAndForth;
+import org.firstinspires.ftc.teamcode.roadrunner.drive.opmode.ￚDriveVelocityPIDTuner;
+import org.firstinspires.ftc.teamcode.roadrunner.drive.opmode.ￚFollowerPIDTuner;
+import org.firstinspires.ftc.teamcode.roadrunner.drive.opmode.ￚLocalizationTest;
+import org.firstinspires.ftc.teamcode.roadrunner.drive.opmode.ￚManualFeedforwardTuner;
+import org.firstinspires.ftc.teamcode.roadrunner.drive.opmode.ￚMaxAngularVeloTuner;
+import org.firstinspires.ftc.teamcode.roadrunner.drive.opmode.ￚMaxVelocityTuner;
+import org.firstinspires.ftc.teamcode.roadrunner.drive.opmode.ￚSplineTest;
+import org.firstinspires.ftc.teamcode.roadrunner.drive.opmode.ￚStrafeTest;
+import org.firstinspires.ftc.teamcode.roadrunner.drive.opmode.ￚTrackWidthTuner;
+import org.firstinspires.ftc.teamcode.roadrunner.drive.opmode.ￚTrackingWheelForwardOffsetTuner;
+import org.firstinspires.ftc.teamcode.roadrunner.drive.opmode.ￚTrackingWheelLateralDistanceTuner;
+import org.firstinspires.ftc.teamcode.roadrunner.drive.opmode.ￚTurnTest;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -25,9 +43,11 @@ import java.util.Objects;
 
 @TeleOp(name="Show Tuning Results", group="test")
 public class ShowTuningResults extends OpMode {
+
     Field[][] endTuning = {
             RoadrunnerTankDrive.class.getDeclaredFields(),
             RoadrunnerDriveConstants.class.getDeclaredFields(),
+
             AllianceMarkerStickSubsystem.class.getDeclaredFields(),
             ArmSubsystem.class.getDeclaredFields(),
             BoxSubsystem.class.getDeclaredFields(),
@@ -37,15 +57,44 @@ public class ShowTuningResults extends OpMode {
             DrivetrainSubsystem.class.getDeclaredFields(),
             IntakeSubsystem.class.getDeclaredFields(),
             TelemetrySubsystem.class.getDeclaredFields(),
-            一AutoValues.class.getDeclaredFields()
+
+            一AutoValues.class.getDeclaredFields(),
+
+            一BlueCarouselDuckDetection.class.getDeclaredFields(),
+            一BlueWarehouseDuckDetection.class.getDeclaredFields(),
+            一RedCarouselDuckDetection.class.getDeclaredFields(),
+            一RedWarehouseDuckDetection.class.getDeclaredFields(),
+
+            ￚServoPositionProgrammer.class.getDeclaredFields(),
+            ￚColorSensorProgrammer.class.getDeclaredFields(),
+
+            ￚAutomaticFeedforwardTuner.class.getDeclaredFields(),
+            ￚBackAndForth.class.getDeclaredFields(),
+            ￚDriveVelocityPIDTuner.class.getDeclaredFields(),
+            ￚFollowerPIDTuner.class.getDeclaredFields(),
+            ￚLocalizationTest.class.getDeclaredFields(),
+            ￚManualFeedforwardTuner.class.getDeclaredFields(),
+            ￚMaxAngularVeloTuner.class.getDeclaredFields(),
+            ￚMaxVelocityTuner.class.getDeclaredFields(),
+            ￚSplineTest.class.getDeclaredFields(),
+            ￚStrafeTest.class.getDeclaredFields(),
+            ￚTrackingWheelForwardOffsetTuner.class.getDeclaredFields(),
+            ￚTrackingWheelLateralDistanceTuner.class.getDeclaredFields(),
+            ￚTrackWidthTuner.class.getDeclaredFields(),
+            ￚTurnTest.class.getDeclaredFields()
+
     };
 
     List<Double> endTuningDoubles = new ArrayList<>();
     List<String> endTuningStrings = new ArrayList<>();
     boolean dataExists = false;
+    boolean dataExistsInClass = false;
+
 
     @Override
     public void init() {
+        TuningStart.initializeTuning();
+
         int doubleIndexNumber=0;
         int stringIndexNumber=0;
 
@@ -60,6 +109,7 @@ public class ShowTuningResults extends OpMode {
                     if (!endTuningDoubles.get(doubleIndexNumber).equals(TuningStart.initialTuningDoubles.get(doubleIndexNumber))) {
                         telemetry.addData(field.getName(), endTuningDoubles.get(doubleIndexNumber));
                         dataExists = true;
+                        dataExistsInClass = true;
                     }
                     doubleIndexNumber++;
                 } catch (Exception ignored) {
@@ -72,6 +122,7 @@ public class ShowTuningResults extends OpMode {
                     if (!endTuningStrings.get(stringIndexNumber).equals(TuningStart.initialTuningStrings.get(stringIndexNumber))) {
                         telemetry.addData(field.getName(), endTuningStrings.get(stringIndexNumber));
                         dataExists = true;
+                        dataExistsInClass = true;
                     }
                     stringIndexNumber++;
                 } catch (Exception ignored) {
@@ -86,6 +137,7 @@ public class ShowTuningResults extends OpMode {
                     if (!endTuningDoubles.get(doubleIndexNumber).equals(TuningStart.initialTuningDoubles.get(doubleIndexNumber))) {
                         telemetry.addData(field.getName() + " kP", endTuningDoubles.get(doubleIndexNumber));
                         dataExists = true;
+                        dataExistsInClass = true;
                     }
                     doubleIndexNumber++;
 
@@ -93,6 +145,7 @@ public class ShowTuningResults extends OpMode {
                     if (!endTuningDoubles.get(doubleIndexNumber).equals(TuningStart.initialTuningDoubles.get(doubleIndexNumber))) {
                         telemetry.addData(field.getName() + " kI", endTuningDoubles.get(doubleIndexNumber));
                         dataExists = true;
+                        dataExistsInClass = true;
                     }
                     doubleIndexNumber++;
 
@@ -100,6 +153,7 @@ public class ShowTuningResults extends OpMode {
                     if (!endTuningDoubles.get(doubleIndexNumber).equals(TuningStart.initialTuningDoubles.get(doubleIndexNumber))) {
                         telemetry.addData(field.getName() + " kD", endTuningDoubles.get(doubleIndexNumber));
                         dataExists = true;
+                        dataExistsInClass = true;
                     }
                     doubleIndexNumber++;
                 } catch (Exception ignored) {
@@ -115,6 +169,7 @@ public class ShowTuningResults extends OpMode {
                     if (!endTuningDoubles.get(doubleIndexNumber).equals(TuningStart.initialTuningDoubles.get(doubleIndexNumber))) {
                         telemetry.addData(field.getName() + " p", endTuningDoubles.get(doubleIndexNumber));
                         dataExists = true;
+                        dataExistsInClass = true;
                     }
                     doubleIndexNumber++;
 
@@ -122,6 +177,7 @@ public class ShowTuningResults extends OpMode {
                     if (!endTuningDoubles.get(doubleIndexNumber).equals(TuningStart.initialTuningDoubles.get(doubleIndexNumber))) {
                         telemetry.addData(field.getName() + " i", endTuningDoubles.get(doubleIndexNumber));
                         dataExists = true;
+                        dataExistsInClass = true;
                     }
                     doubleIndexNumber++;
 
@@ -129,17 +185,25 @@ public class ShowTuningResults extends OpMode {
                     if (!endTuningDoubles.get(doubleIndexNumber).equals(TuningStart.initialTuningDoubles.get(doubleIndexNumber))) {
                         telemetry.addData(field.getName() + " d", endTuningDoubles.get(doubleIndexNumber));
                         dataExists = true;
+                        dataExistsInClass = true;
                     }
                     doubleIndexNumber++;
                     // check if f is not equal
                     if (!endTuningDoubles.get(doubleIndexNumber).equals(TuningStart.initialTuningDoubles.get(doubleIndexNumber))) {
                         telemetry.addData(field.getName() + " f", endTuningDoubles.get(doubleIndexNumber));
                         dataExists = true;
+                        dataExistsInClass = true;
                     }
                     doubleIndexNumber++;
                 } catch (Exception ignored) {
 
                 }
+                if (dataExistsInClass) {
+                    telemetry.addLine(field.toString());
+                    telemetry.addLine(field.getName());
+                    telemetry.addLine(String.valueOf(field.getModifiers()));
+                }
+                dataExistsInClass = false;
             }
         }
         if (!dataExists) {

@@ -17,7 +17,7 @@ import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
-@Autonomous(name="Blue Warehouse (Top) Roadrunner Path", group="Roadrunner Paths", preselectTeleOp = ￚServoPositionProgrammer.servoName)
+@Autonomous(name="Blue Warehouse (Top) Roadrunner Path", group="Roadrunner Paths")
 public class BlueWarehouse extends LinearOpMode {
     @Override
     public void runOpMode() {
