@@ -45,7 +45,7 @@ public class DriveConstants {
      */
     public static double WHEEL_RADIUS = 2.36; // in
     public static double GEAR_RATIO = 1; // output (wheel) speed / input (motor) speed
-    public static double TRACK_WIDTH = 23; // in //19.95
+    public static double TRACK_WIDTH = 19.4; // in //19.95
 
     /*
      * These are the feedforward parameters used to model the drive motor behavior. If you are using
@@ -54,8 +54,8 @@ public class DriveConstants {
      * empirically tuned.
      */
     public static double kV = 0.01;
-    public static double kA = 0.004;
-    public static double kStatic = 0.0022;
+    public static double kA = 0.003;
+    public static double kStatic = 0.02;
 
     /*
      * These values are used to generate the trajectories for you robot. To ensure proper operation,
@@ -64,13 +64,11 @@ public class DriveConstants {
      * small and gradually increase them later after everything is working. All distance units are
      * inches.
      */
-    public static double MAX_VEL = 60; // 30
-    public static double MAX_ACCEL = 30; // 30
+    public static double MAX_VEL = 50; // 30
+    public static double MAX_ACCEL = 60; // 30
 
-    public static double MAX_ANG_VELOCITY_DEGREES = 60;
-    static double MAX_ANG_VEL = Math.toRadians(MAX_ANG_VELOCITY_DEGREES); // Measured in radians // old value: 3.5 radians or 200 degrees
-    public static double MAX_ANG_ACCEL_DEGREES = 60;
-    static double MAX_ANG_ACCEL = Math.toRadians(MAX_ANG_ACCEL_DEGREES); // Measured in radians // old value: 3.5 radians or 200 degrees
+    public static double MAX_ANG_VEL = 4.0; // Measured in radians // old value: 3.5 radians or 200 degrees
+    public static double MAX_ANG_ACCEL = 6.0; // Measured in radians // old value: 3.5 radians or 200 degrees
 
 
     public static double encoderTicksToInches(double ticks) {
