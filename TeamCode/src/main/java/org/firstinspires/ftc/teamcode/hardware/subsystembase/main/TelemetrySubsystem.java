@@ -58,7 +58,7 @@ public class TelemetrySubsystem extends BaseSubsystem {
         telemetry.addData("Status", "Run Time: " + runtime.toString());
         cycles++;
         telemetry.addData("Frequency", (int) (cycles / runtime.seconds()) + "hz");
-        telemetry.addData("Alliance Marker Servo Position", stick.allianceMarkerServoTargetPos);
+//        telemetry.addData("Alliance Marker Servo Position", stick.allianceMarkerServoTargetPos);
         telemetry.addData("Break Mode status", breakMode.breakModeStatus);
         telemetry.update();
     }
@@ -66,7 +66,7 @@ public class TelemetrySubsystem extends BaseSubsystem {
         telemetry.addData("Status", "Run Time: " + runtime.toString());
         cycles++;
         telemetry.addData("Frequency", (int) (cycles / runtime.seconds()) + "hz");
-        telemetry.addData("Alliance Marker Stick Servo Position", stick.allianceMarkerServoTargetPos);
+//        telemetry.addData("Alliance Marker Stick Servo Position", stick.allianceMarkerServoTargetPos);
         telemetry.addData("Arm Position", arm.getArmPosition());
         telemetry.addData("Intake Speed", intake.intakeMotor.getVelocity());
         telemetry.addData("Break Mode status", breakMode.breakModeStatus);
