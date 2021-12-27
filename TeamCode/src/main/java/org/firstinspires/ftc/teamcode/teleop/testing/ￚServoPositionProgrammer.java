@@ -49,7 +49,7 @@ public class ￚServoPositionProgrammer extends LinearOpMode {
             }
 
             servo.setPosition(pos);
-            servo.setPosition(pos2);
+            servo2.setPosition(pos2);
             telemetry.addLine("Press x to switch between passive get position and active set position modes");
             telemetry.addData("Current mode", mode);
             telemetry.addData("Current servo", servoName);
