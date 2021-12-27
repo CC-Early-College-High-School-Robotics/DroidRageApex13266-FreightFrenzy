@@ -14,10 +14,10 @@ import org.firstinspires.ftc.teamcode.hardware.subsystembase.base.BaseSubsystem;
 public class ArmSubsystem extends BaseSubsystem {
     // Values
     public static double ARM_INTAKE_POS = 0; // 0.04 //-0.09
-    public static double ARM_NEUTRAL_POS = -0.015;
-    public static double ARM_LOW_POS = 0.132; //0.132 //0.035
-    public static double ARM_MID_POS = 0.25; //0.25 //0.17
-    public static double ARM_HIGH_POS = 0.36; //0.36 //0.27
+    public static double ARM_NEUTRAL_POS = -0.003;
+    public static double ARM_LOW_POS = -.4884; //0.132 //0.035
+    public static double ARM_MID_POS = -.41; //0.25 //0.17
+    public static double ARM_HIGH_POS = -.338; //0.36 //0.27
 
     public static double ARM_POWER = 0.55;
     public static double ARM_SLOW_POWER = 0.3;
