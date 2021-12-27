@@ -28,15 +28,9 @@ public class ￚColorSensorProgrammer extends LinearOpMode {
 //        pos = servo.getPosition();
         while(!isStopRequested()) {
 
-
-            if (gamepad1.a) {
-                pos -= 0.001;
-            } else if (gamepad1.b) {
-                pos += 0.001;
-            }
 //            servo.setPosition(pos);
 //            telemetry.addData("servo pos", servo.getPosition());
-            telemetry.addData("desired pos", pos);
+            telemetry.addData("desired pos", colorSensorV3.argb());
             telemetry.update();
             sleep(10);
         }

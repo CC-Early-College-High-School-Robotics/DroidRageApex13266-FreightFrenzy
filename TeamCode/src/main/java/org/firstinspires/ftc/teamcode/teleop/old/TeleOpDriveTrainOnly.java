@@ -8,7 +8,6 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 @TeleOp(name="TeleOP Drive Train Only")
-@Disabled
 public class TeleOpDriveTrainOnly extends OpMode {
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();

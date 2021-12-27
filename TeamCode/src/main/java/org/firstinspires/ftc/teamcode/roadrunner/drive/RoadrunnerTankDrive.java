@@ -58,12 +58,12 @@ import static org.firstinspires.ftc.teamcode.roadrunner.drive.RoadrunnerDriveCon
  */
 @Config
 public class RoadrunnerTankDrive extends TankDrive {
-    public static PIDCoefficients AXIAL_PID = new PIDCoefficients(17, 0, 0.23); // 9, 0, 0.5
-    public static PIDCoefficients CROSS_TRACK_PID = new PIDCoefficients(0.02, 0, 0); // 0.0099, 0, 0.0003
-    public static PIDCoefficients HEADING_PID = new PIDCoefficients(13, 0, 0.778); // 18, 0, 0.778
+    public static PIDCoefficients AXIAL_PID = new PIDCoefficients(15, 0, 0.004); // 9, 0, 0.5
+    public static PIDCoefficients CROSS_TRACK_PID = new PIDCoefficients(0.00325, 0, 0.02); // 0.0099, 0, 0.0003
+    public static PIDCoefficients HEADING_PID = new PIDCoefficients(15, 0, 0.375); // 18, 0, 0.778
 
-    public static PIDCoefficients LEFT_DRIVE_PID = new PIDCoefficients(0, 0, 0); // 0.000020, 0, 0
-    public static PIDCoefficients RIGHT_DRIVE_PID = new PIDCoefficients(0, 0, 0); // 0.000020, 0, 0
+    public static PIDCoefficients LEFT_DRIVE_PID = new PIDCoefficients(0.002, 0, 0); // 0.000020, 0, 0
+    public static PIDCoefficients RIGHT_DRIVE_PID = new PIDCoefficients(0.002, 0, 0); // 0.000020, 0, 0
 
     private PIDController leftDriveVeloPID;
     private PIDController rightDriveVeloPID;

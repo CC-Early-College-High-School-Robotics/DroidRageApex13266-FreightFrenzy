@@ -7,11 +7,11 @@ import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.control.PIDCoefficients;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.auto.pipeline.一BlueCarouselDuckDetection;
 import org.firstinspires.ftc.teamcode.auto.pipeline.一BlueWarehouseDuckDetection;
 import org.firstinspires.ftc.teamcode.auto.pipeline.一RedCarouselDuckDetection;
@@ -25,7 +25,6 @@ import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.CarouselSubsys
 import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.DrivetrainSubsystem;
 import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.TelemetrySubsystem;
-import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.TurretSubsystem;
 import org.firstinspires.ftc.teamcode.hardware.一AutoValues;
 import org.firstinspires.ftc.teamcode.roadrunner.drive.RoadrunnerDriveConstants;
 import org.firstinspires.ftc.teamcode.roadrunner.drive.RoadrunnerTankDrive;
@@ -46,15 +45,13 @@ import org.firstinspires.ftc.teamcode.roadrunner.drive.opmode.ￚTurnTest;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.function.UnaryOperator;
 
 @Config
-@TeleOp(name="Tune With Controller", group="test")
-public class TuneWithController extends LinearOpMode {
+@TeleOp(name="Tune With Controller2", group="test")
+@Disabled
+public class TuneWithController2 extends LinearOpMode {
     public static Field[][] initialTuning = {
             RoadrunnerTankDrive.class.getDeclaredFields(),
             RoadrunnerDriveConstants.class.getDeclaredFields(),
@@ -68,7 +65,6 @@ public class TuneWithController extends LinearOpMode {
             DrivetrainSubsystem.class.getDeclaredFields(),
             IntakeSubsystem.class.getDeclaredFields(),
             TelemetrySubsystem.class.getDeclaredFields(),
-            TurretSubsystem.class.getDeclaredFields(),
 
             一AutoValues.class.getDeclaredFields(),
 
@@ -101,12 +97,20 @@ public class TuneWithController extends LinearOpMode {
     public static String selected = " ";
     public static int indexNumber = 0;
     public static int selectedIndexNumber = 0;
-    public static boolean somethingPressed = false;
+    public static boolean gamepad1a = false;
+    public static boolean gamepad1b = false;
+    public static boolean gamepad1left = false;
+    public static boolean gamepad1right = false;
+    public static boolean gamepad1up = false;
+    public static boolean gamepad1down = false;
     public static boolean recalculateScale = true;
     public static int selectedScale = 1;
     public static double selectedScaleValue = 1;
     char selectionCharacter = '█';
     public static double currentDouble = 0;
+    public static double currentKP = 0;
+    public static double currentKI = 0;
+    public static double currentKD = 0;
 
     Field tempField;
     boolean dataExistsInClass = false;
@@ -136,81 +140,19 @@ public class TuneWithController extends LinearOpMode {
                     }
 
                     try {
+                        currentDouble = field.getDouble(field);
+                        scaleValueCalculation(currentDouble, field);
+                        telemetry.addData(field.getName(), fieldBlinker(currentDouble) + selected);
 
-                        // telemetry.addLine(String.valueOf(findScale(field.getDouble(field))));
-                        //currentDouble = field.getDouble(field);
 
-
-
-                        if (indexNumber == selectedIndexNumber) {
-
-                            if (recalculateScale) {
-                                selectedScale = findScale(field.getDouble(field));
-                                recalculateScale = false;
-                            }
-                            if (gamepad1.dpad_left && !somethingPressed) {
-                                selectedScale = selectedScale + 1;
-                                somethingPressed = true;
-                            }
-                            if (gamepad1.dpad_right && !somethingPressed) {
-                                selectedScale = selectedScale - 1;
-                                somethingPressed = true;
-                            }
-                            selectedScaleValue = Math.pow(10, selectedScale);
-
-                            if (gamepad1.a && !somethingPressed) {
-                                field.setDouble(field, field.getDouble(field) + selectedScaleValue);
-                                somethingPressed = true;
-                            }
-                            if (gamepad1.b && !somethingPressed) {
-                                field.setDouble(field, field.getDouble(field) - selectedScaleValue);
-                                somethingPressed = true;
-                            }
-
-//                            telemetry.addLine(String.valueOf(runtime.milliseconds()));
-//                            telemetry.addLine(String.valueOf(runtime.milliseconds() % 100));
+                        if (gamepad1a || gamepad1.a) {
+                            field.setDouble(field, currentDouble + selectedScaleValue);
+                            gamepad1a = false;
                         }
-
-                        if (indexNumber == selectedIndexNumber && (((int) runtime.milliseconds()) % 1500) > 1100) {
-                            char[] original = String.valueOf(field.getDouble(field)).toCharArray();
-
-                            List<Character> numberWithSelector = new ArrayList<>();
-
-                            int nonNumbers = 0;
-                            for (int i = 0; i < original.length; i++) {
-                                if (original[i] == '-' || original[i] == '.') {
-                                    nonNumbers++;
-                                    numberWithSelector.add(original[i]);
-                                } else if (i == (nonNumbers + ((findScale(field.getDouble(field))) - selectedScale))) {
-                                    numberWithSelector.add(selectionCharacter);
-                                } else {
-                                    numberWithSelector.add(original[i]);
-                                }
-                            }
-                            StringBuilder sb = new StringBuilder();
-
-
-                            for (Character ch: numberWithSelector) {
-                                sb.append(ch);
-                            }
-
-                            String output = sb.toString();
-
-                            telemetry.addData(field.getName(), output + selected);
-                        } else {
-                            telemetry.addData(field.getName(), field.getDouble(field) + selected);
+                        if (gamepad1b || gamepad1.b) {
+                            field.setDouble(field, currentDouble - selectedScaleValue);
+                            gamepad1b = false;
                         }
-
-
-                        dataExistsInClass = true;
-                        indexNumber++;
-                    } catch (Exception ignored) {
-
-                    }
-                    //Strings but i dont want to make it so you can edit wit hcontroller so they are commented out
-                    /*
-                    try {
-                        telemetry.addData(field.getName(), (String) field.get(field) + selected);
 
                         dataExistsInClass = true;
                         indexNumber++;
@@ -218,8 +160,53 @@ public class TuneWithController extends LinearOpMode {
 
                     }
 
-                     */
                     try {
+                        currentKP = ((PIDCoefficients) Objects.requireNonNull(field.get(field))).kP;
+                        scaleValueCalculation(currentKP, field);
+                        telemetry.addData(field.getName() + " kP", fieldBlinker(currentKP) + selected);
+
+                        if (gamepad1a || gamepad1.a) {
+                            field.set(field, new PIDCoefficients(currentKP + selectedScaleValue, currentKI, currentKD));
+                            gamepad1a = false;
+                        }
+                        if (gamepad1b || gamepad1.b) {
+                            field.set(field, new PIDCoefficients(currentKP - selectedScaleValue, currentKI, currentKD));
+                            gamepad1b = false;
+                        }
+
+                        indexNumber++;
+
+                        currentKI = ((PIDCoefficients) Objects.requireNonNull(field.get(field))).kI;
+                        scaleValueCalculation(currentKI, field);
+                        telemetry.addData(field.getName() + " kI", fieldBlinker(currentKI) + selected);
+
+                        if (gamepad1a || gamepad1.a) {
+                            field.set(field, new PIDCoefficients(currentKP, currentKI + selectedScaleValue, currentKD));
+                            gamepad1a = false;
+                        }
+                        if (gamepad1b || gamepad1.b) {
+                            field.set(field, new PIDCoefficients(currentKP, currentKI - selectedScaleValue, currentKD));
+                            gamepad1b = false;
+                        }
+
+                        indexNumber++;
+
+                        currentKD = ((PIDCoefficients) Objects.requireNonNull(field.get(field))).kP;
+                        scaleValueCalculation(currentKD, field);
+
+                        telemetry.addData(field.getName() + " kD", fieldBlinker(currentKD) + selected);
+
+                        if (gamepad1a || gamepad1.a) {
+                            field.set(field, new PIDCoefficients(currentKP, currentKI, currentKD + selectedScaleValue));
+                            gamepad1a = false;
+                        }
+                        if (gamepad1b || gamepad1.b) {
+                            field.set(field, new PIDCoefficients(currentKP, currentKI, currentKD - selectedScaleValue));
+                            gamepad1b = false;
+                        }
+
+                        dataExistsInClass = true;
+                        indexNumber++;
                         /*
                         if (indexNumber == selectedIndexNumber) {
 
@@ -237,11 +224,11 @@ public class TuneWithController extends LinearOpMode {
                             }
                             selectedScaleValue = Math.pow(10, selectedScale);
 
-                            if (gamepad1a) {
+                            if (gamepad1a || gamepad1.a) {
                                 field.setDouble(field, field.getDouble(field) + selectedScaleValue);
                                 gamepad1a = false;
                             }
-                            if (gamepad1b) {
+                            if (gamepad1b || gamepad1.b) {
                                 field.setDouble(field, field.getDouble(field) - selectedScaleValue);
                                 gamepad1b = false;
                             }
@@ -299,18 +286,15 @@ public class TuneWithController extends LinearOpMode {
                 }
                 dataExistsInClass = false;
             }
-            if (gamepad1.dpad_down && !somethingPressed) {
+            if (gamepad1down || gamepad1.dpad_down) {
                 selectedIndexNumber++;
                 recalculateScale = true;
-                somethingPressed = true;
+                gamepad1down = false;
             }
-            if (gamepad1.dpad_up && !somethingPressed) {
+            if (gamepad1up || gamepad1.dpad_up) {
                 selectedIndexNumber--;
                 recalculateScale = true;
-                somethingPressed = true;
-            }
-            if (!gamepad1.a || !gamepad1.b || !gamepad1.dpad_up || !gamepad1.dpad_down || !gamepad1.dpad_left || !gamepad1.dpad_right) {
-                somethingPressed = false;
+                gamepad1up = false;
             }
             telemetry.update();
         }
@@ -338,5 +322,55 @@ public class TuneWithController extends LinearOpMode {
 
 
         return outputScale;
+    }
+    public void scaleValueCalculation(Double current, Field currentField) {
+        try {
+            if (indexNumber == selectedIndexNumber) {
+
+                if (recalculateScale) {
+                    selectedScale = findScale(current);
+                    recalculateScale = false;
+                }
+                if (gamepad1left || gamepad1.dpad_left) {
+                    selectedScale = selectedScale + 1;
+                    gamepad1left = false;
+                }
+                if (gamepad1right || gamepad1.dpad_right) {
+                    selectedScale = selectedScale - 1;
+                    gamepad1right = false;
+                }
+                selectedScaleValue = Math.pow(10, selectedScale);
+            }
+        } catch (Exception ignored) {
+
+        }
+    }
+    public String fieldBlinker(Double current) {
+        if (indexNumber == selectedIndexNumber && (((int) runtime.milliseconds()) % 1500) > 1100) {
+            char[] original = String.valueOf(current).toCharArray();
+
+            List<Character> numberWithSelector = new ArrayList<>();
+
+            int nonNumbers = 0;
+            for (int i = 0; i < original.length; i++) {
+                if (original[i] == '-' || original[i] == '.') {
+                    nonNumbers++;
+                    numberWithSelector.add(original[i]);
+                } else if (i == (nonNumbers + ((findScale(current)) - selectedScale))) {
+                    numberWithSelector.add(selectionCharacter);
+                } else {
+                    numberWithSelector.add(original[i]);
+                }
+            }
+            StringBuilder output = new StringBuilder();
+
+
+            for (Character ch : numberWithSelector) {
+                output.append(ch);
+            }
+            return output.toString();
+        } else {
+            return current.toString();
+        }
     }
 }
