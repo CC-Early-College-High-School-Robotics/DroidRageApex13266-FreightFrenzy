@@ -37,6 +37,17 @@ public class TelemetrySubsystem extends BaseSubsystem {
         this.breakMode = breakMode;
     }
 
+    // Initialization
+    public void init(Telemetry telemetry, ArmSubsystem arm, BoxSubsystem box, CarouselSubsystem carousel, DrivetrainSubsystem drivetrain, IntakeSubsystem intake, BreakModeSubsystem breakMode) {
+        this.telemetry = telemetry;
+        this.arm = arm;
+        this.box = box;
+        this.carousel = carousel;
+        this.drivetrain = drivetrain;
+        this.intake = intake;
+        this.breakMode = breakMode;
+    }
+
     public void initMessage() {
         telemetry.addData("GL", "You better win!");
         telemetry.update();
