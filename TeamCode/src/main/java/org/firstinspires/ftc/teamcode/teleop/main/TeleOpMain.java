@@ -13,6 +13,7 @@ import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.CarouselSubsys
 import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.DrivetrainSubsystem;
 import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.TelemetrySubsystem;
+import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.TurretSubsystem;
 import org.firstinspires.ftc.teamcode.teleop.testing.TuningStart;
 
 @TeleOp(name="TeleOP Main")
@@ -26,6 +27,7 @@ public class TeleOpMain extends LinearOpMode {
     IntakeSubsystem intake                      = new IntakeSubsystem                       ();
     BreakModeSubsystem breakMode                = new BreakModeSubsystem                    ();
     TelemetrySubsystem telemetrySubsystem       = new TelemetrySubsystem                    ();
+    TurretSubsystem turret                      = new TurretSubsystem();
 
     @Override
     public void runOpMode() {
@@ -36,6 +38,7 @@ public class TeleOpMain extends LinearOpMode {
         carousel.init(hardwareMap, telemetry);
         drivetrain.init(hardwareMap, telemetry);
         intake.init(hardwareMap, telemetry);
+        turret.init(hardwareMap, telemetry);
 
         telemetrySubsystem.init(telemetry, stick, arm, box, carousel, drivetrain, intake, breakMode);
         breakMode.init(gamepad1, gamepad2, arm, carousel, drivetrain);
@@ -58,6 +61,7 @@ public class TeleOpMain extends LinearOpMode {
             drivetrain.defaultCommand(gamepad1, gamepad2);
             intake.defaultCommand(gamepad1, gamepad2);
             breakMode.defaultCommand();
+            turret.defaultCommand(gamepad1, gamepad2);
             telemetrySubsystem.defaultCommand();
         }
     }
