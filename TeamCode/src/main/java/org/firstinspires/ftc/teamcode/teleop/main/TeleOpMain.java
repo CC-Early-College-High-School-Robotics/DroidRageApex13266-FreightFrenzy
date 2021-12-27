@@ -28,8 +28,8 @@ public class TeleOpMain extends LinearOpMode {
     IntakeSubsystem intake                      = new IntakeSubsystem                       ();
     BreakModeSubsystem breakMode                = new BreakModeSubsystem                    ();
     TelemetrySubsystem telemetrySubsystem       = new TelemetrySubsystem                    ();
-    TurretSubsystem turret                      = new TurretSubsystem();
-    FlipperSubsystem flipper                    = new FlipperSubsystem();
+    TurretSubsystem turret                      = new TurretSubsystem                       ();
+    FlipperSubsystem flipper                    = new FlipperSubsystem                      ();
 
     @Override
     public void runOpMode() {
@@ -65,6 +65,7 @@ public class TeleOpMain extends LinearOpMode {
             intake.defaultCommand(gamepad1, gamepad2);
             breakMode.defaultCommand();
             turret.defaultCommand(gamepad1, gamepad2);
+            flipper.defaultCommand(gamepad1, gamepad2);
             telemetrySubsystem.defaultCommand();
         }
     }

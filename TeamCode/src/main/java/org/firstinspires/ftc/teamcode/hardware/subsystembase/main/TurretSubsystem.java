@@ -10,14 +10,14 @@ import org.firstinspires.ftc.teamcode.hardware.subsystembase.base.BaseSubsystem;
 
 public class TurretSubsystem extends BaseSubsystem {
     // Values
-    public static double TURRET_SERVO_1_FRONT = 1;
-    public static double TURRET_SERVO_2_FRONT = 1;
+    public static double TURRET_SERVO_1_FRONT =.210;
+    public static double TURRET_SERVO_2_FRONT = .210;
 
-    public static double TURRET_SERVO_1_LEFT = .5;
-    public static double TURRET_SERVO_2_LEFT = .5;
+    public static double TURRET_SERVO_1_LEFT = 0;
+    public static double TURRET_SERVO_2_LEFT = 0;
 
-    public static double TURRET_SERVO_1_RIGHT = 0;
-    public static double TURRET_SERVO_2_RIGHT = 0;
+    public static double TURRET_SERVO_1_RIGHT = .4838;
+    public static double TURRET_SERVO_2_RIGHT = .4838;
 
     // Create hardware variables
     public Servo turretServo1 = null;
@@ -45,17 +45,17 @@ public class TurretSubsystem extends BaseSubsystem {
             turretServo2.setPosition(TURRET_SERVO_2_FRONT);
         }
         // right
-        if (gamepad2.x) {
+        if (gamepad2.b) {
             turretServo1.setPosition(TURRET_SERVO_1_RIGHT);
             turretServo2.setPosition(TURRET_SERVO_2_RIGHT);
         }
         // left
-        if (gamepad2.b) {
+        if (gamepad2.x) {
             turretServo1.setPosition(TURRET_SERVO_1_LEFT);
             turretServo2.setPosition(TURRET_SERVO_2_LEFT);
         }
         // intake/reset position
-        if (gamepad2.y) {
+        if (gamepad2.a) {
             turretServo1.setPosition(TURRET_SERVO_1_FRONT);
             turretServo2.setPosition(TURRET_SERVO_2_FRONT);
         }

@@ -13,8 +13,8 @@ import org.firstinspires.ftc.teamcode.hardware.subsystembase.base.BaseSubsystem;
 @Disabled
 public class FlipperSubsystem extends BaseSubsystem {
     // Values
-    public static double FLIPPER_OPEN = 1;
-    public static double FLIPPER_CLOSED = 0;
+    public static double FLIPPER_OPEN = .60;
+    public static double FLIPPER_CLOSED = .68;
 
     // Create hardware variables
     public Servo flipperServo = null;
@@ -32,8 +32,8 @@ public class FlipperSubsystem extends BaseSubsystem {
         flipperServo.setDirection(Servo.Direction.FORWARD);
     }
 
-    // Default command
-    public void defaultCommand() {
+    public void defaultCommand(Gamepad gamepad1, Gamepad gamepad2) {
+        super.gamepadInit(gamepad1, gamepad2);
         if (gamepad2.y) {
             flipperServo.setPosition(FLIPPER_OPEN);
         } else {
