@@ -10,10 +10,10 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class ￚServoPositionProgrammer extends LinearOpMode {
     public static double pos;
     public static double pos2;
-    String mode = "passive";
+    String mode = "active";
     boolean xPressed = false;
-    public static String servoName = "boxServo";
-    public static String servoName2 = "boxServo";
+    public static String servoName = "turretServo1";
+    public static String servoName2 = "turretServo2";
 
     @Override
     public void runOpMode() {
@@ -32,17 +32,6 @@ public class ￚServoPositionProgrammer extends LinearOpMode {
         sleep(1000);
         waitForStart();
         while(!isStopRequested()) {
-            if (gamepad1.x  && !xPressed && mode.equals("passive")) {
-                mode = "active";
-                xPressed = true;
-            }
-            if (gamepad1.x  && !xPressed && mode.equals("active")) {
-                mode = "passive";
-                xPressed = true;
-            }
-            if (!gamepad1.x && xPressed) {
-                xPressed = false;
-            }
 
             if (mode.equals("active")) {
                 pos = servo.getPosition();
@@ -60,7 +49,7 @@ public class ￚServoPositionProgrammer extends LinearOpMode {
             }
 
             servo.setPosition(pos);
-            servo.setPosition(pos2);
+            servo2.setPosition(pos2);
             telemetry.addLine("Press x to switch between passive get position and active set position modes");
             telemetry.addData("Current mode", mode);
             telemetry.addData("Current servo", servoName);
