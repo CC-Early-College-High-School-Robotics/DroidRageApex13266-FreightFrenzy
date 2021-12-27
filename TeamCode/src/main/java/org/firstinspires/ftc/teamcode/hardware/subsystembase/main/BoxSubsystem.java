@@ -16,9 +16,15 @@ public class BoxSubsystem extends BaseSubsystem {
     public static double BOX_AUTO_APPROACH_HUB = 0.500;
     public static double BOX_INTAKE = 0.925;
     public static double BOX_DROP = 0.180;
+    public static double BOX_INTERMEDIATE = 0.243;
+    public static double BOX_UP_WAIT = 1;
+    public static double BOX_INTAKE_WAIT = 1;
 
     // Create hardware variables
     public Servo boxServo = null;
+    double targetTime = 0;
+    boolean setUpPos = false;
+    boolean setIntakePos = false;
 
     // Constructor
     public BoxSubsystem() {
@@ -37,8 +43,13 @@ public class BoxSubsystem extends BaseSubsystem {
         super.gamepadInit(gamepad1, gamepad2);
         // High
         if (gamepad2.dpad_up) {
+            targetTime = runtime.seconds() + BOX_UP_WAIT;
+            setUpPos = true;
+        }
+        if (setUpPos && runtime.seconds() >= targetTime) {
             boxServo.setPosition(BOX_UP);
         }
+
         // Mid
         if (gamepad2.dpad_right) {
             boxServo.setPosition(BOX_UP);
@@ -50,8 +61,18 @@ public class BoxSubsystem extends BaseSubsystem {
         }
         // intake/reset position
         if (gamepad2.dpad_left) {
+            boxServo.setPosition(BOX_INTERMEDIATE);
+
+            setIntakePos = true;
+            targetTime = runtime.seconds() + BOX_INTAKE;
+        }
+        if (setIntakePos && runtime.seconds() >= targetTime) {
             boxServo.setPosition(BOX_INTAKE);
         }
+
+
+
+
         if (gamepad2.a) {
             boxServo.setPosition(Devices.BOX_INTAKE);
         }
