@@ -12,11 +12,11 @@ import org.firstinspires.ftc.teamcode.hardware.subsystembase.base.BaseSubsystem;
 @Config
 public class BoxSubsystem extends BaseSubsystem {
     // Values
-    public static double BOX_UP = 0.641;
+    public static double BOX_UP = 0.892;
     public static double BOX_AUTO_APPROACH_HUB = 0.500;
-    public static double BOX_INTAKE = 0.925;
+    public static double BOX_INTAKE = 0;
     public static double BOX_DROP = 0.180;
-    public static double BOX_INTERMEDIATE = 0.243;
+    public static double BOX_INTERMEDIATE = 0.43;
     public static double BOX_UP_WAIT = 0.25;
     public static double BOX_INTAKE_WAIT = 0.25;
 
@@ -48,6 +48,7 @@ public class BoxSubsystem extends BaseSubsystem {
         }
         if (setUpPos && runtime.seconds() >= targetTime) {
             boxServo.setPosition(BOX_UP);
+            setUpPos = false;
         }
 
         // Mid
@@ -68,6 +69,7 @@ public class BoxSubsystem extends BaseSubsystem {
         }
         if (setIntakePos && runtime.seconds() >= targetTime) {
             boxServo.setPosition(BOX_INTAKE);
+            setIntakePos = false;
         }
 
 

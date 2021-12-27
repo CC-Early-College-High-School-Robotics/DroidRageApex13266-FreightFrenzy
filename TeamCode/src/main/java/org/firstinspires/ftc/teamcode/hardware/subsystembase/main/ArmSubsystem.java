@@ -19,7 +19,7 @@ public class ArmSubsystem extends BaseSubsystem {
     public static double ARM_MID_POS = -.41; //0.25 //0.17
     public static double ARM_HIGH_POS = -.338; //0.36 //0.27
 
-    public static double ARM_POWER = 0.55;
+    public static double ARM_POWER = 0.35;
     public static double ARM_SLOW_POWER = 0.3;
     public static double ARM_TICKS_PER_REV = 1425.06;
     public static double ARM_POS_CHANGE_SPEED = 0.0005;
@@ -88,6 +88,7 @@ public class ArmSubsystem extends BaseSubsystem {
         }
         if (setIntakePos && runtime.seconds() >= targetTime) {
             armCurrentPos = ARM_INTAKE_POS;
+            setIntakePos = false;
         }
 
         if (-gamepad2.right_stick_y > ControllerSubsystem.TRIGGER_THRESHOLD) {
