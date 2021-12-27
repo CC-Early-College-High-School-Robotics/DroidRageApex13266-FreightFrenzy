@@ -84,6 +84,7 @@ public class ArmSubsystem extends BaseSubsystem {
         if (gamepad2.dpad_left) {
 
             targetTime = runtime.seconds() + ARM_INTAKE_WAIT;
+            setIntakePos = true;
         }
         if (setIntakePos && runtime.seconds() >= targetTime) {
             armCurrentPos = ARM_INTAKE_POS;
