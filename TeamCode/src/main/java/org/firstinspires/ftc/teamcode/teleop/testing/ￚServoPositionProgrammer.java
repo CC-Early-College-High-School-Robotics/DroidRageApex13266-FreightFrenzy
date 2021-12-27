@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class ￚServoPositionProgrammer extends LinearOpMode {
     public static double pos;
     public static double pos2;
-    String mode = "passive";
+    String mode = "active";
     boolean xPressed = false;
     public static String servoName = "turretServo1";
     public static String servoName2 = "turretServo2";
@@ -32,17 +32,6 @@ public class ￚServoPositionProgrammer extends LinearOpMode {
         sleep(1000);
         waitForStart();
         while(!isStopRequested()) {
-            if (gamepad1.x  && !xPressed && mode.equals("passive")) {
-                mode = "active";
-                xPressed = true;
-            }
-            if (gamepad1.x  && !xPressed && mode.equals("active")) {
-                mode = "passive";
-                xPressed = true;
-            }
-            if (!gamepad1.x && xPressed) {
-                xPressed = false;
-            }
 
             if (mode.equals("active")) {
                 pos = servo.getPosition();
