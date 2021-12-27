@@ -64,7 +64,7 @@ public class BoxSubsystem extends BaseSubsystem {
             boxServo.setPosition(BOX_INTERMEDIATE);
 
             setIntakePos = true;
-            targetTime = runtime.seconds() + BOX_INTAKE;
+            targetTime = runtime.seconds() + BOX_INTAKE_WAIT;
         }
         if (setIntakePos && runtime.seconds() >= targetTime) {
             boxServo.setPosition(BOX_INTAKE);
