@@ -8,6 +8,7 @@ import org.firstinspires.ftc.teamcode.auto.pipeline.一BlueCarouselDuckDetection
 import org.firstinspires.ftc.teamcode.auto.pipeline.一BlueWarehouseDuckDetection;
 import org.firstinspires.ftc.teamcode.auto.pipeline.一RedCarouselDuckDetection;
 import org.firstinspires.ftc.teamcode.auto.pipeline.一RedWarehouseDuckDetection;
+import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.FlipperSubsystem;
 import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.TurretSubsystem;
 import org.firstinspires.ftc.teamcode.hardware.一AutoValues;
 import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.AllianceMarkerStickSubsystem;
@@ -56,6 +57,7 @@ public class TuningStart {
             IntakeSubsystem.class.getDeclaredFields(),
             TelemetrySubsystem.class.getDeclaredFields(),
             TurretSubsystem.class.getDeclaredFields(),
+            FlipperSubsystem.class.getDeclaredFields(),
 
             一AutoValues.class.getDeclaredFields(),
 

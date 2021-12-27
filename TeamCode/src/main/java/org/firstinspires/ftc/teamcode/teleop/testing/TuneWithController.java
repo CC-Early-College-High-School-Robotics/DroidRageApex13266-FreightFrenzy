@@ -23,6 +23,7 @@ import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.BreakModeSubsy
 import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.CameraStandSubsystem;
 import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.CarouselSubsystem;
 import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.DrivetrainSubsystem;
+import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.FlipperSubsystem;
 import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.TelemetrySubsystem;
 import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.TurretSubsystem;
@@ -69,6 +70,7 @@ public class TuneWithController extends LinearOpMode {
             IntakeSubsystem.class.getDeclaredFields(),
             TelemetrySubsystem.class.getDeclaredFields(),
             TurretSubsystem.class.getDeclaredFields(),
+            FlipperSubsystem.class.getDeclaredFields(),
 
             一AutoValues.class.getDeclaredFields(),
 
