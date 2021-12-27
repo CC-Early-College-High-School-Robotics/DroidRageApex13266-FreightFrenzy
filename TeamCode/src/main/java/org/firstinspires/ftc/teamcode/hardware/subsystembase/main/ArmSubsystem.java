@@ -13,7 +13,7 @@ import org.firstinspires.ftc.teamcode.hardware.subsystembase.base.BaseSubsystem;
 @Config
 public class ArmSubsystem extends BaseSubsystem {
     // Values
-    public static double ARM_INTAKE_POS = -.02; // 0.04 //-0.09
+    public static double ARM_INTAKE_POS = -.01; // 0.04 //-0.09
     public static double ARM_NEUTRAL_POS = -0.003;
     public static double ARM_LOW_POS = -.4884; //0.132 //0.035
     public static double ARM_MID_POS = -.41; //0.25 //0.17
@@ -23,7 +23,7 @@ public class ArmSubsystem extends BaseSubsystem {
     public static double ARM_SLOW_POWER = 0.3;
     public static double ARM_TICKS_PER_REV = 1425.06;
     public static double ARM_POS_CHANGE_SPEED = 0.0005;
-    public static double ARM_INTAKE_WAIT = 0.6;
+    public static double ARM_INTAKE_WAIT = 0.45;
     boolean setIntakePos = false;
     double targetTime = 0;
 
