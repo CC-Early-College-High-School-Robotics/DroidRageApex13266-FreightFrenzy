@@ -5,19 +5,19 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.hardware.Devices;
 import org.firstinspires.ftc.teamcode.hardware.subsystembase.base.BaseSubsystem;
 
 public class TurretSubsystem extends BaseSubsystem {
     // Values
-    public static double TURRET_SERVO_1_FRONT =.210;
-    public static double TURRET_SERVO_2_FRONT = .210;
+    public static double TURRET_SERVOS_FRONT = .210;
 
-    public static double TURRET_SERVO_1_LEFT = 0;
-    public static double TURRET_SERVO_2_LEFT = 0;
+    public static double TURRET_SERVOS_LEFT = 0;
 
-    public static double TURRET_SERVO_1_RIGHT = .4838;
-    public static double TURRET_SERVO_2_RIGHT = .4838;
+    public static double TURRET_SERVOS_RIGHT = .4838;
+
+    public static double TURRET_SERVOS_SPEED = 0.0001;
+
+    double currentPos = 0;
 
     // Create hardware variables
     public Servo turretServo1 = null;
@@ -41,23 +41,24 @@ public class TurretSubsystem extends BaseSubsystem {
         super.gamepadInit(gamepad1, gamepad2);
         // Reset
         if (gamepad2.a) {
-            turretServo1.setPosition(TURRET_SERVO_1_FRONT);
-            turretServo2.setPosition(TURRET_SERVO_2_FRONT);
+            currentPos = TURRET_SERVOS_FRONT;
         }
         // right
         if (gamepad2.b) {
-            turretServo1.setPosition(TURRET_SERVO_1_RIGHT);
-            turretServo2.setPosition(TURRET_SERVO_2_RIGHT);
+            currentPos = TURRET_SERVOS_RIGHT;
         }
         // left
         if (gamepad2.x) {
-            turretServo1.setPosition(TURRET_SERVO_1_LEFT);
-            turretServo2.setPosition(TURRET_SERVO_2_LEFT);
+            currentPos = TURRET_SERVOS_LEFT;
         }
-        // intake/reset position
-        if (gamepad2.a) {
-            turretServo1.setPosition(TURRET_SERVO_1_FRONT);
-            turretServo2.setPosition(TURRET_SERVO_2_FRONT);
+        if (gamepad2.left_stick_x > 0.1) {
+            currentPos += TURRET_SERVOS_SPEED;
         }
+        if (gamepad2.left_stick_x < -0.1) {
+            currentPos -= TURRET_SERVOS_SPEED;
+        }
+
+        turretServo1.setPosition(currentPos);
+        turretServo2.setPosition(currentPos);
     }
 }
