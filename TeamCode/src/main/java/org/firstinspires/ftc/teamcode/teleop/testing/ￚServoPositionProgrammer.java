@@ -9,9 +9,11 @@ import com.qualcomm.robotcore.hardware.Servo;
 @TeleOp(name="Servo Position Programmer", group="test")
 public class ￚServoPositionProgrammer extends LinearOpMode {
     public static double pos;
+    public static double pos2;
     String mode = "passive";
     boolean xPressed = false;
-    public static String servoName = "boxServo";
+    public static String servoName = "turretServo1";
+    public static String servoName2 = "turretServo2";
 
     @Override
     public void runOpMode() {
@@ -19,11 +21,14 @@ public class ￚServoPositionProgrammer extends LinearOpMode {
 
         //hardware initialization
         Servo servo;
+        Servo servo2;
 
 
         servo = hardwareMap.get(Servo.class, servoName);
+        servo2 = hardwareMap.get(Servo.class, servoName2);
 
         pos = servo.getPosition();
+        pos2 = servo2.getPosition();
         sleep(1000);
         waitForStart();
         while(!isStopRequested()) {
@@ -48,15 +53,24 @@ public class ￚServoPositionProgrammer extends LinearOpMode {
             } else if (gamepad1.b && mode.equals("active")) {
                 pos += 0.001;
             }
+            if (gamepad1.x && mode.equals("active")) {
+                pos2 -= 0.001;
+            } else if (gamepad1.y && mode.equals("active")) {
+                pos2 += 0.001;
+            }
 
             servo.setPosition(pos);
+            servo.setPosition(pos2);
             telemetry.addLine("Press x to switch between passive get position and active set position modes");
             telemetry.addData("Current mode", mode);
+            telemetry.addData("Current servo", servoName);
             telemetry.addLine();
             telemetry.addData("Current Servo pos", servo.getPosition());
+            telemetry.addData("Current Servo2 pos", servo2.getPosition());
 
             if (mode.equals("active")) {
                 telemetry.addData("Desired Servo pos", pos);
+                telemetry.addData("Desired Servo2 pos", pos2);
             }
 
             telemetry.update();
