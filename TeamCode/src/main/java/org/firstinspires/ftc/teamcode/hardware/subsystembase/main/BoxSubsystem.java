@@ -17,8 +17,8 @@ public class BoxSubsystem extends BaseSubsystem {
     public static double BOX_INTAKE = 0.925;
     public static double BOX_DROP = 0.180;
     public static double BOX_INTERMEDIATE = 0.243;
-    public static double BOX_UP_WAIT = 1;
-    public static double BOX_INTAKE_WAIT = 1;
+    public static double BOX_UP_WAIT = 0.25;
+    public static double BOX_INTAKE_WAIT = 0.25;
 
     // Create hardware variables
     public Servo boxServo = null;

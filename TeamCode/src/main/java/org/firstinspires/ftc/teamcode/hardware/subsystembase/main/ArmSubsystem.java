@@ -23,7 +23,7 @@ public class ArmSubsystem extends BaseSubsystem {
     public static double ARM_SLOW_POWER = 0.3;
     public static double ARM_TICKS_PER_REV = 1425.06;
     public static double ARM_POS_CHANGE_SPEED = 0.0005;
-    public static double ARM_INTAKE_WAIT = 1;
+    public static double ARM_INTAKE_WAIT = 0.25;
     boolean setIntakePos = false;
     double targetTime = 0;
 
