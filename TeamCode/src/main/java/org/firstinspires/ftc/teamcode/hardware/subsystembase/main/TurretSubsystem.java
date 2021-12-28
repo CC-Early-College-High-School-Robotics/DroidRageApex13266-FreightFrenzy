@@ -17,7 +17,7 @@ public class TurretSubsystem extends BaseSubsystem {
 
     public static double TURRET_SERVOS_RIGHT = .4838;
 
-    public static double TURRET_SERVOS_SPEED = 0.0001;
+    public static double TURRET_SERVOS_SPEED = 0.2;
 
     double currentPos = 0.20;
 
