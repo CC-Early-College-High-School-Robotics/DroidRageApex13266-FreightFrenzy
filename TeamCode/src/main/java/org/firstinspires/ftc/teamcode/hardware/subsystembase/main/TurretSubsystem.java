@@ -19,7 +19,7 @@ public class TurretSubsystem extends BaseSubsystem {
 
     public static double TURRET_SERVOS_SPEED = 0.0001;
 
-    double currentPos = 0;
+    double currentPos = 0.20;
 
     // Create hardware variables
     public Servo turretServo1 = null;
@@ -59,8 +59,11 @@ public class TurretSubsystem extends BaseSubsystem {
         if (gamepad2.left_stick_x < -0.1) {
             currentPos -= TURRET_SERVOS_SPEED;
         }
+        if (gamepad2.a || gamepad2.b || gamepad2.x || gamepad2.left_stick_x > 0.1 || gamepad2.left_stick_x < -0.1) {
+            turretServo1.setPosition(currentPos);
+            turretServo2.setPosition(currentPos);
+        }
 
-        turretServo1.setPosition(currentPos);
-        turretServo2.setPosition(currentPos);
+
     }
 }
