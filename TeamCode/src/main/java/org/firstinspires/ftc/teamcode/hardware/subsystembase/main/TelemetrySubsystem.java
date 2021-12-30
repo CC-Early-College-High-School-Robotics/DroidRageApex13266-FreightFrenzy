@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.hardware.subsystembase.main;
 
 import com.acmerobotics.dashboard.config.Config;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -68,6 +69,7 @@ public class TelemetrySubsystem extends BaseSubsystem {
         telemetry.addData("Frequency", (int) (cycles / runtime.seconds()) + "hz");
 //        telemetry.addData("Alliance Marker Stick Servo Position", stick.allianceMarkerServoTargetPos);
         telemetry.addData("Arm Position", arm.getArmPosition());
+        telemetry.addData("Arm PIDF Coeffiecients", arm.armMotor.getPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION));
         telemetry.addData("Intake Speed", intake.intakeMotor.getVelocity());
         telemetry.addData("Break Mode status", breakMode.breakModeStatus);
         telemetry.update();

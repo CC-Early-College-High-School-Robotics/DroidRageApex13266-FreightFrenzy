@@ -35,7 +35,7 @@ public class TeleOpMain extends LinearOpMode {
     public void runOpMode() {
         // Initialize subsystems
 //        stick.init(hardwareMap, telemetry);
-        arm.init(hardwareMap, telemetry);
+        arm.init(hardwareMap, telemetry, box, turret, flipper);
         box.init(hardwareMap, telemetry);
         carousel.init(hardwareMap, telemetry);
         drivetrain.init(hardwareMap, telemetry);
@@ -58,8 +58,9 @@ public class TeleOpMain extends LinearOpMode {
 
 //            stick.defaultCommand(gamepad1, gamepad2);
             arm.findArmPosition(gamepad1, gamepad2);
-            arm.setArmPosition(gamepad1, gamepad2);
-            box.defaultCommand(gamepad1, gamepad2);
+            arm.loopCommand();
+            
+//            box.defaultCommand(gamepad1, gamepad2);
             carousel.defaultCommand(gamepad1, gamepad2);
             drivetrain.defaultCommand(gamepad1, gamepad2);
             intake.defaultCommand(gamepad1, gamepad2);

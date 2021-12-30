@@ -13,7 +13,8 @@ import org.firstinspires.ftc.teamcode.hardware.subsystembase.base.BaseSubsystem;
 @Config
 public class IntakeSubsystem extends BaseSubsystem {
     // Values
-    public static double INTAKE_VELOCITY = 1000;
+//    public static double INTAKE_VELOCITY = 1000;
+    public static double INTAKE_POWER = 0.8;
 
     // Create hardware variables
     public DcMotorEx intakeMotor = null;
@@ -39,10 +40,10 @@ public class IntakeSubsystem extends BaseSubsystem {
     public void defaultCommand(Gamepad gamepad1, Gamepad gamepad2) {
         super.gamepadInit(gamepad1, gamepad2);
         if (gamepad1.right_trigger >= ControllerSubsystem.TRIGGER_THRESHOLD) {
-            intakeMotor.setVelocity(-INTAKE_VELOCITY);
+            intakeMotor.setPower(-INTAKE_POWER);
         }
         else if (gamepad1.left_trigger >= ControllerSubsystem.TRIGGER_THRESHOLD) {
-            intakeMotor.setVelocity(INTAKE_VELOCITY);
+            intakeMotor.setPower(INTAKE_POWER);
         }
         else if (gamepad1.right_trigger < ControllerSubsystem.TRIGGER_THRESHOLD && gamepad1.left_trigger < ControllerSubsystem.TRIGGER_THRESHOLD) {
             intakeMotor.setVelocity(0);
