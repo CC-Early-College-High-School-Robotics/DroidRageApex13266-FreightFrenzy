@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.auto.paths;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -15,45 +16,18 @@ import org.firstinspires.ftc.teamcode.teleop.testing.TuningStart;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
-/*
 @Autonomous(name="Blue Carousel (Bottom) Roadrunner Path", group="Roadrunner Paths")
 public class BlueWarehouseCycleTest extends LinearOpMode {
     @Override
     public void runOpMode() {
         TuningStart.initializeTuning();
         RoadrunnerTankDrive drive = new RoadrunnerTankDrive(hardwareMap);
-        Devices robot = new Devices();
-        robot.init(hardwareMap);
-
-        double armHeight = 0;
-        double hubDistance = 0;
-
-
-        // Before start
-
-        // Lift box up
-        robot.boxServo.setPosition(Devices.BOX_UP);
 
         // On start
 
         waitForStart();
         if(isStopRequested()) return;
 
-        if (detector.getAnalysis() == 一BlueCarouselDuckDetection.DuckPosition.RIGHT) {
-            armHeight = Devices.ARM_HIGH_POS;
-            hubDistance = 一AutoValues.BLUE_CAROUSEL_HIGH;
-        }
-
-        if (detector.getAnalysis() == 一BlueCarouselDuckDetection.DuckPosition.CENTER) {
-            armHeight = Devices.ARM_MID_POS;
-            hubDistance = 一AutoValues.BLUE_CAROUSEL_MID;
-        }
-
-        if (detector.getAnalysis() == 一BlueCarouselDuckDetection.DuckPosition.LEFT) {
-            armHeight = Devices.ARM_LOW_POS;
-            hubDistance = 一AutoValues.BLUE_CAROUSEL_LOW;;
-
-        }
 
 
 
@@ -63,48 +37,53 @@ public class BlueWarehouseCycleTest extends LinearOpMode {
 
 
 
-        Pose2d startPose = new Pose2d(-47, 60, Math.toRadians(270));
+        Pose2d startPose = new Pose2d(-11, 62.5, Math.toRadians(90));
         ElapsedTime timer = new ElapsedTime();
 
         drive.setPoseEstimate(startPose);
 
         TrajectorySequence Trajectory1 = drive.trajectorySequenceBuilder(startPose)
-                .forward(10)
-                .turn(Math.toRadians(30), 4, 4)
+                .back(19)
+                .turn(Math.toRadians(-50))
+                .forward(30)
+                .turn(Math.toRadians(-40))
+                .forward(50)
+                .back(40)
                 .build();
 
         TrajectorySequence Trajectory2 = drive.trajectorySequenceBuilder(Trajectory1.end())
-                .back(9)
+                .splineTo(new Vector2d(-20, 48), Math.toRadians(200)) // reversed
                 .build();
 
         TrajectorySequence Trajectory3 = drive.trajectorySequenceBuilder(Trajectory2.end())
-                .forward(9)
-                .turn(Math.toRadians(60), 4, 4)
-                .back(6)
-                .turn(Math.toRadians(90))
+                .forward(48)
+                .turn(Math.toRadians(-20))
+                .forward(30)
                 .back(30)
-                .turn(Math.toRadians(90))
                 .build();
 
         TrajectorySequence Trajectory4 = drive.trajectorySequenceBuilder(Trajectory3.end())
-                .back(hubDistance)
+                .splineTo(new Vector2d(-20, 48), Math.toRadians(200)) // reversed
                 .build();
 
+        /*
         TrajectorySequence Trajectory5 = drive.trajectorySequenceBuilder(Trajectory4.end())
-                .forward(hubDistance + 4)
-                .turn(Math.toRadians(-90))
+
                 .build();
 
         TrajectorySequence Trajectory6 = drive.trajectorySequenceBuilder(Trajectory5.end())
                 .forward(15)
                 .build();
 
+         */
+
 
 
         // Run trajectory 1
         drive.followTrajectorySequence((Trajectory1));
+        drive.followTrajectorySequence((Trajectory2));
+        drive.followTrajectorySequence((Trajectory3));
+        drive.followTrajectorySequence((Trajectory4));
     }
 }
-
- */
 
