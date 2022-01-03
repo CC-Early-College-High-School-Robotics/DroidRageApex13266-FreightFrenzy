@@ -58,12 +58,12 @@ import static org.firstinspires.ftc.teamcode.roadrunner.drive.RoadrunnerDriveCon
  */
 @Config
 public class RoadrunnerTankDrive extends TankDrive {
-    public static PIDCoefficients AXIAL_PID = new PIDCoefficients(15, 0, 0.004); // 9, 0, 0.5
-    public static PIDCoefficients CROSS_TRACK_PID = new PIDCoefficients(0.00325, 0, 0.02); // 0.0099, 0, 0.0003
-    public static PIDCoefficients HEADING_PID = new PIDCoefficients(15, 0, 0.375); // 18, 0, 0.778
+    public static PIDCoefficients AXIAL_PID = new PIDCoefficients(0.05, 0, 0); // 9, 0, 0.5
+    public static PIDCoefficients CROSS_TRACK_PID = new PIDCoefficients(0.01, 0, 0); // 0.0099, 0, 0.0003
+    public static PIDCoefficients HEADING_PID = new PIDCoefficients(0, 0, 0); // 18, 0, 0.778
 
-    public static PIDCoefficients LEFT_DRIVE_PID = new PIDCoefficients(0.002, 0, 0); // 0.000020, 0, 0
-    public static PIDCoefficients RIGHT_DRIVE_PID = new PIDCoefficients(0.002, 0, 0); // 0.000020, 0, 0
+    public static PIDCoefficients LEFT_DRIVE_PID = new PIDCoefficients(0, 0, 0); // 0.000020, 0, 0
+    public static PIDCoefficients RIGHT_DRIVE_PID = new PIDCoefficients(0, 0, 0); // 0.000020, 0, 0
 
     private PIDController leftDriveVeloPID;
     private PIDController rightDriveVeloPID;
@@ -90,7 +90,7 @@ public class RoadrunnerTankDrive extends TankDrive {
 
 
         follower = new TankPIDVAFollower(AXIAL_PID, CROSS_TRACK_PID,
-                new Pose2d(0.5, 0.5, Math.toRadians(5.0)), 0.5);
+                new Pose2d(0.5, 0.5, Math.toRadians(5.0)), 1);
 
         LynxModuleUtil.ensureMinimumFirmwareVersion(hardwareMap);
 
@@ -108,7 +108,7 @@ public class RoadrunnerTankDrive extends TankDrive {
 
         // Tif your hub is mounted vertically, remap the IMU axes so that the z-axis points
         // upward (normal to the floor) using a command like the following:
-        BNO055IMUUtil.remapAxes(imu, AxesOrder.XZY, AxesSigns.NPN);
+//        BNO055IMUUtil.remapAxes(imu, AxesOrder.XZY, AxesSigns.NPN);
 
         // add/remove motors depending on your robot (e.g., 6WD)
         DcMotorEx leftFront = hardwareMap.get(DcMotorEx.class, "leftFront");
@@ -336,7 +336,7 @@ public class RoadrunnerTankDrive extends TankDrive {
 
         // TODO: consider messing with this (Justin)
 
-        return (double) imu.getAngularVelocity().zRotationRate;
+        return (double) imu.getAngularVelocity().xRotationRate;
     }
 
     public static TrajectoryVelocityConstraint getVelocityConstraint(double maxVel, double maxAngularVel, double trackWidth) {
