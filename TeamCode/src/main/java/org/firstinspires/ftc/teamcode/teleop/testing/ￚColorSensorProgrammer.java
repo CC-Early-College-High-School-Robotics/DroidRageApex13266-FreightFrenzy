@@ -5,6 +5,7 @@ import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 @Config
@@ -18,10 +19,12 @@ public class ￚColorSensorProgrammer extends LinearOpMode {
         TuningStart.initializeTuning();
 
         //hardware initialization
-        RevColorSensorV3 colorSensorV3;
+//        RevColorSensorV3 colorSensorV3;
+        ColorSensor colorSensor;
 
 
-        colorSensorV3 = hardwareMap.get(RevColorSensorV3.class, colorSensorName);
+//        colorSensorV3 = hardwareMap.get(RevColorSensorV3.class, colorSensorName);
+        colorSensor = hardwareMap.get(ColorSensor.class, colorSensorName);
 
 
         waitForStart();
@@ -30,7 +33,11 @@ public class ￚColorSensorProgrammer extends LinearOpMode {
 
 //            servo.setPosition(pos);
 //            telemetry.addData("servo pos", servo.getPosition());
-            telemetry.addData("desired pos", colorSensorV3.argb());
+
+            telemetry.addData("Servo alpha", colorSensor.alpha());
+            telemetry.addData("Servo red", colorSensor.red());
+            telemetry.addData("Servo blue", colorSensor.blue());
+            telemetry.addData("Servo green", colorSensor.green());
             telemetry.update();
             sleep(10);
         }

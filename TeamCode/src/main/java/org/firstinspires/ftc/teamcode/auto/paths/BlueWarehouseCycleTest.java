@@ -16,7 +16,7 @@ import org.firstinspires.ftc.teamcode.teleop.testing.TuningStart;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
-@Autonomous(name="Blue Carousel (Bottom) Roadrunner Path", group="Roadrunner Paths")
+@Autonomous(name="Blue warehouse cycle test Roadrunner Path", group="Roadrunner Paths")
 public class BlueWarehouseCycleTest extends LinearOpMode {
     @Override
     public void runOpMode() {
