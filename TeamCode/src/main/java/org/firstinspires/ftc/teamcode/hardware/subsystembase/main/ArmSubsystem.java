@@ -136,13 +136,24 @@ public class ArmSubsystem extends BaseSubsystem {
         } else if (gamepad2.dpad_down && !buttonPressed) {
             armUp(ARM_LOW_POS, BoxSubsystem.BOX_SHARED);
             buttonPressed = true;
+
+
         } else if (gamepad2.dpad_left && !buttonPressed) {
             armReset();
             buttonPressed = true;
+
+
+        } else if (gamepad2.right_bumper && !buttonPressed) {
+            armUp(TurretSubsystem.TURRET_SERVOS_RIGHT);
+        } else if (gamepad2.left_bumper && !buttonPressed) {
+            armUp(TurretSubsystem.TURRET_SERVOS_LEFT);
         }
-        if (!gamepad2.dpad_up && !gamepad2.dpad_left && !gamepad2.dpad_down && !gamepad2.dpad_right) {
+
+
+        if (!gamepad2.dpad_up && !gamepad2.dpad_left && !gamepad2.dpad_down && !gamepad2.dpad_right && !gamepad2.right_bumper) {
              buttonPressed = false;
         }
+
 
 
 
@@ -216,6 +227,7 @@ public class ArmSubsystem extends BaseSubsystem {
             armIsUp = true;
             turret.disableTurret = false;
             setArmPosition();
+            turret.setTurretPosition();
         }
 
 
@@ -280,6 +292,38 @@ public class ArmSubsystem extends BaseSubsystem {
         } else {
             armTargetPos = armSelectedPos;
             setArmPosition();
+            box.boxServo.setPosition(servoSelectedPos);
+        }
+    }
+    public void armUp(double turretPos) {
+        armSelectedPos = ARM_INTERMEDIATE_POS;
+        servoSelectedPos = BoxSubsystem.BOX_HIGH;
+        turret.targetPos = turretPos;
+
+        armMotor.setPower(ARM_POWER);
+
+        if (!armIsUp) {
+            turret.disableTurret = true;
+
+            armTargetPos = ARM_INTERMEDIATE_POS;
+            setArmPosition();
+
+            armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+//            flipper.disableFlipper = false;
+
+            // action 1
+            boxUp = true;
+
+            // action 2
+            targetTime1 = runtime.seconds() + ARM_UP_WAIT;
+
+            // action 3
+            targetTime2 = runtime.seconds() + ARM_UP_WAIT;
+        } else {
+            armTargetPos = armSelectedPos;
+            setArmPosition();
+            box.boxServo.setPosition(servoSelectedPos);
         }
     }
 
