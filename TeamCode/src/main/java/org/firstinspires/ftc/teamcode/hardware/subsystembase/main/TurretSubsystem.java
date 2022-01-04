@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.hardware.subsystembase.base.BaseSubsystem;
 @Config
 public class TurretSubsystem extends BaseSubsystem {
     // Values
-    public static double TURRET_SERVOS_FRONT = .48;
+    public static double TURRET_SERVOS_FRONT = .47;
 
     public static double TURRET_SERVOS_LEFT = 0.14;
 
