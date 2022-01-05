@@ -132,33 +132,35 @@ public class ArmSubsystem extends BaseSubsystem {
 //            setIntakePos = false;
 //        }
         if (gamepad2.dpad_up) {
-            armUp(ARM_HIGH_POS, BoxSubsystem.BOX_HIGH);
+            armUp(ARM_HIGH_POS, BoxSubsystem.BOX_HIGH, TurretSubsystem.TURRET_SERVOS_FRONT, false);
         } else if (gamepad2.dpad_right) {
-            armUp(ARM_MID_POS, BoxSubsystem.BOX_HIGH);
-        } else if (gamepad2.dpad_down) {
-            armUp(ARM_LOW_POS, BoxSubsystem.BOX_SHARED);
-
-
+            armUp(ARM_INTERMEDIATE_POS, BoxSubsystem.BOX_SHARED, TurretSubsystem.TURRET_SERVOS_RIGHT, true);
         } else if (gamepad2.dpad_left) {
+            armUp(ARM_INTERMEDIATE_POS, BoxSubsystem.BOX_SHARED, TurretSubsystem.TURRET_SERVOS_LEFT, true);
+
+
+        } else if (gamepad2.dpad_down) {
             armReset();
 
 
-        } else if (gamepad2.right_bumper) {
-            armUp(TurretSubsystem.TURRET_SERVOS_RIGHT);
-        } else if (gamepad2.left_bumper) {
-            armUp(TurretSubsystem.TURRET_SERVOS_LEFT);
+        } else if ((gamepad2.right_trigger >= ControllerSubsystem.TRIGGER_THRESHOLD) && armIsUp) {
+            armTargetPos = ARM_HIGH_POS;
+            setArmPosition();
+        } else if ((gamepad2.left_trigger >= ControllerSubsystem.TRIGGER_THRESHOLD) && armIsUp) {
+            armTargetPos = ARM_LOW_POS;
+            setArmPosition();
         }
 
         // we basically use distance formula to see how far away the stick is from the center of the joystick, and if it is greater than the joystick threshold, gamepad2StickTouchingEdge will be true
-        gamepad2StickTouchingEdge = (Math.sqrt((Math.pow(-gamepad1.left_stick_y, 2)) + (Math.pow(gamepad1.left_stick_x, 2)))) > ControllerSubsystem.TURRET_JOYSTICK_THRESHOLD;
+        gamepad2StickTouchingEdge = (Math.sqrt((Math.pow(-gamepad1.right_stick_y, 2)) + (Math.pow(gamepad1.right_stick_x, 2)))) > ControllerSubsystem.TURRET_JOYSTICK_THRESHOLD;
 
         // we basically calculate the stick position
-        gamepad2StickPos = Math.toDegrees(Math.atan2(gamepad1.left_stick_x, -gamepad1.left_stick_y)) + (TurretSubsystem.TURRET_RANGE / 2);
+        gamepad2StickPos = Math.toDegrees(Math.atan2(gamepad1.right_stick_x, -gamepad1.right_stick_y)) + (TurretSubsystem.TURRET_RANGE / 2);
         gamepad2StickMath1 = gamepad2StickPos - ((0.5 * TurretSubsystem.TURRET_RANGE) - (TurretSubsystem.TURRET_SERVOS_FRONT * TurretSubsystem.TURRET_RANGE));
         gamepad2StickMath2 = ((gamepad2StickPos) / (TurretSubsystem.TURRET_RANGE));
 
         if (gamepad2StickTouchingEdge) {
-            armUp(gamepad2StickPos);
+            armUp(ARM_HIGH_POS, BoxSubsystem.BOX_HIGH, gamepad2StickMath2, false);
         } else if (gamepad2StickMath2 < -0.1 || gamepad2StickPos > 1.1) {
             armReset();
         }
@@ -172,11 +174,11 @@ public class ArmSubsystem extends BaseSubsystem {
 
 
 
-        if (-gamepad2.right_stick_y > ControllerSubsystem.TRIGGER_THRESHOLD) {
+        if (-gamepad2.left_stick_y > ControllerSubsystem.TRIGGER_THRESHOLD) {
             armTargetPos += ARM_POS_CHANGE_SPEED;
             setArmPosition();
         }
-        if (-gamepad2.right_stick_y < -ControllerSubsystem.TRIGGER_THRESHOLD) {
+        if (-gamepad2.left_stick_y < -ControllerSubsystem.TRIGGER_THRESHOLD) {
             armTargetPos -= ARM_POS_CHANGE_SPEED;
             setArmPosition();
         }
@@ -282,7 +284,7 @@ public class ArmSubsystem extends BaseSubsystem {
 
     }
 
-    public void armUp(double finalArmPosition, double finalServoPosition) {
+    public void armUp(double finalArmPosition, double finalServoPosition, double turretPosition, boolean moveTurretInstantly) {
         if (!armIsMoving) {
             armSelectedPos = finalArmPosition;
             servoSelectedPos = finalServoPosition;
@@ -290,67 +292,75 @@ public class ArmSubsystem extends BaseSubsystem {
 
             if (!armIsUp) {
                 armIsMoving = true;
-                turret.targetPos = TurretSubsystem.TURRET_SERVOS_FRONT;
+                if (moveTurretInstantly) {
+                    turret.targetPos = turretPosition;
+                } else {
+                    turret.targetPos = TurretSubsystem.TURRET_SERVOS_FRONT;
+                }
+
+                turret.disableTurret = true;
+
+                armTargetPos = ARM_INTERMEDIATE_POS;
+                setArmPosition();
+
+                armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+//            flipper.disableFlipper = false;
+
+                // action 1
+                boxUp = true;
+
+                // action 2
+                targetTime1 = runtime.seconds() + ARM_UP_WAIT;
+
+                // action 3
+                if (moveTurretInstantly) {
+                    targetTime2 = runtime.seconds() + ARM_UP_WAIT;
+                } else {
+                    targetTime2 = runtime.seconds() + ARM_FORWARD_WAIT;
+                }
+            } else {
+                turret.targetPos = turretPosition;
                 turret.setTurretPosition();
-                turret.disableTurret = true;
-
-                armTargetPos = ARM_INTERMEDIATE_POS;
-                setArmPosition();
-
-                armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-//            flipper.disableFlipper = false;
-
-                // action 1
-                boxUp = true;
-
-                // action 2
-                targetTime1 = runtime.seconds() + ARM_UP_WAIT;
-
-                // action 3
-                targetTime2 = runtime.seconds() + ARM_FORWARD_WAIT;
-            } else {
-                armTargetPos = armSelectedPos;
-                setArmPosition();
                 box.boxServo.setPosition(servoSelectedPos);
             }
         }
     }
-    public void armUp(double turretPos) {
-        if (!armIsMoving) {
-            armSelectedPos = ARM_INTERMEDIATE_POS;
-            servoSelectedPos = BoxSubsystem.BOX_HIGH;
-            turret.targetPos = turretPos;
-
-            armMotor.setPower(ARM_POWER);
-
-            if (!armIsUp) {
-                armIsMoving = true;
-
-                turret.disableTurret = true;
-
-                armTargetPos = ARM_INTERMEDIATE_POS;
-                setArmPosition();
-
-                armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-//            flipper.disableFlipper = false;
-
-                // action 1
-                boxUp = true;
-
-                // action 2
-                targetTime1 = runtime.seconds() + ARM_UP_WAIT;
-
-                // action 3
-                targetTime2 = runtime.seconds() + ARM_UP_WAIT;
-            } else {
-                armTargetPos = armSelectedPos;
-                setArmPosition();
-                box.boxServo.setPosition(servoSelectedPos);
-            }
-        }
-    }
+//    public void armUp(double turretPos) {
+//        if (!armIsMoving) {
+//            armSelectedPos = ARM_INTERMEDIATE_POS;
+//            servoSelectedPos = BoxSubsystem.BOX_HIGH;
+//            turret.targetPos = turretPos;
+//
+//            armMotor.setPower(ARM_POWER);
+//
+//            if (!armIsUp) {
+//                armIsMoving = true;
+//
+//                turret.disableTurret = true;
+//
+//                armTargetPos = ARM_INTERMEDIATE_POS;
+//                setArmPosition();
+//
+//                armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//
+////            flipper.disableFlipper = false;
+//
+//                // action 1
+//                boxUp = true;
+//
+//                // action 2
+//                targetTime1 = runtime.seconds() + ARM_UP_WAIT;
+//
+//                // action 3
+//                targetTime2 = runtime.seconds() + ARM_UP_WAIT;
+//            } else {
+//                armTargetPos = armSelectedPos;
+//                setArmPosition();
+//                box.boxServo.setPosition(servoSelectedPos);
+//            }
+//        }
+//    }
 
     public void armReset() {
         if (!armIsMoving) {
