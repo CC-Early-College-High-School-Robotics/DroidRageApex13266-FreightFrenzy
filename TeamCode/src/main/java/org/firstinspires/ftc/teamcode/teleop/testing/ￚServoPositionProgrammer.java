@@ -26,6 +26,7 @@ public class ￚServoPositionProgrammer extends LinearOpMode {
 
         servo = hardwareMap.get(Servo.class, servoName);
         servo2 = hardwareMap.get(Servo.class, servoName2);
+        servo.setDirection(Servo.Direction.REVERSE);
 
         pos = servo.getPosition();
         pos2 = servo2.getPosition();

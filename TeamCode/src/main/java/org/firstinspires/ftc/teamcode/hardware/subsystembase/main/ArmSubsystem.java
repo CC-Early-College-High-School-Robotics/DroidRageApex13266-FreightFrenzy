@@ -58,6 +58,7 @@ public class ArmSubsystem extends BaseSubsystem {
     double armTargetPos = 0;
     double armSelectedPos = 0;
     double servoSelectedPos = 0;
+    double selectedTurretPos = 0;
 
     boolean gamepad2StickTouchingEdge = false;
     double gamepad2StickPos = 0;
@@ -146,9 +147,11 @@ public class ArmSubsystem extends BaseSubsystem {
         } else if ((gamepad2.right_trigger >= ControllerSubsystem.TRIGGER_THRESHOLD) && armIsUp) {
             armTargetPos = ARM_HIGH_POS;
             setArmPosition();
+            box.boxServo.setPosition(BoxSubsystem.BOX_HIGH);
         } else if ((gamepad2.left_trigger >= ControllerSubsystem.TRIGGER_THRESHOLD) && armIsUp) {
             armTargetPos = ARM_LOW_POS;
             setArmPosition();
+            box.boxServo.setPosition(BoxSubsystem.BOX_SHARED);
         }
 
         // we basically use distance formula to see how far away the stick is from the center of the joystick, and if it is greater than the joystick threshold, gamepad2StickTouchingEdge will be true
@@ -161,9 +164,10 @@ public class ArmSubsystem extends BaseSubsystem {
 
         if (gamepad2StickTouchingEdge) {
             armUp(ARM_HIGH_POS, BoxSubsystem.BOX_HIGH, gamepad2StickMath2, false);
-        } else if (gamepad2StickMath2 < -0.1 || gamepad2StickPos > 1.1) {
-            armReset();
         }
+//        else if (gamepad2StickMath2 < -0.1 || gamepad2StickPos > 1.1) {
+//            armReset();
+//        }
 
 //        if (!gamepad2.dpad_up && !gamepad2.dpad_left && !gamepad2.dpad_down && !gamepad2.dpad_right && !gamepad2.right_bumper && !gamepad2StickTouchingEdge) {
 //             armMoving = false;
@@ -196,31 +200,31 @@ public class ArmSubsystem extends BaseSubsystem {
 
 
 
-        if (-gamepad2.right_stick_y > ControllerSubsystem.TRIGGER_THRESHOLD && gamepad2.right_trigger >= ControllerSubsystem.TRIGGER_THRESHOLD && armIsUp) {
+        if (-gamepad2.left_stick_y > ControllerSubsystem.TRIGGER_THRESHOLD && gamepad2.right_trigger >= ControllerSubsystem.TRIGGER_THRESHOLD && armIsUp) {
             ARM_HIGH_POS+= ARM_POS_CHANGE_SPEED;
             setArmPosition();
         }
-        if (-gamepad2.right_stick_y < -ControllerSubsystem.TRIGGER_THRESHOLD && gamepad2.right_trigger >= ControllerSubsystem.TRIGGER_THRESHOLD && armIsUp) {
+        if (-gamepad2.left_stick_y < -ControllerSubsystem.TRIGGER_THRESHOLD && gamepad2.right_trigger >= ControllerSubsystem.TRIGGER_THRESHOLD && armIsUp) {
             ARM_HIGH_POS -= ARM_POS_CHANGE_SPEED;
             setArmPosition();
         }
 
 
 //
-//        if (-gamepad2.right_stick_y > ControllerSubsystem.TRIGGER_THRESHOLD && gamepad2.dpad_right) {
+//        if (-gamepad2.left_stick_y > ControllerSubsystem.TRIGGER_THRESHOLD && gamepad2.dpad_right) {
 //            ARM_MID_POS+= ARM_POS_CHANGE_SPEED;
 //            setArmPosition();
 //        }
-//        if (-gamepad2.right_stick_y < -ControllerSubsystem.TRIGGER_THRESHOLD && gamepad2.dpad_right) {
+//        if (-gamepad2.left_stick_y < -ControllerSubsystem.TRIGGER_THRESHOLD && gamepad2.dpad_right) {
 //            ARM_MID_POS -= ARM_POS_CHANGE_SPEED;
 //            setArmPosition();
 //        }
 
-        if (-gamepad2.right_stick_y > ControllerSubsystem.TRIGGER_THRESHOLD && gamepad2.left_trigger >= ControllerSubsystem.TRIGGER_THRESHOLD && armIsUp) {
+        if (-gamepad2.left_stick_y > ControllerSubsystem.TRIGGER_THRESHOLD && gamepad2.left_trigger >= ControllerSubsystem.TRIGGER_THRESHOLD && armIsUp) {
             ARM_LOW_POS+= ARM_POS_CHANGE_SPEED;
             setArmPosition();
         }
-        if (-gamepad2.right_stick_y < -ControllerSubsystem.TRIGGER_THRESHOLD && gamepad2.left_trigger >= ControllerSubsystem.TRIGGER_THRESHOLD && armIsUp) {
+        if (-gamepad2.left_stick_y < -ControllerSubsystem.TRIGGER_THRESHOLD && gamepad2.left_trigger >= ControllerSubsystem.TRIGGER_THRESHOLD && armIsUp) {
             ARM_LOW_POS -= ARM_POS_CHANGE_SPEED;
             setArmPosition();
         }
@@ -235,6 +239,9 @@ public class ArmSubsystem extends BaseSubsystem {
             boxUp = false;
 
             box.boxServo.setPosition(servoSelectedPos);
+            turret.targetPos = selectedTurretPos;
+            turret.setTurretPosition();
+            turret.disableTurret = false;
 
             armForward = true;
         }
@@ -243,9 +250,10 @@ public class ArmSubsystem extends BaseSubsystem {
 
             armTargetPos = armSelectedPos;
             armIsUp = true;
-            turret.disableTurret = false;
+
             setArmPosition();
-            turret.setTurretPosition();
+//            turret.setTurretPosition();
+//            turret.disableTurret = false;
             armIsMoving = false;
         }
 
@@ -288,6 +296,7 @@ public class ArmSubsystem extends BaseSubsystem {
         if (!armIsMoving) {
             armSelectedPos = finalArmPosition;
             servoSelectedPos = finalServoPosition;
+            selectedTurretPos = turretPosition;
             armMotor.setPower(ARM_POWER);
 
             if (!armIsUp) {
@@ -322,7 +331,7 @@ public class ArmSubsystem extends BaseSubsystem {
             } else {
                 turret.targetPos = turretPosition;
                 turret.setTurretPosition();
-                box.boxServo.setPosition(servoSelectedPos);
+//                box.boxServo.setPosition(servoSelectedPos);
             }
         }
     }
