@@ -152,10 +152,10 @@ public class ArmSubsystem extends BaseSubsystem {
         }
 
         // we basically use distance formula to see how far away the stick is from the center of the joystick, and if it is greater than the joystick threshold, gamepad2StickTouchingEdge will be true
-        gamepad2StickTouchingEdge = (Math.sqrt((Math.pow(-gamepad1.right_stick_y, 2)) + (Math.pow(gamepad1.right_stick_x, 2)))) > ControllerSubsystem.TURRET_JOYSTICK_THRESHOLD;
+        gamepad2StickTouchingEdge = (Math.sqrt((Math.pow(-gamepad2.right_stick_y, 2)) + (Math.pow(gamepad2.right_stick_x, 2)))) > ControllerSubsystem.TURRET_JOYSTICK_THRESHOLD;
 
         // we basically calculate the stick position
-        gamepad2StickPos = Math.toDegrees(Math.atan2(gamepad1.right_stick_x, -gamepad1.right_stick_y)) + (TurretSubsystem.TURRET_RANGE / 2);
+        gamepad2StickPos = Math.toDegrees(Math.atan2(gamepad2.right_stick_x, -gamepad2.right_stick_y)) + (TurretSubsystem.TURRET_RANGE / 2);
         gamepad2StickMath1 = gamepad2StickPos - ((0.5 * TurretSubsystem.TURRET_RANGE) - (TurretSubsystem.TURRET_SERVOS_FRONT * TurretSubsystem.TURRET_RANGE));
         gamepad2StickMath2 = ((gamepad2StickPos) / (TurretSubsystem.TURRET_RANGE));
 
@@ -174,11 +174,11 @@ public class ArmSubsystem extends BaseSubsystem {
 
 
 
-        if (-gamepad2.left_stick_y > ControllerSubsystem.TRIGGER_THRESHOLD) {
+        if (-gamepad2.left_stick_y > ControllerSubsystem.TRIGGER_THRESHOLD && armIsUp) {
             armTargetPos += ARM_POS_CHANGE_SPEED;
             setArmPosition();
         }
-        if (-gamepad2.left_stick_y < -ControllerSubsystem.TRIGGER_THRESHOLD) {
+        if (-gamepad2.left_stick_y < -ControllerSubsystem.TRIGGER_THRESHOLD && armIsUp) {
             armTargetPos -= ARM_POS_CHANGE_SPEED;
             setArmPosition();
         }
@@ -196,11 +196,11 @@ public class ArmSubsystem extends BaseSubsystem {
 
 
 
-        if (-gamepad2.right_stick_y > ControllerSubsystem.TRIGGER_THRESHOLD && gamepad2.dpad_up) {
+        if (-gamepad2.right_stick_y > ControllerSubsystem.TRIGGER_THRESHOLD && gamepad2.right_trigger >= ControllerSubsystem.TRIGGER_THRESHOLD && armIsUp) {
             ARM_HIGH_POS+= ARM_POS_CHANGE_SPEED;
             setArmPosition();
         }
-        if (-gamepad2.right_stick_y < -ControllerSubsystem.TRIGGER_THRESHOLD && gamepad2.dpad_up) {
+        if (-gamepad2.right_stick_y < -ControllerSubsystem.TRIGGER_THRESHOLD && gamepad2.right_trigger >= ControllerSubsystem.TRIGGER_THRESHOLD && armIsUp) {
             ARM_HIGH_POS -= ARM_POS_CHANGE_SPEED;
             setArmPosition();
         }
@@ -216,11 +216,11 @@ public class ArmSubsystem extends BaseSubsystem {
 //            setArmPosition();
 //        }
 
-        if (-gamepad2.right_stick_y > ControllerSubsystem.TRIGGER_THRESHOLD && gamepad2.dpad_down) {
+        if (-gamepad2.right_stick_y > ControllerSubsystem.TRIGGER_THRESHOLD && gamepad2.left_trigger >= ControllerSubsystem.TRIGGER_THRESHOLD && armIsUp) {
             ARM_LOW_POS+= ARM_POS_CHANGE_SPEED;
             setArmPosition();
         }
-        if (-gamepad2.right_stick_y < -ControllerSubsystem.TRIGGER_THRESHOLD && gamepad2.dpad_down) {
+        if (-gamepad2.right_stick_y < -ControllerSubsystem.TRIGGER_THRESHOLD && gamepad2.left_trigger >= ControllerSubsystem.TRIGGER_THRESHOLD && armIsUp) {
             ARM_LOW_POS -= ARM_POS_CHANGE_SPEED;
             setArmPosition();
         }
