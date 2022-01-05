@@ -12,4 +12,5 @@ import org.firstinspires.ftc.teamcode.hardware.subsystembase.base.BaseSubsystem;
 public class ControllerSubsystem extends BaseSubsystem {
     // Values
     public static double TRIGGER_THRESHOLD = 0.2;
+    public static double TURRET_JOYSTICK_THRESHOLD = 0.9;
 }

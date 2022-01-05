@@ -19,6 +19,8 @@ public class TurretSubsystem extends BaseSubsystem {
 
     public static double TURRET_SERVOS_SPEED = 0.003;
 
+    public static double TURRET_RANGE = 270;
+
     double targetPos = TURRET_SERVOS_FRONT;
     boolean disableTurret = true;
 
@@ -55,13 +57,13 @@ public class TurretSubsystem extends BaseSubsystem {
         if (gamepad2.x && !disableTurret) {
             targetPos = TURRET_SERVOS_LEFT;
         }
-        if (gamepad2.left_stick_x > 0.1 && !disableTurret) {
-            targetPos += TURRET_SERVOS_SPEED;
-        }
-        if (gamepad2.left_stick_x < -0.1 && !disableTurret) {
-            targetPos -= TURRET_SERVOS_SPEED;
-        }
-        if ((gamepad2.a || gamepad2.b || gamepad2.x || gamepad2.left_stick_x > 0.1 || gamepad2.left_stick_x < -0.1) && !disableTurret) {
+//        if (gamepad2.left_stick_x > 0.1 && !disableTurret) {
+//            targetPos += TURRET_SERVOS_SPEED;
+//        }
+//        if (gamepad2.left_stick_x < -0.1 && !disableTurret) {
+//            targetPos -= TURRET_SERVOS_SPEED;
+//        }
+        if ((gamepad2.a || gamepad2.b || gamepad2.x/* || gamepad2.left_stick_x > 0.1 || gamepad2.left_stick_x < -0.1*/) && !disableTurret) {
             setTurretPosition();
         }
 
