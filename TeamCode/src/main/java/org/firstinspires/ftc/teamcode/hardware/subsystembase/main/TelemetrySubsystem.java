@@ -39,6 +39,17 @@ public class TelemetrySubsystem extends BaseSubsystem {
     }
 
     // Initialization
+    public void init(Telemetry telemetry, ArmSubsystem arm, BoxSubsystem box, CarouselSubsystem carousel, DrivetrainSubsystem drivetrain, IntakeSubsystem intake) {
+        this.telemetry = telemetry;
+        this.stick = stick;
+        this.arm = arm;
+        this.box = box;
+        this.carousel = carousel;
+        this.drivetrain = drivetrain;
+        this.intake = intake;
+    }
+
+    // Initialization
     public void init(Telemetry telemetry, ArmSubsystem arm, BoxSubsystem box, CarouselSubsystem carousel, DrivetrainSubsystem drivetrain, IntakeSubsystem intake, BreakModeSubsystem breakMode) {
         this.telemetry = telemetry;
         this.arm = arm;
@@ -60,7 +71,7 @@ public class TelemetrySubsystem extends BaseSubsystem {
         cycles++;
         telemetry.addData("Frequency", (int) (cycles / runtime.seconds()) + "hz");
 //        telemetry.addData("Alliance Marker Servo Position", stick.allianceMarkerServoTargetPos);
-        telemetry.addData("Break Mode status", breakMode.breakModeStatus);
+//        telemetry.addData("Break Mode status", breakMode.breakModeStatus);
         telemetry.update();
     }
     public void verboseCommand() {

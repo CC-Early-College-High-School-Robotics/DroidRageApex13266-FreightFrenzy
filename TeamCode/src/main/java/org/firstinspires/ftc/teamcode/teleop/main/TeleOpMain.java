@@ -26,7 +26,7 @@ public class TeleOpMain extends LinearOpMode {
     CarouselSubsystem carousel                  = new CarouselSubsystem                     ();
     DrivetrainSubsystem drivetrain              = new DrivetrainSubsystem                   ();
     IntakeSubsystem intake                      = new IntakeSubsystem                       ();
-    BreakModeSubsystem breakMode                = new BreakModeSubsystem                    ();
+//    BreakModeSubsystem breakMode                = new BreakModeSubsystem                    ();
     TelemetrySubsystem telemetrySubsystem       = new TelemetrySubsystem                    ();
     TurretSubsystem turret                      = new TurretSubsystem                       ();
     FlipperSubsystem flipper                    = new FlipperSubsystem                      ();
@@ -43,8 +43,8 @@ public class TeleOpMain extends LinearOpMode {
         turret.init(hardwareMap, telemetry);
         flipper.init(hardwareMap,telemetry);
 
-        telemetrySubsystem.init(telemetry, arm, box, carousel, drivetrain, intake, breakMode);
-        breakMode.init(gamepad1, gamepad2, arm, carousel, drivetrain);
+        telemetrySubsystem.init(telemetry, arm, box, carousel, drivetrain, intake);
+//        breakMode.init(gamepad1, gamepad2, arm, carousel, drivetrain);
 
         TuningStart.initializeTuning();
         telemetrySubsystem.initMessage();
@@ -64,7 +64,7 @@ public class TeleOpMain extends LinearOpMode {
             carousel.defaultCommand(gamepad1, gamepad2);
             drivetrain.defaultCommand(gamepad1, gamepad2);
             intake.defaultCommand(gamepad1, gamepad2);
-            breakMode.defaultCommand();
+//            breakMode.defaultCommand();
             turret.defaultCommand(gamepad1, gamepad2);
             flipper.defaultCommand(gamepad1, gamepad2);
             telemetrySubsystem.defaultCommand();

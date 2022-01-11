@@ -52,6 +52,7 @@ public class BlueWarehouseCycleTest extends LinearOpMode {
                 .build();
 
         TrajectorySequence Trajectory2 = drive.trajectorySequenceBuilder(Trajectory1.end())
+                .setReversed(true)
                 .splineTo(new Vector2d(-20, 48), Math.toRadians(200)) // reversed
                 .build();
 
