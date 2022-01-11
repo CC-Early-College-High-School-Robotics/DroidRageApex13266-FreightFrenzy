@@ -33,6 +33,7 @@ public class ArmSubsystem extends BaseSubsystem {
     public static double ARM_DOWN_WAIT = 0;
     public static double ARM_RESET_WAIT = 1.0;
     public static double ARM_RESET_WAIT_2 = 1.5;
+    public static double ARM_RESET_WAIT_EXTRA = 0.2;
 
     public static boolean useCustompidf = false;
 
@@ -50,6 +51,7 @@ public class ArmSubsystem extends BaseSubsystem {
     boolean boxDown = false;
     boolean armIsUp = false;
     boolean armIsMoving = false;
+    double armResetWaitLong = 0;
 
     BoxSubsystem box;
     TurretSubsystem turret;
@@ -357,7 +359,38 @@ public class ArmSubsystem extends BaseSubsystem {
 //
 //                // action 1
 //                boxUp = true;
-//
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//                               rrttttttttttta       GTTOTOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOT555
 //                // action 2
 //                targetTime1 = runtime.seconds() + ARM_UP_WAIT;
 //
@@ -374,6 +407,11 @@ public class ArmSubsystem extends BaseSubsystem {
     public void armReset() {
         if (!armIsMoving) {
             if (armIsUp) {
+                if (armTargetPos == ARM_LOW_POS) {
+                    armResetWaitLong = ARM_RESET_WAIT_EXTRA;
+                } else {
+                    armResetWaitLong = 0;
+                }
                 armIsMoving = true;
 
                 armMotor.setPower(ARM_POWER);
@@ -392,13 +430,13 @@ public class ArmSubsystem extends BaseSubsystem {
                 boxDown = true;
 
                 // action 2
-                targetTime1 = runtime.seconds() + ARM_DOWN_WAIT;
+                targetTime1 = runtime.seconds() + ARM_DOWN_WAIT + armResetWaitLong;
 
                 // action 3
-                targetTime2 = runtime.seconds() + ARM_RESET_WAIT;
+                targetTime2 = runtime.seconds() + ARM_RESET_WAIT + armResetWaitLong;
 
                 // action 4
-                targetTime3 = runtime.seconds() + ARM_RESET_WAIT_2;
+                targetTime3 = runtime.seconds() + ARM_RESET_WAIT_2 + armResetWaitLong;
             }
         }
     }

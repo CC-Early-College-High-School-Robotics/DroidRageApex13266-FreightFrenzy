@@ -35,10 +35,10 @@ public class CarouselSubsystem extends BaseSubsystem {
     // Default command
     public void defaultCommand(Gamepad gamepad1, Gamepad gamepad2) {
         super.gamepadInit(gamepad1, gamepad2);
-        if (gamepad1.b) {
+        if (gamepad1.x) {
             carouselMotor.setPower(CAROUSEL_POWER);
         }
-        if (gamepad1.x) {
+        if (gamepad1.b) {
             carouselMotor.setPower(-CAROUSEL_POWER);
         }
         if (!gamepad1.b && !gamepad1.x) {
