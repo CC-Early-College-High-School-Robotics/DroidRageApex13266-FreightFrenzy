@@ -46,7 +46,7 @@ public class RoadrunnerDriveConstants {
      */
     public static double WHEEL_RADIUS = 2.36; // in
     public static double GEAR_RATIO = 1; // output (wheel) speed / input (motor) speed
-    public static double TRACK_WIDTH = 15.7; // in //19.95
+    public static double TRACK_WIDTH = 9.5; // in //19.95
 
     /*
      * These are the feedforward parameters used to model the drive motor behavior. If you are using
@@ -68,10 +68,10 @@ public class RoadrunnerDriveConstants {
      * small and gradually increase them later after everything is working. All distance units are
      * inches.
      */
-    public static double MAX_VEL = 50; // 30
-    public static double MAX_ACCEL = 60; // 30
+    public static double MAX_VEL = 60; // 30
+    public static double MAX_ACCEL = 100; // 30
 
-    public static double MAX_ANG_VEL = 4.0; // Measured in radians // old value: 3.5 radians or 200 degrees
+    public static double MAX_ANG_VEL = 6; // Measured in radians // old value: 3.5 radians or 200 degrees
     public static double MAX_ANG_ACCEL = 6.0; // Measured in radians // old value: 3.5 radians or 200 degrees
 
 

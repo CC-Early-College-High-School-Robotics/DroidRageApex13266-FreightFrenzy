@@ -58,9 +58,9 @@ import static org.firstinspires.ftc.teamcode.roadrunner.drive.RoadrunnerDriveCon
  */
 @Config
 public class RoadrunnerTankDrive extends TankDrive {
-    public static PIDCoefficients AXIAL_PID = new PIDCoefficients(0.05, 0, 0.01); // 9, 0, 0.5
-    public static PIDCoefficients CROSS_TRACK_PID = new PIDCoefficients(0.05, 0, 0.02); // 0.0099, 0, 0.0003
-    public static PIDCoefficients HEADING_PID = new PIDCoefficients(15, 0, 2); // 18, 0, 0.778
+    public static PIDCoefficients AXIAL_PID = new PIDCoefficients(0.34, 0, 0.2); // 9, 0, 0.5
+    public static PIDCoefficients CROSS_TRACK_PID = new PIDCoefficients(0.027, 0, 0.004); // 0.0099, 0, 0.0003
+    public static PIDCoefficients HEADING_PID = new PIDCoefficients(6.56, 0, 1.5); // 18, 0, 0.778
 
     public static PIDCoefficients LEFT_DRIVE_PID = new PIDCoefficients(0, 0, 0); // 0.000020, 0, 0
     public static PIDCoefficients RIGHT_DRIVE_PID = new PIDCoefficients(0, 0, 0); // 0.000020, 0, 0
