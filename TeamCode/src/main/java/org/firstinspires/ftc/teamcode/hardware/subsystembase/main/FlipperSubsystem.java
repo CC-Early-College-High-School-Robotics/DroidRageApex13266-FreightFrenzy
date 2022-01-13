@@ -32,6 +32,7 @@ public class FlipperSubsystem extends BaseSubsystem {
         super.init(hardwareMap, telemetry);
         flipperServo = hardwareMap.get(Servo.class,"flipperServo");
         flipperServo.setDirection(Servo.Direction.FORWARD);
+        flipperServo.setPosition(FLIPPER_OPEN);
     }
 
     public void defaultCommand(Gamepad gamepad1, Gamepad gamepad2) {
