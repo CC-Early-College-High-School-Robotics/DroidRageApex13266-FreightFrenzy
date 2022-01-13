@@ -32,7 +32,7 @@ public class TeleOpVerboseWithSubsystems extends LinearOpMode {
     public void runOpMode() {
         // Initialize subsystems
 //        stick.init(hardwareMap, telemetry);
-        arm.init(hardwareMap, telemetry, box, turret, flipper);
+//        arm.init(hardwareMap, telemetry, box, turret, flipper);
         box.init(hardwareMap, telemetry);
         carousel.init(hardwareMap, telemetry);
         drivetrain.init(hardwareMap, telemetry);
