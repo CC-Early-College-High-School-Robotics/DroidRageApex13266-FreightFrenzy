@@ -37,7 +37,7 @@ public class FlipperSubsystem extends BaseSubsystem {
 
     public void defaultCommand(Gamepad gamepad1, Gamepad gamepad2) {
         super.gamepadInit(gamepad1, gamepad2);
-        if (gamepad2.right_bumper && !disableFlipper) {
+        if (gamepad2.right_bumper) {
             flipperServo.setPosition(FLIPPER_OPEN);
         } else if (!disableFlipper) {
             flipperServo.setPosition(FLIPPER_CLOSED);
