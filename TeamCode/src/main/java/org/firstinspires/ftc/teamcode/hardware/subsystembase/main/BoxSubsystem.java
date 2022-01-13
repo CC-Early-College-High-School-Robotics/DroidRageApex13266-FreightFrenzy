@@ -43,7 +43,7 @@ public class BoxSubsystem extends BaseSubsystem {
         boxServo = hardwareMap.get(Servo.class,"boxServo");
         boxServo.setDirection(Servo.Direction.REVERSE);
 
-        boxServo.setPosition(BOX_DOWN_SLIGHTLY_FORWARD);
+        boxServo.setPosition(BOX_DOWN);
     }
 
     // Default command
