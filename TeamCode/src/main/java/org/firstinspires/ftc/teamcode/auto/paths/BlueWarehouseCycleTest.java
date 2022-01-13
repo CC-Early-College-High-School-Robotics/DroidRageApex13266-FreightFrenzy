@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.roadrunner.drive.RoadrunnerTankDrive;
 import org.firstinspires.ftc.teamcode.roadrunner.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.teleop.testing.TuningStart;
 
-@Autonomous(name="Blue warehouse cycle spline test Roadrunner Path", group="Roadrunner Paths")
+@Autonomous(name="Blue warehouse cycle test Roadrunner Path", group="Roadrunner Paths")
 public class BlueWarehouseCycleTest extends LinearOpMode {
     @Override
     public void runOpMode() {
