@@ -312,7 +312,7 @@ public class ArmSubsystem extends BaseSubsystem {
         if (closeFlipper && runtime.seconds() >= targetTimeFlipper) {
             flipper.flipperServo.setPosition(FlipperSubsystem.FLIPPER_CLOSED);
             intake.disableIntake = false;
-            intake.intakeMotor.setPower(IntakeSubsystem.INTAKE_POWER);
+            intake.intakeMotor.setPower(0);
         }
 
 
