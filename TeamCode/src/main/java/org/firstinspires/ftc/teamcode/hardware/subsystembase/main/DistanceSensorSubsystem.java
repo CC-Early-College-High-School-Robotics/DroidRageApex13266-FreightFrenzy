@@ -4,6 +4,7 @@ import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.hardware.rev.Rev2mDistanceSensor;
 import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.hardware.ColorRangeSensor;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Gamepad;
@@ -19,7 +20,7 @@ public class DistanceSensorSubsystem extends BaseSubsystem {
     // Values
 
     // Create hardware variables
-    public Rev2mDistanceSensor distanceSensor;
+    public ColorRangeSensor distanceSensor;
 
 
     // Constructor
@@ -30,7 +31,7 @@ public class DistanceSensorSubsystem extends BaseSubsystem {
     // Initialize hardware variables
     public void init(HardwareMap hardwareMap, Telemetry telemetry) {
         super.init(hardwareMap, telemetry);
-        distanceSensor = hardwareMap.get(Rev2mDistanceSensor.class,"distanceSensor");
+        distanceSensor = hardwareMap.get(ColorRangeSensor.class,"distanceSensor");
     }
 
 }
