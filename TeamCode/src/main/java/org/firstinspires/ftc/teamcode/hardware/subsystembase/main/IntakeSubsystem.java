@@ -15,6 +15,7 @@ public class IntakeSubsystem extends BaseSubsystem {
     // Values
 //    public static double INTAKE_VELOCITY = 1000;
     public static double INTAKE_POWER = 0.8;
+    boolean disableIntake = false;
 
     // Create hardware variables
     public DcMotorEx intakeMotor = null;
@@ -39,13 +40,13 @@ public class IntakeSubsystem extends BaseSubsystem {
     // Default command
     public void defaultCommand(Gamepad gamepad1, Gamepad gamepad2) {
         super.gamepadInit(gamepad1, gamepad2);
-        if (gamepad1.right_trigger >= ControllerSubsystem.TRIGGER_THRESHOLD) {
+        if ((gamepad1.right_trigger >= ControllerSubsystem.TRIGGER_THRESHOLD )&& !disableIntake) {
             intakeMotor.setPower(-INTAKE_POWER);
         }
-        else if (gamepad1.left_trigger >= ControllerSubsystem.TRIGGER_THRESHOLD) {
+        else if ((gamepad1.left_trigger >= ControllerSubsystem.TRIGGER_THRESHOLD )&& !disableIntake) {
             intakeMotor.setPower(INTAKE_POWER);
         }
-        else if (gamepad1.right_trigger < ControllerSubsystem.TRIGGER_THRESHOLD && gamepad1.left_trigger < ControllerSubsystem.TRIGGER_THRESHOLD) {
+        else if ((gamepad1.right_trigger < ControllerSubsystem.TRIGGER_THRESHOLD && gamepad1.left_trigger < ControllerSubsystem.TRIGGER_THRESHOLD) && !disableIntake) {
             intakeMotor.setVelocity(0);
         }
     }
