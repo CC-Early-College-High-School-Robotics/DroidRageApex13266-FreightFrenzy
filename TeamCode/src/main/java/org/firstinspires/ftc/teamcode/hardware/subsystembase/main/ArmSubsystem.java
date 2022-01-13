@@ -243,7 +243,7 @@ public class ArmSubsystem extends BaseSubsystem {
 
 
         if (distanceSensor.distanceSensor.getDistance(DistanceUnit.MM) < DistanceSensorSubsystem.DISTANCE_THRESHOLD) {
-            intake.intakeMotor.setPower(-IntakeSubsystem.INTAKE_POWER);
+            intake.intakeMotor.setPower(IntakeSubsystem.INTAKE_POWER);
             flipper.disableFlipper = false;
             intake.disableIntake = true;
             targetTimeFlipper = runtime.seconds() + COLOR_SENSOR_OUTTAKE_WAIT;
@@ -312,6 +312,7 @@ public class ArmSubsystem extends BaseSubsystem {
         if (closeFlipper && runtime.seconds() >= targetTimeFlipper) {
             flipper.flipperServo.setPosition(FlipperSubsystem.FLIPPER_CLOSED);
             intake.disableIntake = false;
+            intake.intakeMotor.setPower(IntakeSubsystem.INTAKE_POWER);
         }
 
 
