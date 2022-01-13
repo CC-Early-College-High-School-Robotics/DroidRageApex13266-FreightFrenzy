@@ -28,6 +28,6 @@ public class DistanceSensorSubsystem extends BaseSubsystem {
     // Initialize hardware variables
     public void init(HardwareMap hardwareMap, Telemetry telemetry) {
         super.init(hardwareMap, telemetry);
-        distanceSensor = hardwareMap.get(DistanceSensor.class,"flipperServo");
+        distanceSensor = hardwareMap.get(DistanceSensor.class,"distanceSensor");
     }
 }
