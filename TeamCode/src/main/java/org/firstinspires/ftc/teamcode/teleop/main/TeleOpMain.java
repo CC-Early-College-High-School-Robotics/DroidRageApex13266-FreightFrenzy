@@ -33,7 +33,7 @@ public class TeleOpMain extends LinearOpMode {
     public void runOpMode() {
         // Initialize subsystems
 //        stick.init(hardwareMap, telemetry);
-        arm.init(hardwareMap, telemetry, box, turret, flipper, colorSensor);
+        arm.init(hardwareMap, telemetry, box, turret, flipper, colorSensor, intake);
         colorSensor.init(hardwareMap, telemetry);
         box.init(hardwareMap, telemetry);
         carousel.init(hardwareMap, telemetry);
