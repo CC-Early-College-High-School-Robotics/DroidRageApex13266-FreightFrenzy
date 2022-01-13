@@ -35,7 +35,7 @@ public class ArmSubsystem extends BaseSubsystem {
     public static double ARM_RESET_WAIT = 1.0;
     public static double ARM_RESET_WAIT_2 = 1.5;
     public static double ARM_RESET_WAIT_EXTRA = 0.2;
-    public static double COLOR_SENSOR_OUTTAKE_WAIT = 2;
+    public static double COLOR_SENSOR_OUTTAKE_WAIT = 0.5;
 
     public static boolean useCustompidf = false;
 
@@ -55,6 +55,7 @@ public class ArmSubsystem extends BaseSubsystem {
     boolean armIsUp = false;
     boolean armIsMoving = false;
     boolean closeFlipper = false;
+    boolean sensorIsDisabled = false;
     double armResetWaitLong = 0;
 
     BoxSubsystem box;
@@ -151,6 +152,7 @@ public class ArmSubsystem extends BaseSubsystem {
 
 
         } else if (gamepad2.dpad_down) {
+            sensorIsDisabled = false;
             armReset();
 
 
@@ -242,11 +244,13 @@ public class ArmSubsystem extends BaseSubsystem {
 
 
 
-        if (distanceSensor.distanceSensor.getDistance(DistanceUnit.MM) < DistanceSensorSubsystem.DISTANCE_THRESHOLD) {
+        if (distanceSensor.distanceSensor.getDistance(DistanceUnit.MM) < DistanceSensorSubsystem.DISTANCE_THRESHOLD && !sensorIsDisabled) {
             intake.intakeMotor.setPower(IntakeSubsystem.INTAKE_POWER);
             flipper.disableFlipper = false;
             intake.disableIntake = true;
             targetTimeFlipper = runtime.seconds() + COLOR_SENSOR_OUTTAKE_WAIT;
+            closeFlipper = true;
+            sensorIsDisabled = true;
         }
 
 
@@ -313,6 +317,7 @@ public class ArmSubsystem extends BaseSubsystem {
             flipper.flipperServo.setPosition(FlipperSubsystem.FLIPPER_CLOSED);
             intake.disableIntake = false;
             intake.intakeMotor.setPower(0);
+            closeFlipper = false;
         }
 
 
