@@ -242,10 +242,10 @@ public class ArmSubsystem extends BaseSubsystem {
 
 
 
-        if (distanceSensor.distanceSensor.getDistance(DistanceUnit.MM) < 25) {
+        if (distanceSensor.distanceSensor.getDistance(DistanceUnit.MM) < DistanceSensorSubsystem.DISTANCE_THRESHOLD) {
             intake.intakeMotor.setPower(-IntakeSubsystem.INTAKE_POWER);
             flipper.disableFlipper = false;
-            targetTimeFlipper = runtime.seconds() + ARM_UP_WAIT;
+            targetTimeFlipper = runtime.seconds() + COLOR_SENSOR_OUTTAKE_WAIT;
         }
 
 

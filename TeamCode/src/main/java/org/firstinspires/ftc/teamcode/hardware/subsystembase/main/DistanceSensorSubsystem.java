@@ -21,6 +21,7 @@ public class DistanceSensorSubsystem extends BaseSubsystem {
 
     // Create hardware variables
     public ColorRangeSensor distanceSensor;
+    public static double DISTANCE_THRESHOLD = 50;
 
 
     // Constructor
