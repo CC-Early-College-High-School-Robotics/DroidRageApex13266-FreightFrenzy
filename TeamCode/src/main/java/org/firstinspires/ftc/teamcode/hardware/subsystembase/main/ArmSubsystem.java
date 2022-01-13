@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.hardware.MotorControlAlgorithm;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.hardware.subsystembase.base.BaseSubsystem;
 
 @Config
@@ -34,6 +35,7 @@ public class ArmSubsystem extends BaseSubsystem {
     public static double ARM_RESET_WAIT = 1.0;
     public static double ARM_RESET_WAIT_2 = 1.5;
     public static double ARM_RESET_WAIT_EXTRA = 0.2;
+    public static double COLOR_SENSOR_OUTTAKE_WAIT = 2;
 
     public static boolean useCustompidf = false;
 
@@ -42,6 +44,7 @@ public class ArmSubsystem extends BaseSubsystem {
     double targetTime1 = 0;
     double targetTime2 = 0;
     double targetTime3 = 0;
+    double targetTimeFlipper = 0;
     boolean armUp = false;
     boolean armForward = false;
     boolean armReset = false;
@@ -51,11 +54,14 @@ public class ArmSubsystem extends BaseSubsystem {
     boolean boxDown = false;
     boolean armIsUp = false;
     boolean armIsMoving = false;
+    boolean closeFlipper = false;
     double armResetWaitLong = 0;
 
     BoxSubsystem box;
     TurretSubsystem turret;
     FlipperSubsystem flipper;
+    DistanceSensorSubsystem distanceSensor;
+    IntakeSubsystem intake;
 
     double armTargetPos = 0;
     double armSelectedPos = 0;
@@ -76,11 +82,13 @@ public class ArmSubsystem extends BaseSubsystem {
     }
 
     // Initialize hardware variables
-    public void init(HardwareMap hardwareMap, Telemetry telemetry, BoxSubsystem box, TurretSubsystem turret, FlipperSubsystem flipper) {
+    public void init(HardwareMap hardwareMap, Telemetry telemetry, BoxSubsystem box, TurretSubsystem turret, FlipperSubsystem flipper, DistanceSensorSubsystem distanceSensor, IntakeSubsystem intake) {
         super.init(hardwareMap, telemetry);
         this.box = box;
         this.turret = turret;
         this.flipper = flipper;
+        this.distanceSensor = distanceSensor;
+        this.intake = intake;
 
         armMotor = hardwareMap.get(DcMotorEx.class,"armMotor");
         armMotor.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -233,6 +241,15 @@ public class ArmSubsystem extends BaseSubsystem {
 
 
 
+
+        if (distanceSensor.distanceSensor.getDistance(DistanceUnit.MM) < 25) {
+            intake.intakeMotor.setPower(-IntakeSubsystem.INTAKE_POWER);
+            flipper.disableFlipper = false;
+            targetTimeFlipper = runtime.seconds() + ARM_UP_WAIT;
+        }
+
+
+
     }
 
     public void loopCommand() {
@@ -269,8 +286,8 @@ public class ArmSubsystem extends BaseSubsystem {
 
             box.boxServo.setPosition(BoxSubsystem.BOX_DOWN_SLIGHTLY_FORWARD);
 
-//            flipper.disableFlipper = true;
-//            flipper.flipperServo.setPosition(FlipperSubsystem.FLIPPER_UP);
+            flipper.disableFlipper = true;
+            flipper.flipperServo.setPosition(FlipperSubsystem.FLIPPER_OPEN);
 
             armReset = true;
         }
@@ -289,6 +306,10 @@ public class ArmSubsystem extends BaseSubsystem {
            box.boxServo.setPosition(BoxSubsystem.BOX_DOWN);
            armMotor.setPower(0);
             armIsMoving = false;
+        }
+
+        if (closeFlipper && runtime.seconds() >= targetTimeFlipper) {
+            flipper.flipperServo.setPosition(FlipperSubsystem.FLIPPER_CLOSED);
         }
 
 
@@ -316,7 +337,7 @@ public class ArmSubsystem extends BaseSubsystem {
 
                 armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-//            flipper.disableFlipper = false;
+            flipper.disableFlipper = false;
 
                 // action 1
                 boxUp = true;

@@ -1,15 +1,12 @@
 package org.firstinspires.ftc.teamcode.teleop.main;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.hardware.subsystembase.base.BaseSubsystem;
-import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.AllianceMarkerStickSubsystem;
 import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.ArmSubsystem;
 import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.BoxSubsystem;
-import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.BreakModeSubsystem;
 import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.CarouselSubsystem;
+import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.DistanceSensorSubsystem;
 import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.DrivetrainSubsystem;
 import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.FlipperSubsystem;
 import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.IntakeSubsystem;
@@ -30,12 +27,14 @@ public class TeleOpMain extends LinearOpMode {
     TelemetrySubsystem telemetrySubsystem       = new TelemetrySubsystem                    ();
     TurretSubsystem turret                      = new TurretSubsystem                       ();
     FlipperSubsystem flipper                    = new FlipperSubsystem                      ();
+    DistanceSensorSubsystem colorSensor                    = new DistanceSensorSubsystem();
 
     @Override
     public void runOpMode() {
         // Initialize subsystems
 //        stick.init(hardwareMap, telemetry);
-        arm.init(hardwareMap, telemetry, box, turret, flipper);
+        arm.init(hardwareMap, telemetry, box, turret, flipper, colorSensor);
+        colorSensor.init(hardwareMap, telemetry);
         box.init(hardwareMap, telemetry);
         carousel.init(hardwareMap, telemetry);
         drivetrain.init(hardwareMap, telemetry);
