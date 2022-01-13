@@ -27,14 +27,14 @@ public class TeleOpMain extends LinearOpMode {
     TelemetrySubsystem telemetrySubsystem       = new TelemetrySubsystem                    ();
     TurretSubsystem turret                      = new TurretSubsystem                       ();
     FlipperSubsystem flipper                    = new FlipperSubsystem                      ();
-    DistanceSensorSubsystem colorSensor                    = new DistanceSensorSubsystem();
+    DistanceSensorSubsystem distanceSensor                    = new DistanceSensorSubsystem();
 
     @Override
     public void runOpMode() {
         // Initialize subsystems
 //        stick.init(hardwareMap, telemetry);
-        arm.init(hardwareMap, telemetry, box, turret, flipper, colorSensor, intake);
-        colorSensor.init(hardwareMap, telemetry);
+        arm.init(hardwareMap, telemetry, box, turret, flipper, distanceSensor, intake);
+        distanceSensor.init(hardwareMap, telemetry);
         box.init(hardwareMap, telemetry);
         carousel.init(hardwareMap, telemetry);
         drivetrain.init(hardwareMap, telemetry);
@@ -42,7 +42,7 @@ public class TeleOpMain extends LinearOpMode {
         turret.init(hardwareMap, telemetry);
         flipper.init(hardwareMap,telemetry);
 
-        telemetrySubsystem.init(telemetry, arm, box, carousel, drivetrain, intake);
+        telemetrySubsystem.init(telemetry, arm, box, carousel, drivetrain, intake, distanceSensor);
 //        breakMode.init(gamepad1, gamepad2, arm, carousel, drivetrain);
 
         TuningStart.initializeTuning();

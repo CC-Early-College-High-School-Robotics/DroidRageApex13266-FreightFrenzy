@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.hardware.subsystembase.base.BaseSubsystem;
 
 @Config
@@ -18,6 +19,7 @@ public class TelemetrySubsystem extends BaseSubsystem {
     DrivetrainSubsystem drivetrain;
     IntakeSubsystem intake;
     BreakModeSubsystem breakMode;
+    DistanceSensorSubsystem distanceSensor;
     public int cycles = 0;
 
     // Create hardware variables
@@ -39,7 +41,7 @@ public class TelemetrySubsystem extends BaseSubsystem {
     }
 
     // Initialization
-    public void init(Telemetry telemetry, ArmSubsystem arm, BoxSubsystem box, CarouselSubsystem carousel, DrivetrainSubsystem drivetrain, IntakeSubsystem intake) {
+    public void init(Telemetry telemetry, ArmSubsystem arm, BoxSubsystem box, CarouselSubsystem carousel, DrivetrainSubsystem drivetrain, IntakeSubsystem intake, DistanceSensorSubsystem distanceSensor) {
         this.telemetry = telemetry;
         this.stick = stick;
         this.arm = arm;
@@ -47,6 +49,7 @@ public class TelemetrySubsystem extends BaseSubsystem {
         this.carousel = carousel;
         this.drivetrain = drivetrain;
         this.intake = intake;
+        this.distanceSensor = distanceSensor;
     }
 
     // Initialization
@@ -72,6 +75,7 @@ public class TelemetrySubsystem extends BaseSubsystem {
         telemetry.addData("Frequency", (int) (cycles / runtime.seconds()) + "hz");
 //        telemetry.addData("Alliance Marker Servo Position", stick.allianceMarkerServoTargetPos);
 //        telemetry.addData("Break Mode status", breakMode.breakModeStatus);
+        telemetry.addData("distance sensor distance in MM", distanceSensor.distanceSensor.getDistance(DistanceUnit.MM));
         telemetry.update();
     }
     public void verboseCommand() {
