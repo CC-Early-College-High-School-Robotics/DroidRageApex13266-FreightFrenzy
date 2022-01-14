@@ -12,7 +12,7 @@ import org.firstinspires.ftc.teamcode.hardware.subsystembase.base.BaseSubsystem;
 @Config
 public class FlipperSubsystem extends BaseSubsystem {
     // Values
-    public static double FLIPPER_OPEN = 0.86;
+    public static double FLIPPER_OPEN = 0.85;
     public static double FLIPPER_CLOSED = 0.75 ;
 //    public static double FLIPPER_UP = 0.0;
 
