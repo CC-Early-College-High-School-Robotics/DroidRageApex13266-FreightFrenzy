@@ -16,12 +16,12 @@ import org.firstinspires.ftc.teamcode.hardware.subsystembase.base.BaseSubsystem;
 @Config
 public class ArmSubsystem extends BaseSubsystem {
     // Values
-    public static double ARM_INTAKE_POS = -0.03; // 0.04 //-0.09
+    public static double ARM_INTAKE_POS = 0; //-0.03             // 0.04 //-0.09
 //    public static double ARM_NEUTRAL_POS = -0.003;
     public static double ARM_LOW_POS = -.47; //0.132 //0.035
     public static double ARM_MID_POS = -.41; //0.25 //0.17
     public static double ARM_HIGH_POS = -.315; //0.36 //0.27
-    public static double ARM_INTERMEDIATE_POS = -0.22; //0.36 //0.27
+    public static double ARM_INTERMEDIATE_POS = -0.15; //0.36 //0.27
 
     public static double ARM_POWER = 0.35;
 //    public static double ARM_SLOW_POWER = 0.3;
@@ -309,7 +309,7 @@ public class ArmSubsystem extends BaseSubsystem {
             armReset2 = false;
 
            box.boxServo.setPosition(BoxSubsystem.BOX_DOWN);
-           armMotor.setPower(0);
+//           armMotor.setPower(0);
             armIsMoving = false;
         }
 
