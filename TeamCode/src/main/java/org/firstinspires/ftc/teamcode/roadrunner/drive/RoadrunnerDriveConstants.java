@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.roadrunner.drive;
 
 import com.acmerobotics.dashboard.config.Config;
+import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
 /*
@@ -23,6 +24,21 @@ public class RoadrunnerDriveConstants {
     public static final double TICKS_PER_REV = 384.5;
     public static final double MAX_RPM = 435;
 
+
+    /*
+     * Robot statics
+     */
+    public static double MAX_CURRENT = 4100;
+    public static double MAX_CURRENT_OVERFLOW_TIME = 0.4;
+    public static double COOLDOWN_TIME = 0.4;
+    public static Pose2d admissibleError = new Pose2d(2, 2, Math.toRadians(5));
+    public static double admissibleDistance = admissibleError.getX();
+    public static double admissibleHeading = Math.toDegrees(admissibleError.getHeading());
+    public static double admissibleTimeout = 0.5;
+    public static boolean integrateUsingPosition = false;
+    public static double gyroHorizontalOffset = 6;
+    public static double gyroVerticalOffset = -2;
+
     /*
      * Set RUN_USING_ENCODER to true to enable built-in hub velocity control using drive encoders.
      * Set this flag to false if drive encoders are not present and an alternative localization
@@ -31,10 +47,10 @@ public class RoadrunnerDriveConstants {
      * If using the built-in motor velocity PID, update MOTOR_VELO_PID with the tuned coefficients
      * from DriveVelocityPIDTuner.
      */
-    public static final boolean RUN_USING_ENCODER = true;
-//    public static PIDFCoefficients MOTOR_VELO_PID = new PIDFCoefficients(0, 0, 0,
-//            getMotorVelocityF(MAX_RPM / 60 * TICKS_PER_REV)); //p=10, i=0, d=3.6, f=9.6
-    public static PIDFCoefficients MOTOR_VELO_PID = new PIDFCoefficients(10, 0, 3.6, 9.0); //p=10, i=0, d=3.6, f=9.6
+    public static final boolean RUN_USING_ENCODER = false;
+    public static PIDFCoefficients MOTOR_VELO_PID = new PIDFCoefficients(0, 0, 0,
+            getMotorVelocityF(MAX_RPM / 60 * TICKS_PER_REV)); //p=10, i=0, d=3.6, f=9.6
+//    public static PIDFCoefficients MOTOR_VELO_PID = new PIDFCoefficients(10, 0, 3.6, 9.0); //p=10, i=0, d=3.6, f=9.6
 
     /*
      * These are physical constants that can be determined from your robot (including the track
@@ -46,7 +62,7 @@ public class RoadrunnerDriveConstants {
      */
     public static double WHEEL_RADIUS = 2.36; // in
     public static double GEAR_RATIO = 1; // output (wheel) speed / input (motor) speed
-    public static double TRACK_WIDTH = 9.5; // in //19.95
+    public static double TRACK_WIDTH = 15; // in //19.95
 
     /*
      * These are the feedforward parameters used to model the drive motor behavior. If you are using
@@ -61,6 +77,10 @@ public class RoadrunnerDriveConstants {
     public static double kA = 0;
     public static double kStatic = 0;
 
+    public static double kVBackward = kV;
+    public static double kABackward = kA;
+    public static double kStaticBackward = kStatic;
+
     /*
      * These values are used to generate the trajectories for you robot. To ensure proper operation,
      * the constraints should never exceed ~80% of the robot's actual capabilities. While Road
@@ -68,12 +88,37 @@ public class RoadrunnerDriveConstants {
      * small and gradually increase them later after everything is working. All distance units are
      * inches.
      */
-    public static double MAX_VEL = 60; // 30
-    public static double MAX_ACCEL = 100; // 30
+    /*
+     * Note from LearnRoadRunner.com:
+     * The velocity and acceleration constraints were calculated based on the following equation:
+     * ((MAX_RPM / 60) * GEAR_RATIO * WHEEL_RADIUS * 2 * Math.PI) * 0.85
+     * Resulting in 74.76041056423146 in/s.
+     * This is only 85% of the theoretical maximum velocity of the bot, following the recommendation above.
+     * This is capped at 85% because there are a number of variables that will prevent your bot from actually
+     * reaching this maximum velocity: voltage dropping over the game, bot weight, general mechanical inefficiencies, etc.
+     * However, you can push this higher yourself if you'd like. Perhaps raise it to 90-95% of the theoretically
+     * max velocity. The theoretically maximum velocity is 87.9534241932135 in/s.
+     * Just make sure that your bot can actually reach this maximum velocity. Path following will be detrimentally
+     * affected if it is aiming for a velocity not actually possible.
+     *
+     * The maximum acceleration is somewhat arbitrary and it is recommended that you tweak this yourself based on
+     * actual testing. Just set it at a reasonable value and keep increasing until your path following starts
+     * to degrade. As of now, it simply mirrors the velocity, resulting in 74.76041056423146 in/s/s
+     *
+     * Maximum Angular Velocity is calculated as: maximum velocity / trackWidth * (180 / Math.PI) but capped at 360°/s.
+     * You are free to raise this on your own if you would like. It is best determined through experimentation.
 
-    public static double MAX_ANG_VEL = 6; // Measured in radians // old value: 3.5 radians or 200 degrees
-    public static double MAX_ANG_ACCEL = 6.0; // Measured in radians // old value: 3.5 radians or 200 degrees
+     */
+//    public static double MAX_VEL = 60; // 30
+//    public static double MAX_ACCEL = 100; // 30
+//
+//    public static double MAX_ANG_VEL = 6; // Measured in radians // old value: 3.5 radians or 200 degrees
+//    public static double MAX_ANG_ACCEL = 6.0; // Measured in radians // old value: 3.5 radians or 200 degrees
 
+    public static double MAX_VEL = 65;
+    public static double MAX_ACCEL = 65;
+    public static double MAX_ANG_VEL = Math.toRadians(274.5043079608481);
+    public static double MAX_ANG_ACCEL = Math.toRadians(274.5043079608481);
 
     public static double encoderTicksToInches(double ticks) {
         return WHEEL_RADIUS * 2 * Math.PI * GEAR_RATIO * ticks / TICKS_PER_REV;

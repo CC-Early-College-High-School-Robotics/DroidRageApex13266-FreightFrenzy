@@ -38,6 +38,9 @@ public class ￚLocalizationTest extends LinearOpMode {
             drive.update();
 
             Pose2d poseEstimate = drive.getPoseEstimate();
+            if (gamepad1.right_bumper) {
+                drive.setPoseEstimate(new Pose2d());
+            }
             telemetry.addData("x", poseEstimate.getX());
             telemetry.addData("y", poseEstimate.getY());
             telemetry.addData("heading", poseEstimate.getHeading());
