@@ -55,7 +55,7 @@ public class ArmSubsystem extends BaseSubsystem {
     boolean armIsUp = false;
     boolean armIsMoving = false;
     boolean closeFlipper = false;
-    boolean sensorIsDisabled = false;
+    public boolean sensorIsDisabled = false;
     double armResetWaitLong = 0;
 
     BoxSubsystem box;

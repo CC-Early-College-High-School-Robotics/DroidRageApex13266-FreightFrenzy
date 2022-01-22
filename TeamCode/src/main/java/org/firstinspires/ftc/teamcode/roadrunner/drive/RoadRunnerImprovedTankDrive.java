@@ -19,6 +19,7 @@ import androidx.annotation.NonNull;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.control.PIDCoefficients;
 import com.acmerobotics.roadrunner.drive.DriveSignal;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
@@ -42,6 +43,7 @@ import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
@@ -118,10 +120,10 @@ public class RoadRunnerImprovedTankDrive extends ImprovedTankDrive {
         dashboard = FtcDashboard.getInstance();
 //        Context.opModeType = type;
 //        Context.alliance = alliance;
-//        robotPose = pose2d;
+        Pose2d robotPose = pose2d;
 //        if (opModeType == OpModeType.AUTO) robotPose = FrequentPositions.startingPosition();
         hardwareMap = opMode.hardwareMap;
-//        telemetry = opMode.telemetry = new MultipleTelemetry(opMode.telemetry, dashboard.getTelemetry());
+        opMode.telemetry = new MultipleTelemetry(opMode.telemetry, dashboard.getTelemetry());
         dashboard.setTelemetryTransmissionInterval(25);
         ImprovedTrajectoryFollower follower = new ImprovedRamsete();
         LynxModuleUtil.ensureMinimumFirmwareVersion(hardwareMap);
@@ -177,11 +179,11 @@ public class RoadRunnerImprovedTankDrive extends ImprovedTankDrive {
         }
         trajectorySequenceRunner = new TrajectorySequenceRunner(follower, HEADING_PID);
         pitchOffset = -imu.getAngularOrientation().secondAngle;
-        // imu.startAccelerationIntegration(new Position(), new Velocity(), 50);
-//        setPoseEstimate(robotPose);
-//        telemetry.clear();
-//        telemetry.addData("Init", "Complete");
-//        telemetry.update();
+         imu.startAccelerationIntegration(new Position(), new Velocity(), 50);
+        setPoseEstimate(robotPose);
+        opMode.telemetry.clear();
+        opMode.telemetry.addData("Init", "Complete");
+        opMode.telemetry.update();
     }
 
 //    public void visionInit() {

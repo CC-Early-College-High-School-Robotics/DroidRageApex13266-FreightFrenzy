@@ -99,7 +99,8 @@ public class TrajectorySequenceRunner {
         Pose2d targetPose = null;
         DriveSignal driveSignal = null;
 
-//        Canvas fieldOverlay = packet.fieldOverlay();
+        TelemetryPacket packet = new TelemetryPacket();
+        Canvas fieldOverlay = packet.fieldOverlay();
 
         SequenceSegment currentSegment = null;
 
@@ -223,19 +224,17 @@ public class TrajectorySequenceRunner {
             poseHistory.removeFirst();
         }
 
-//        packet.put("x", poseEstimate.getX());
-//        packet.put("y", poseEstimate.getY());
-//        packet.put("heading (deg)", Math.toDegrees(poseEstimate.getHeading()));
-//
-//        packet.put("xError", getLastPoseError().getX());
-//        packet.put("yError", getLastPoseError().getY());
-//        packet.put("headingError (deg)", Math.toDegrees(getLastPoseError().getHeading()));
-//
-//        draw(fieldOverlay, currentTrajectorySequence, currentSegment, targetPose, poseEstimate);
-//
-//        dashboard.sendTelemetryPacket(packet);
-//
-//        packet = new TelemetryPacket();
+        packet.put("x", poseEstimate.getX());
+        packet.put("y", poseEstimate.getY());
+        packet.put("heading (deg)", Math.toDegrees(poseEstimate.getHeading()));
+
+        packet.put("xError", getLastPoseError().getX());
+        packet.put("yError", getLastPoseError().getY());
+        packet.put("headingError (deg)", Math.toDegrees(getLastPoseError().getHeading()));
+
+        draw(fieldOverlay, currentTrajectorySequence, currentSegment, targetPose, poseEstimate);
+
+        dashboard.sendTelemetryPacket(packet);
 
         return driveSignal;
     }
