@@ -11,6 +11,7 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.auto.pipeline.一BlueCarouselDuckDetection;
 import org.firstinspires.ftc.teamcode.auto.pipeline.一DefaultDetection;
 import org.firstinspires.ftc.teamcode.roadrunner.drive.RoadRunnerImprovedTankDrive;
+import org.firstinspires.ftc.teamcode.roadrunner.drive.Robot;
 import org.firstinspires.ftc.teamcode.roadrunner.trajectorysequenceimproved.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.teleop.testing.TuningStart;
 import org.openftc.easyopencv.OpenCvCamera;
@@ -42,7 +43,7 @@ public class BlueWarehouseCycleSplineTest extends LinearOpMode {
     public void runOpMode() {
         autoThread.start();
         TuningStart.initializeTuning();
-        RoadRunnerImprovedTankDrive drive = new RoadRunnerImprovedTankDrive(this);
+        Robot drive = new Robot(this);
         // On start
 //        arm.init(hardwareMap, telemetry, box, turret, flipper, distanceSensor, intake);
 //        distanceSensor.init(hardwareMap, telemetry);
@@ -82,19 +83,15 @@ public class BlueWarehouseCycleSplineTest extends LinearOpMode {
                 camera.startStreaming(1280,720, OpenCvCameraRotation.UPRIGHT);
 
                 camera.setPipeline(detector);
-                telemetry.addData("you should see this", "ill be mad if you dont");
 
-//                arm.loopCommand();
-//                telemetrySubsystem.defaultCommand();
-
-                telemetry.update();
             }
             @Override
             public void onError(int errorCode) {
                 telemetry.addData("Camera status", "Camera failed :(");
-                telemetry.update();
             }
         });
+        sleep(AutoValues.CAMERA_WAIT_TIME);
+        telemetry.addData("auto Position", detector.getAnalysis());
 
 //        telemetrySubsystem.initMessage();
 
@@ -107,43 +104,78 @@ public class BlueWarehouseCycleSplineTest extends LinearOpMode {
             return;
         }
 
-        Pose2d startPose = new Pose2d(-11, 62.5, Math.toRadians(90));
+        Pose2d startPose = new Pose2d(7, 62.5, Math.toRadians(90));
         ElapsedTime timer = new ElapsedTime();
 
         drive.setPoseEstimate(startPose);
 
         TrajectorySequence Trajectory1 = drive.trajectorySequenceBuilder(startPose)
-                .back(15)
+                .setReversed(true)
+                .splineTo(new Vector2d(-11, 47), Math.toRadians(-90))
                 .build();
 
 
         TrajectorySequence Trajectory2 = drive.trajectorySequenceBuilder(Trajectory1.end())
                 .turn(Math.toRadians(-50))
-                .build();
-
-        TrajectorySequence Trajectory3 = drive.trajectorySequenceBuilder(Trajectory2.end())
                 .setReversed(false)
-                .splineTo(new Vector2d(20, 63), Math.toRadians(0))
-                .build();
+                .splineTo(new Vector2d(20, 65), Math.toRadians(0))
 
-        TrajectorySequence Forward = drive.trajectorySequenceBuilder(Trajectory3.end())
+                //back forth
                 .forward(24)
-                .build();
-
-        TrajectorySequence Backward = drive.trajectorySequenceBuilder(Forward.end())
                 .back(24)
-                .build();
 
-        TrajectorySequence SplineOut = drive.trajectorySequenceBuilder(Backward.end())
-
+                //spline out
                 .setReversed(true)
                 .splineTo(new Vector2d(-15, 44), Math.toRadians(200)) // reversed
                 .build();
 
-        TrajectorySequence SplineIn = drive.trajectorySequenceBuilder(SplineOut.end())
+//        TrajectorySequence Trajectory3 = drive.trajectorySequenceBuilder(Trajectory2.end())
+//                .setReversed(false)
+//                .splineTo(new Vector2d(20, 64), Math.toRadians(0))
+//                .build();
+        TrajectorySequence Trajectory3 = drive.trajectorySequenceBuilder(Trajectory2.end())
                 .setReversed(false)
-                .splineTo(new Vector2d(20, 63), Math.toRadians(0))
+                .splineTo(new Vector2d(20, 65), Math.toRadians(0))
+                .intake()
+                .forward(24)
+                .back(24)
+                .setReversed(true)
+                .splineTo(new Vector2d(-15, 44), Math.toRadians(200)) // reversed
+        .build();
+
+        TrajectorySequence Trajectory4 = drive.trajectorySequenceBuilder(Trajectory3.end())
+                .setReversed(false)
+                .splineTo(new Vector2d(20, 65), Math.toRadians(0))
+                .intake()
+                .forward(24)
+                .back(24)
+                .setReversed(true)
+                .splineTo(new Vector2d(-15, 44), Math.toRadians(200)) // reversed
                 .build();
+//
+//                TrajectorySequence Trajectory4 = drive.trajectorySequenceBuilder(Trajectory2.end())
+//                .setReversed(false)
+//                .splineTo(new Vector2d(20, 64), Math.toRadians(0))
+//                .build();
+
+//        TrajectorySequence Forward = drive.trajectorySequenceBuilder(Trajectory3.end())
+//                .forward(24)
+//                .build();
+//
+//        TrajectorySequence Backward = drive.trajectorySequenceBuilder(Forward.end())
+//                .back(24)
+//                .build();
+//
+//        TrajectorySequence SplineOut = drive.trajectorySequenceBuilder(Backward.end())
+//
+//                .setReversed(true)
+//                .splineTo(new Vector2d(-15, 44), Math.toRadians(200)) // reversed
+//                .build();
+//
+//        TrajectorySequence SplineIn = drive.trajectorySequenceBuilder(SplineOut.end())
+//                .setReversed(false)
+//                .splineTo(new Vector2d(20, 64), Math.toRadians(0))
+//                .build();
 
         /*
         TrajectorySequence Trajectory5 = drive.trajectorySequenceBuilder(Trajectory4.end())
@@ -160,41 +192,59 @@ public class BlueWarehouseCycleSplineTest extends LinearOpMode {
 
         // Run trajectory 1
         AutoBooleans.armForward = true;
-        drive.setMotorRPMFraction(MOTORVELOF);
         drive.followTrajectorySequence((Trajectory1));
         AutoBooleans.openFlipper = true;
-
-        drive.setMotorRPMFraction(MOTORVELOFBACKFORTH);
-        drive.followTrajectorySequence((Trajectory2));
         AutoBooleans.armIntake = true;
 
-        drive.setMotorRPMFraction(MOTORVELOFSPLINEIN);
+        drive.followTrajectorySequence((Trajectory2));
+        AutoBooleans.armToAllianceHub = true;
+        sleep(2000);
+        AutoBooleans.armIntake = true;
+
         drive.followTrajectorySequence((Trajectory3));
-
-        drive.setMotorRPMFraction(MOTORVELOFBACKFORTH);
-        drive.followTrajectorySequence((Forward));
-        drive.followTrajectorySequence((Backward));
-
-        drive.setMotorRPMFraction(MOTORVELOF);
-        drive.followTrajectorySequence((SplineOut));
-        drive.setMotorRPMFraction(MOTORVELOFSPLINEIN);
-        drive.followTrajectorySequence((SplineIn));
-
-        drive.setMotorRPMFraction(MOTORVELOFBACKFORTH);
-        drive.followTrajectorySequence((Forward));
-        drive.followTrajectorySequence((Backward));
-        drive.setMotorRPMFraction(MOTORVELOF);
-        drive.followTrajectorySequence((SplineOut));
-        drive.setMotorRPMFraction(MOTORVELOFSPLINEIN);
-        drive.followTrajectorySequence((SplineIn));
-
-        drive.setMotorRPMFraction(MOTORVELOFBACKFORTH);
-        drive.followTrajectorySequence((Forward));
-        drive.followTrajectorySequence((Backward));
-        drive.setMotorRPMFraction(MOTORVELOF);
-        drive.followTrajectorySequence((SplineOut));
-        drive.setMotorRPMFraction(MOTORVELOFSPLINEIN);
-        drive.followTrajectorySequence((SplineIn));
+        AutoBooleans.armToAllianceHub = true;
+        sleep(2000);
+        AutoBooleans.armIntake = true;
+        drive.followTrajectorySequence((Trajectory4));
+        AutoBooleans.armToAllianceHub = true;
+        sleep(2000);
+        AutoBooleans.armIntake = true;
+        drive.followTrajectorySequence((Trajectory4));
+        AutoBooleans.armToAllianceHub = true;
+        sleep(2000);
+        AutoBooleans.armIntake = true;
+        drive.followTrajectorySequence((Trajectory4));
+        AutoBooleans.armToAllianceHub = true;
+        sleep(2000);
+        AutoBooleans.armIntake = true;
+//
+//        drive.setMotorRPMFraction(MOTORVELOFSPLINEIN);
+//        drive.followTrajectorySequence((Trajectory3));
+//
+//        drive.setMotorRPMFraction(MOTORVELOFBACKFORTH);
+//        drive.followTrajectorySequence((Forward));
+//        drive.followTrajectorySequence((Backward));
+//
+//        drive.setMotorRPMFraction(MOTORVELOF);
+//        drive.followTrajectorySequence((SplineOut));
+//        drive.setMotorRPMFraction(MOTORVELOFSPLINEIN);
+//        drive.followTrajectorySequence((SplineIn));
+//
+//        drive.setMotorRPMFraction(MOTORVELOFBACKFORTH);
+//        drive.followTrajectorySequence((Forward));
+//        drive.followTrajectorySequence((Backward));
+//        drive.setMotorRPMFraction(MOTORVELOF);
+//        drive.followTrajectorySequence((SplineOut));
+//        drive.setMotorRPMFraction(MOTORVELOFSPLINEIN);
+//        drive.followTrajectorySequence((SplineIn));
+//
+//        drive.setMotorRPMFraction(MOTORVELOFBACKFORTH);
+//        drive.followTrajectorySequence((Forward));
+//        drive.followTrajectorySequence((Backward));
+//        drive.setMotorRPMFraction(MOTORVELOF);
+//        drive.followTrajectorySequence((SplineOut));
+//        drive.setMotorRPMFraction(MOTORVELOFSPLINEIN);
+//        drive.followTrajectorySequence((SplineIn));
 
     }
 }

@@ -11,8 +11,8 @@ import com.acmerobotics.roadrunner.trajectory.*
 import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryAccelerationConstraint
 import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryVelocityConstraint
 import com.acmerobotics.roadrunner.util.Angle.norm
+import org.firstinspires.ftc.teamcode.auto.paths.comp2.AutoBooleans
 import org.firstinspires.ftc.teamcode.roadrunner.roadrunnerext.angleTo
-import org.firstinspires.ftc.teamcode.trajectorysequenceimproved.sequencesegment.*
 import org.firstinspires.ftc.teamcode.roadrunner.roadrunnerext.flip
 import org.firstinspires.ftc.teamcode.roadrunner.roadrunnerext.geometry.Circle
 import org.firstinspires.ftc.teamcode.roadrunner.roadrunnerext.geometry.Coordinate
@@ -435,6 +435,19 @@ class TrajectorySequenceBuilder(
     fun setReversed(reversed: Boolean): TrajectorySequenceBuilder {
         return if (reversed) setTangentOffset(Math.toRadians(180.0)) else setTangentOffset(0.0)
     }
+
+
+    fun armToAllianceHub(): TrajectorySequenceBuilder  {
+        AutoBooleans.armToAllianceHub = true;
+        return this
+    }
+
+    fun intake(): TrajectorySequenceBuilder  {
+        AutoBooleans.intake = true;
+        return this
+    }
+
+
 
     fun setConstraints(
         velConstraint: TrajectoryVelocityConstraint?,

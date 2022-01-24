@@ -49,9 +49,23 @@ public class AutoCommandThread extends Thread{
             if (AutoBooleans.openFlipper) {
                 flipper.flipperServo.setPosition(FlipperSubsystem.FLIPPER_OPEN);
             }
+            if (AutoBooleans.armToAllianceHub) {
+                arm.armUp(ArmSubsystem.ARM_HIGH_POS, BoxSubsystem.BOX_HIGH, AutoValues.AUTO_TURRET_POSITION, false);
+            }
+            if (AutoBooleans.intake) {
+//                try {
+//                    sleep(AutoValues.AUTO_INTAKE_WAIT);
+//                } catch (InterruptedException ignored) {
+//                }
+                intake.intakeMotor.setPower(-IntakeSubsystem.INTAKE_POWER);
+            }
             arm.loopCommand();
             AutoBooleans.init = false;
             AutoBooleans.armForward = false;
+            AutoBooleans.armIntake = false;
+            AutoBooleans.openFlipper = false;
+            AutoBooleans.intake = false;
+            AutoBooleans.armToAllianceHub = false;
             opmode.telemetry.update();
         }
     }

@@ -8,4 +8,5 @@ public class AutoBooleans {
     public static boolean isActive = false;
     public static boolean openFlipper = false;
     public static boolean intake = false;
+    public static boolean armToAllianceHub = false;
 }

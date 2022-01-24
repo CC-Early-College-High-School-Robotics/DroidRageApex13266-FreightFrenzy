@@ -25,7 +25,7 @@ public class 一DefaultDetection extends OpenCvPipeline {
     public static int boxWidth = 640;
     public static int boxHeight = 720;
 
-    public static double THRESHOLD =  120;
+    public static double THRESHOLD =  -125;
 
     private final Point region1 = new Point(point1x,point1y);
     private final Point region2 = new Point(point2x,point2y);
@@ -229,7 +229,7 @@ public class 一DefaultDetection extends OpenCvPipeline {
         boolean isYellow = false;
         int maxOneTwo = Math.max(avg1, avg2);
 //        int max = Math.max(maxOneTwo, avg3);
-        if (-maxOneTwo > THRESHOLD) {
+        if (maxOneTwo > THRESHOLD) {
             isYellow = true;
         }
 
@@ -253,7 +253,7 @@ public class 一DefaultDetection extends OpenCvPipeline {
                     region1_pointA, // First point which defines the rectangle
                     region1_pointB, // Second point which defines the rectangle
                     GREEN, // The color the rectangle is drawn in
-                    -1); // Negative thickness means solid fill
+                    20); // Negative thickness means solid fill
         }
             else if(maxOneTwo == avg2) // Was it from region 2?
         {
@@ -267,8 +267,8 @@ public class 一DefaultDetection extends OpenCvPipeline {
                     input, // Buffer to draw on
                     region2_pointA, // First point which defines the rectangle
                     region2_pointB, // Second point which defines the rectangle
-                    new Scalar(0, 255, 0, 0.5), // The color the rectangle is drawn in
-                    -1); // Negative thickness means solid fill
+                    GREEN, // The color the rectangle is drawn in
+                    20); // Negative thickness means solid fill
         }
 
 

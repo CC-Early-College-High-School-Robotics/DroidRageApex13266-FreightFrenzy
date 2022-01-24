@@ -29,7 +29,7 @@ public class ArmSubsystem extends BaseSubsystem {
     public static double ARM_POS_CHANGE_SPEED = 0.0005;
 
 //    public static double ARM_INTAKE_WAIT = 0.45;
-    public static double ARM_UP_WAIT = 0.4;
+    public static double ARM_UP_WAIT = 0.55;
     public static double ARM_FORWARD_WAIT = 0.7;
     public static double ARM_DOWN_WAIT = 0;
     public static double ARM_RESET_WAIT = 1.0;
@@ -244,14 +244,7 @@ public class ArmSubsystem extends BaseSubsystem {
 
 
 
-        if (distanceSensor.distanceSensor.getDistance(DistanceUnit.MM) < DistanceSensorSubsystem.DISTANCE_THRESHOLD && !sensorIsDisabled) {
-            intake.intakeMotor.setPower(IntakeSubsystem.INTAKE_POWER);
-            flipper.disableFlipper = false;
-            intake.disableIntake = true;
-            targetTimeFlipper = runtime.seconds() + COLOR_SENSOR_OUTTAKE_WAIT;
-            closeFlipper = true;
-            sensorIsDisabled = true;
-        }
+
 
 
 
@@ -279,6 +272,15 @@ public class ArmSubsystem extends BaseSubsystem {
 //            turret.setTurretPosition();
 //            turret.disableTurret = false;
             armIsMoving = false;
+
+            if (distanceSensor.distanceSensor.getDistance(DistanceUnit.MM) < DistanceSensorSubsystem.DISTANCE_THRESHOLD && !sensorIsDisabled) {
+                intake.intakeMotor.setPower(IntakeSubsystem.INTAKE_POWER);
+                flipper.disableFlipper = false;
+                intake.disableIntake = true;
+                targetTimeFlipper = runtime.seconds() + COLOR_SENSOR_OUTTAKE_WAIT;
+                closeFlipper = true;
+                sensorIsDisabled = true;
+            }
         }
 
 
