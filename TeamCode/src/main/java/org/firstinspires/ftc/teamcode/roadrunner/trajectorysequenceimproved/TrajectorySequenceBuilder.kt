@@ -438,7 +438,7 @@ class TrajectorySequenceBuilder(
 
 
     fun armToAllianceHub(): TrajectorySequenceBuilder  {
-        AutoBooleans.armToAllianceHub = true;
+        AutoBooleans.armToAllianceHubBlue = true;
         return this
     }
 

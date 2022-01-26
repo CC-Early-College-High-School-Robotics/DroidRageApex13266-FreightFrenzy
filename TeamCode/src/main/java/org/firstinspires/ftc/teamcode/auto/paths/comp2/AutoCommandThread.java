@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.auto.paths.comp2;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.ArmSubsystem;
 import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.BoxSubsystem;
@@ -9,7 +8,6 @@ import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.CarouselSubsys
 import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.DistanceSensorSubsystem;
 import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.FlipperSubsystem;
 import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.IntakeSubsystem;
-import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.TelemetrySubsystem;
 import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.TurretSubsystem;
 
 public class AutoCommandThread extends Thread{
@@ -39,8 +37,11 @@ public class AutoCommandThread extends Thread{
         flipper.init(opmode.hardwareMap,opmode.telemetry);
         flipper.flipperServo.setPosition(FlipperSubsystem.FLIPPER_CLOSED);
         while(AutoBooleans.isActive) {
-            if (AutoBooleans.armForward) {
-                arm.armUp(ArmSubsystem.ARM_HIGH_POS, BoxSubsystem.BOX_HIGH, TurretSubsystem.TURRET_SERVOS_FRONT, false);
+            if (AutoBooleans.armBlueWarehouseStart) {
+                arm.armUp(ArmSubsystem.ARM_HIGH_POS, BoxSubsystem.BOX_HIGH, AutoValues.AUTO_TURRET_BLUE_WAREHOUSE_STARt, false);
+            }
+            if (AutoBooleans.armRedWarehouseStart) {
+                arm.armUp(ArmSubsystem.ARM_HIGH_POS, BoxSubsystem.BOX_HIGH, AutoValues.AUTO_TURRET_RED_WAREHOUSE_START, false);
             }
             if (AutoBooleans.armIntake) {
                 arm.sensorIsDisabled = false;
@@ -49,8 +50,11 @@ public class AutoCommandThread extends Thread{
             if (AutoBooleans.openFlipper) {
                 flipper.flipperServo.setPosition(FlipperSubsystem.FLIPPER_OPEN);
             }
-            if (AutoBooleans.armToAllianceHub) {
-                arm.armUp(ArmSubsystem.ARM_HIGH_POS, BoxSubsystem.BOX_HIGH, AutoValues.AUTO_TURRET_POSITION, false);
+            if (AutoBooleans.armToAllianceHubBlue) {
+                arm.armUp(ArmSubsystem.ARM_HIGH_POS, BoxSubsystem.BOX_HIGH, AutoValues.AUTO_TURRET_POSITION_BLUE, false);
+            }
+            if (AutoBooleans.armToAllianceHubRed) {
+                arm.armUp(ArmSubsystem.ARM_HIGH_POS, BoxSubsystem.BOX_HIGH, AutoValues.AUTO_TURRET_POSITION_RED, false);
             }
             if (AutoBooleans.intake) {
 //                try {
@@ -61,12 +65,13 @@ public class AutoCommandThread extends Thread{
             }
             arm.loopCommand();
             AutoBooleans.init = false;
-            AutoBooleans.armForward = false;
+            AutoBooleans.armBlueWarehouseStart = false;
             AutoBooleans.armIntake = false;
             AutoBooleans.openFlipper = false;
             AutoBooleans.intake = false;
-            AutoBooleans.armToAllianceHub = false;
-            opmode.telemetry.update();
+            AutoBooleans.armToAllianceHubBlue = false;
+            // dont ever do this bc screws up everything
+//            opmode.telemetry.update();
         }
     }
 }

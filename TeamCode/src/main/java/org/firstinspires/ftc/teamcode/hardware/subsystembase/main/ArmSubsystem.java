@@ -240,6 +240,14 @@ public class ArmSubsystem extends BaseSubsystem {
             ARM_LOW_POS -= ARM_POS_CHANGE_SPEED;
             setArmPosition();
         }
+        if (distanceSensor.distanceSensor.getDistance(DistanceUnit.MM) < DistanceSensorSubsystem.DISTANCE_THRESHOLD && !sensorIsDisabled) {
+            intake.intakeMotor.setPower(IntakeSubsystem.INTAKE_POWER);
+            flipper.disableFlipper = false;
+            intake.disableIntake = true;
+            targetTimeFlipper = runtime.seconds() + COLOR_SENSOR_OUTTAKE_WAIT;
+            closeFlipper = true;
+            sensorIsDisabled = true;
+        }
 
 
 
@@ -273,14 +281,7 @@ public class ArmSubsystem extends BaseSubsystem {
 //            turret.disableTurret = false;
             armIsMoving = false;
 
-            if (distanceSensor.distanceSensor.getDistance(DistanceUnit.MM) < DistanceSensorSubsystem.DISTANCE_THRESHOLD && !sensorIsDisabled) {
-                intake.intakeMotor.setPower(IntakeSubsystem.INTAKE_POWER);
-                flipper.disableFlipper = false;
-                intake.disableIntake = true;
-                targetTimeFlipper = runtime.seconds() + COLOR_SENSOR_OUTTAKE_WAIT;
-                closeFlipper = true;
-                sensorIsDisabled = true;
-            }
+
         }
 
 
