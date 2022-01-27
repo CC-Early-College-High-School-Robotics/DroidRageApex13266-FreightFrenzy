@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.auto.pipeline.一DefaultDetection;
 import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.ArmSubsystem;
 import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.BoxSubsystem;
@@ -16,6 +17,7 @@ import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.DistanceSensor
 import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.FlipperSubsystem;
 import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.hardware.subsystembase.main.TurretSubsystem;
+import org.firstinspires.ftc.teamcode.roadrunner.Trajectories;
 import org.firstinspires.ftc.teamcode.roadrunner.drive.Robot;
 import org.firstinspires.ftc.teamcode.roadrunner.trajectorysequenceimproved.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.teleop.testing.TuningStart;
@@ -36,10 +38,17 @@ public class BlueWarehouseCycleSplineTest extends LinearOpMode {
     FlipperSubsystem flipper                    = new FlipperSubsystem                      ();
     DistanceSensorSubsystem distanceSensor      = new DistanceSensorSubsystem               ();
 
-    public static long CYCLE_DROP_WAIT = 1000;
+    public static long CYCLE_DROP_WAIT = 2000;
 
 
-    Thread armForwardStart = new Thread(() -> {
+//    Runnable armForwardStart = () -> {
+//        double targetTime = runtime.seconds() + 3;
+//        arm.armUp(ArmSubsystem.ARM_HIGH_POS, BoxSubsystem.BOX_HIGH, AutoValues.AUTO_TURRET_BLUE_WAREHOUSE_STARt, false);
+//        while (targetTime > runtime.seconds()) {
+//            arm.loopCommand();
+//        }
+//    };
+    Thread armForwardStartCommand = new Thread(() -> {
         double targetTime = runtime.seconds() + 3;
         arm.armUp(ArmSubsystem.ARM_HIGH_POS, BoxSubsystem.BOX_HIGH, AutoValues.AUTO_TURRET_BLUE_WAREHOUSE_STARt, false);
         while (targetTime > runtime.seconds()) {
@@ -47,25 +56,49 @@ public class BlueWarehouseCycleSplineTest extends LinearOpMode {
         }
     });
 
-    Thread armCycleCommand = new Thread(() -> {
+    Runnable armIn = () -> {
+        double targetTime = runtime.seconds() + 3;
+        arm.sensorIsDisabled = false;
+        arm.armReset();
+        while (targetTime > runtime.seconds()) {
+            arm.loopCommand();
+        }
+    };
+    Thread armInCommand = new Thread(armIn);
+
+    Runnable armCycle = () -> {
         double targetTime = runtime.seconds() + 3;
         arm.armUp(ArmSubsystem.ARM_HIGH_POS, BoxSubsystem.BOX_HIGH, AutoValues.AUTO_TURRET_POSITION_BLUE,false);
         while (targetTime > runtime.seconds()) {
             arm.loopCommand();
         }
-    });
+    };
+    Thread armCycleCommand = new Thread(armCycle);
 
-    Thread dropCommand = new Thread(() -> {
-        flipper.flipperServo.setPosition(FlipperSubsystem.FLIPPER_OPEN);
-    });
+    Runnable drop = () -> flipper.flipperServo.setPosition(FlipperSubsystem.FLIPPER_OPEN);
+    Thread dropCommand = new Thread(drop);
 
-    Thread intakeInCommand = new Thread(() -> {
-        intake.intakeMotor.setPower(-IntakeSubsystem.INTAKE_POWER);
-    });
+    Runnable intakeIn = () -> intake.intakeMotor.setPower(-IntakeSubsystem.INTAKE_POWER);
+    Thread intakeInCommand = new Thread(intakeIn);
 
-    Thread intakeStopCommand = new Thread(() -> {
-        intake.intakeMotor.setPower(0);
-    });
+    Runnable intakeStop = () -> intake.intakeMotor.setPower(0);
+    Thread intakeStopCommand = new Thread(intakeStop);
+
+    Runnable colorSensor = () -> {
+        while (!arm.detected) {
+            if (distanceSensor.distanceSensor.getDistance(DistanceUnit.MM) < DistanceSensorSubsystem.DISTANCE_THRESHOLD && !arm.sensorIsDisabled) {
+                intake.intakeMotor.setPower(IntakeSubsystem.INTAKE_POWER);
+                flipper.disableFlipper = false;
+                intake.disableIntake = true;
+                arm.targetTimeFlipper = runtime.seconds() + ArmSubsystem.COLOR_SENSOR_OUTTAKE_WAIT;
+                arm.closeFlipper = true;
+                arm.sensorIsDisabled = true;
+                arm.detected = true;
+            }
+        }
+    };
+    Thread colorSensorCommand = new Thread(colorSensor);
+
 
 
 
@@ -141,31 +174,27 @@ public class BlueWarehouseCycleSplineTest extends LinearOpMode {
 
         if(isStopRequested()) return;
 
-        Pose2d startPose = new Pose2d(7, 62.5, Math.toRadians(90));
+        Pose2d startPose = new Pose2d(7, 61, Math.toRadians(90));
         ElapsedTime timer = new ElapsedTime();
 
         drive.setPoseEstimate(startPose);
 
         TrajectorySequence Trajectory1 = drive.trajectorySequenceBuilder(startPose)
                 .setReversed(true)
-                .addDisplacementMarker(() -> {
-                    armForwardStart.start();
-                })
-                .back(15)
-                .turn(Math.toRadians(-50))
+                .addDisplacementMarker(() -> armForwardStartCommand.start())
+                .splineTo(new Vector2d(0, 44), Math.toRadians(-120))
                 .build();
 
 
         TrajectorySequence Trajectory2 = drive.trajectorySequenceBuilder(Trajectory1.end())
                 .setReversed(false)
-                .splineTo(new Vector2d(20, 65), Math.toRadians(0))
+                .splineTo(new Vector2d(20, 66), Math.toRadians(0), Trajectories.splineInConstraint, Trajectories.accelConstraint)
 
                 //back forth
-                .forward(24)
-                .back(24)
-                .addDisplacementMarker(() -> {
-                    intakeStopCommand.start();
-                })
+                .addDisplacementMarker(() -> colorSensorCommand.start())
+                .forward(35, Trajectories.warehouseInConstraint, Trajectories.accelConstraint)
+                .back(35,  Trajectories.warehouseOutConstraint, Trajectories.accelConstraint)
+                .addDisplacementMarker(() -> intakeStopCommand.start())
 
                 //spline out
                 .setReversed(true)
@@ -173,22 +202,26 @@ public class BlueWarehouseCycleSplineTest extends LinearOpMode {
                 .build();
         TrajectorySequence Trajectory3 = drive.trajectorySequenceBuilder(Trajectory2.end())
                 .setReversed(false)
-                .splineTo(new Vector2d(20, 65), Math.toRadians(0))
+                .splineTo(new Vector2d(20, 69), Math.toRadians(0), Trajectories.splineInConstraint, Trajectories.accelConstraint)
                 .intake()
-                .forward(24)
-                .back(24)
+                .addDisplacementMarker(() -> colorSensorCommand.start())
+                .forward(35)
+                .back(35)
+                .addDisplacementMarker(() -> intakeStopCommand.start())
                 .setReversed(true)
-                .splineTo(new Vector2d(-15, 44), Math.toRadians(200)) // reversed
+                .splineTo(new Vector2d(-15, 47), Math.toRadians(200)) // reversed
         .build();
 
         TrajectorySequence Trajectory4 = drive.trajectorySequenceBuilder(Trajectory3.end())
                 .setReversed(false)
-                .splineTo(new Vector2d(20, 65), Math.toRadians(0))
+                .splineTo(new Vector2d(20, 71), Math.toRadians(0), Trajectories.splineInConstraint, Trajectories.accelConstraint)
                 .intake()
-                .forward(24)
-                .back(24)
+                .addDisplacementMarker(() -> colorSensorCommand.start())
+                .forward(35)
+                .back(35)
+                .addDisplacementMarker(() -> intakeStopCommand.start())
                 .setReversed(true)
-                .splineTo(new Vector2d(-15, 44), Math.toRadians(200)) // reversed
+                .splineTo(new Vector2d(-15, 49), Math.toRadians(200)) // reversed
                 .build();
 
 
@@ -198,29 +231,30 @@ public class BlueWarehouseCycleSplineTest extends LinearOpMode {
         sleep(1000);
         dropCommand.start();
         sleep(1000);
+        armInCommand.start();
         intakeInCommand.start();
 
         drive.followTrajectorySequence((Trajectory2));
         armCycleCommand.start();
         sleep(CYCLE_DROP_WAIT);
-        AutoBooleans.armIntake = true;
+        intakeInCommand.start();
 
         drive.followTrajectorySequence((Trajectory3));
-        AutoBooleans.armToAllianceHubBlue = true;
+        armCycleCommand.start();
         sleep(CYCLE_DROP_WAIT);
-        AutoBooleans.armIntake = true;
+        intakeInCommand.start();
         drive.followTrajectorySequence((Trajectory4));
-        AutoBooleans.armToAllianceHubBlue = true;
+        armCycleCommand.start();
         sleep(CYCLE_DROP_WAIT);
-        AutoBooleans.armIntake = true;
+        intakeInCommand.start();
         drive.followTrajectorySequence((Trajectory4));
-        AutoBooleans.armToAllianceHubBlue = true;
+        armCycleCommand.start();
         sleep(CYCLE_DROP_WAIT);
-        AutoBooleans.armIntake = true;
+        intakeInCommand.start();
         drive.followTrajectorySequence((Trajectory4));
-        AutoBooleans.armToAllianceHubBlue = true;
+        armCycleCommand.start();
         sleep(CYCLE_DROP_WAIT);
-        AutoBooleans.armIntake = true;
+        intakeInCommand.start();
     }
 }
 

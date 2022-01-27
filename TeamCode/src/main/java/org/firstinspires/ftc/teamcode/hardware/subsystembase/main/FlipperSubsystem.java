@@ -16,7 +16,7 @@ public class FlipperSubsystem extends BaseSubsystem {
     public static double FLIPPER_CLOSED = 0.75 ;
 //    public static double FLIPPER_UP = 0.0;
 
-    boolean disableFlipper = true;
+    public boolean disableFlipper = true;
 
     // Create hardware variables
     public Servo flipperServo = null;

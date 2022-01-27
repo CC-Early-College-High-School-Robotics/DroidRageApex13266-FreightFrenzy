@@ -15,7 +15,7 @@ public class IntakeSubsystem extends BaseSubsystem {
     // Values
 //    public static double INTAKE_VELOCITY = 1000;
     public static double INTAKE_POWER = 0.8;
-    boolean disableIntake = false;
+    public boolean disableIntake = false;
 
     // Create hardware variables
     public DcMotorEx intakeMotor = null;

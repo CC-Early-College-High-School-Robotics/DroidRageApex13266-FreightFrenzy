@@ -22,6 +22,7 @@ import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.control.PIDCoefficients;
 import com.acmerobotics.roadrunner.drive.DriveSignal;
+import com.acmerobotics.roadrunner.followers.TrajectoryFollower;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.acmerobotics.roadrunner.trajectory.TrajectoryBuilder;
@@ -43,7 +44,6 @@ import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
@@ -94,8 +94,11 @@ public class RoadRunnerImprovedTankDrive extends ImprovedTankDrive {
 
     public static double VX_WEIGHT = 1;
     public static double OMEGA_WEIGHT = 2;
-    private static final TrajectoryVelocityConstraint VEL_CONSTRAINT = getVelocityConstraint(MAX_VEL, MAX_ANG_VEL, TRACK_WIDTH);
-    private static final TrajectoryAccelerationConstraint ACCEL_CONSTRAINT = getAccelerationConstraint(MAX_ACCEL);
+//    private static final TrajectoryVelocityConstraint VEL_CONSTRAINT = getVelocityConstraint(MAX_VEL, MAX_ANG_VEL, TRACK_WIDTH);
+//    private static final TrajectoryAccelerationConstraint ACCEL_CONSTRAINT = getAccelerationConstraint(MAX_ACCEL);
+    private TrajectoryVelocityConstraint VEL_CONSTRAINT;
+    private TrajectoryAccelerationConstraint ACCEL_CONSTRAINT;
+    private TrajectoryFollower follower;
     private final TrajectorySequenceRunner trajectorySequenceRunner;
     private final FtcDashboard dashboard;
 
@@ -121,6 +124,12 @@ public class RoadRunnerImprovedTankDrive extends ImprovedTankDrive {
 //        Context.opModeType = type;
 //        Context.alliance = alliance;
         Pose2d robotPose = pose2d;
+
+        VEL_CONSTRAINT = new MinVelocityConstraint(Arrays.asList(
+                new AngularVelocityConstraint(MAX_ANG_VEL),
+                new TankVelocityConstraint(MAX_VEL, TRACK_WIDTH)
+        ));
+        ACCEL_CONSTRAINT = new ProfileAccelerationConstraint(MAX_ACCEL);
 //        if (opModeType == OpModeType.AUTO) robotPose = FrequentPositions.startingPosition();
         hardwareMap = opMode.hardwareMap;
         opMode.telemetry = new MultipleTelemetry(opMode.telemetry, dashboard.getTelemetry());

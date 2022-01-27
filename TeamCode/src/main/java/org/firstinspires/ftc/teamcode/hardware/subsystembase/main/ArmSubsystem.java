@@ -44,7 +44,8 @@ public class ArmSubsystem extends BaseSubsystem {
     double targetTime1 = 0;
     double targetTime2 = 0;
     double targetTime3 = 0;
-    double targetTimeFlipper = 0;
+    public double targetTimeFlipper = 0;
+    public boolean detected = false;
     boolean armUp = false;
     boolean armForward = false;
     boolean armReset = false;
@@ -54,7 +55,7 @@ public class ArmSubsystem extends BaseSubsystem {
     boolean boxDown = false;
     boolean armIsUp = false;
     boolean armIsMoving = false;
-    boolean closeFlipper = false;
+    public boolean closeFlipper = false;
     public boolean sensorIsDisabled = false;
     double armResetWaitLong = 0;
 
