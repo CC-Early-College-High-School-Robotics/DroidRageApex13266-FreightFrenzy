@@ -29,8 +29,8 @@ import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
 @Config
-@Autonomous(name="Blue warehouse cycle spline test Roadrunner Path", group="Roadrunner Paths")
-public class BlueWarehouseCycleSplineTest extends LinearOpMode {
+@Autonomous(name="Red warehouse cycle spline REAL Roadrunner Path", group="Roadrunner Paths")
+public class RedWarehouseCycleSpline extends LinearOpMode {
     ElapsedTime runtime  = new ElapsedTime();
     ArmSubsystem arm                            = new ArmSubsystem                          ();
     BoxSubsystem box                            = new BoxSubsystem                          ();
@@ -40,11 +40,12 @@ public class BlueWarehouseCycleSplineTest extends LinearOpMode {
     TurretSubsystem turret                      = new TurretSubsystem                       ();
     FlipperSubsystem flipper                    = new FlipperSubsystem                      ();
     DistanceSensorSubsystem distanceSensor      = new DistanceSensorSubsystem               ();
+    public static Vector2d splineOutPos = new Vector2d(1, 1);
 
 
 
 
-//    Runnable armForwardStart = () -> {
+    //    Runnable armForwardStart = () -> {
 //        double targetTime = runtime.seconds() + 3;
 //        arm.armUp(ArmSubsystem.ARM_HIGH_POS, BoxSubsystem.BOX_HIGH, AutoValues.AUTO_TURRET_BLUE_WAREHOUSE_STARt, false);
 //        while (targetTime > runtime.seconds()) {
@@ -52,8 +53,8 @@ public class BlueWarehouseCycleSplineTest extends LinearOpMode {
 //        }
 //    };
     Thread armForwardStartCommand = new Thread(() -> {
-        double targetTime = runtime.seconds() + 3;
-        arm.armUp(ArmSubsystem.ARM_HIGH_POS, BoxSubsystem.BOX_HIGH, AutoValues.AUTO_TURRET_BLUE_WAREHOUSE_STARt, false);
+        double targetTime = runtime.seconds() + 2;
+        arm.armUp(ArmSubsystem.ARM_HIGH_POS, BoxSubsystem.BOX_HIGH, AutoValues.AUTO_TURRET_RED_WAREHOUSE_START, false);
         while (targetTime > runtime.seconds()) {
             arm.loopCommand();
         }
@@ -69,8 +70,8 @@ public class BlueWarehouseCycleSplineTest extends LinearOpMode {
     });
 
     Thread armCycleCommand = new Thread(() -> {
-        double targetTime = runtime.seconds() + 3;
-        arm.armUp(ArmSubsystem.ARM_HIGH_POS, BoxSubsystem.BOX_HIGH, AutoValues.AUTO_TURRET_POSITION_BLUE,false);
+        double targetTime = runtime.seconds() + 2;
+        arm.armUp(ArmSubsystem.ARM_HIGH_POS, BoxSubsystem.BOX_HIGH, AutoValues.AUTO_TURRET_POSITION_RED,true);
         while (targetTime > runtime.seconds()) {
             arm.loopCommand();
         }
@@ -86,19 +87,18 @@ public class BlueWarehouseCycleSplineTest extends LinearOpMode {
 //    Thread intakeStopCommand = new Thread(intakeStop);
 
     Runnable colorSensor = () -> {
+        arm.detected = false;
         while (!arm.detected) {
             if (distanceSensor.distanceSensor.getDistance(DistanceUnit.MM) < DistanceSensorSubsystem.DISTANCE_THRESHOLD && !arm.sensorIsDisabled) {
+                flipper.flipperServo.setPosition(FlipperSubsystem.FLIPPER_CLOSED);
                 intake.intakeMotor.setPower(IntakeSubsystem.INTAKE_POWER);
-                flipper.disableFlipper = false;
-                intake.disableIntake = true;
-                arm.targetTimeFlipper = runtime.seconds() + ArmSubsystem.COLOR_SENSOR_OUTTAKE_WAIT;
-                arm.closeFlipper = true;
-                arm.sensorIsDisabled = true;
                 arm.detected = true;
             }
+            if(isStopRequested()) return;
         }
     };
     Thread colorSensorCommand = new Thread(colorSensor);
+    Thread carouselBlue = new Thread(() -> carousel.carouselMotor.setPower(1));
 
 
 
@@ -118,17 +118,6 @@ public class BlueWarehouseCycleSplineTest extends LinearOpMode {
 //        autoThread.start();
         TuningStart.initializeTuning();
         Robot drive = new Robot(this);
-        // On start
-//        arm.init(hardwareMap, telemetry, box, turret, flipper, distanceSensor, intake);
-//        distanceSensor.init(hardwareMap, telemetry);
-//        box.init(hardwareMap, telemetry);
-//        carousel.init(hardwareMap, telemetry);
-//        intake.init(hardwareMap, telemetry);
-//        turret.init(hardwareMap, telemetry);
-//        flipper.init(hardwareMap,telemetry);
-//
-//        telemetrySubsystem.init(telemetry, arm, box, carousel, drivetrain, intake, distanceSensor);
-
         /* Open CV */
 
         一DefaultDetection detector = new 一DefaultDetection();
@@ -175,85 +164,121 @@ public class BlueWarehouseCycleSplineTest extends LinearOpMode {
 
         if(isStopRequested()) return;
 
-        Pose2d startPose = new Pose2d(7, 61, Math.toRadians(90));
+        Pose2d startPose = new Pose2d(7, -61, Math.toRadians(-90));
         ElapsedTime timer = new ElapsedTime();
 
         drive.setPoseEstimate(startPose);
 
         TrajectorySequence Trajectory1 = drive.trajectorySequenceBuilder(startPose)
+                // go to hub
                 .setReversed(true)
                 .addDisplacementMarker(() -> armForwardStartCommand.start())
-                .splineTo(new Vector2d(0, 44), Math.toRadians(-120))
+                .splineTo(new Vector2d(-12, -45), Math.toRadians(90), Trajectories.splineStartConstraint, Trajectories.accelConstraint )
+//                .splineTo(new Vector2d(0, -44), Math.toRadians(120))
                 .build();
 
 
         TrajectorySequence Trajectory2 = drive.trajectorySequenceBuilder(Trajectory1.end())
+                //spline in
                 .setReversed(false)
-                .splineTo(new Vector2d(20, 66), Math.toRadians(0), Trajectories.splineInConstraint, Trajectories.accelConstraint)
+                .splineTo(new Vector2d(20, -64), Math.toRadians(0), Trajectories.splineInConstraint, Trajectories.accelConstraint)
 
                 //back forth
+                .addDisplacementMarker(() -> intakeInCommand.start())
                 .addDisplacementMarker(() -> colorSensorCommand.start())
-                .forward(35, Trajectories.warehouseInConstraint, Trajectories.accelConstraint)
-                .back(35,  Trajectories.warehouseOutConstraint, Trajectories.accelConstraint)
+                .forward(40, Trajectories.warehouseInConstraint, Trajectories.accelConstraint)
+
+                // move out arm after 10 inches
+
+
+                .back(40,  Trajectories.warehouseOutConstraint, Trajectories.accelConstraint)
+                .addDisplacementMarker(() -> armCycleCommand.start())
+
                 .addDisplacementMarker(() -> intakeStopCommand.start())
+
 
                 //spline out
                 .setReversed(true)
-                .splineTo(new Vector2d(-15, 44), Math.toRadians(200)) // reversed
+                .splineTo(new Vector2d(-16, -42), Math.toRadians(-200)) // reversed
+//                .splineTo(new Vector2d(-15, -44), Math.toRadians(-200)) // reversed
                 .build();
+
         TrajectorySequence Trajectory3 = drive.trajectorySequenceBuilder(Trajectory2.end())
+                // spline in
                 .setReversed(false)
-                .splineTo(new Vector2d(20, 69), Math.toRadians(0), Trajectories.splineInConstraint, Trajectories.accelConstraint)
+                .splineTo(new Vector2d(20, -69), Math.toRadians(0), Trajectories.splineInConstraint, Trajectories.accelConstraint)
+
+                //back forth
+                .addDisplacementMarker(() -> intakeInCommand.start())
                 .addDisplacementMarker(() -> colorSensorCommand.start())
-                .forward(35)
-                .back(35)
+                .forward(40, Trajectories.warehouseInConstraint, Trajectories.accelConstraint)
+
+
+
+                .back(40,  Trajectories.warehouseOutConstraint, Trajectories.accelConstraint)
                 .addDisplacementMarker(() -> intakeStopCommand.start())
+                .addDisplacementMarker(() -> armCycleCommand.start())
+
+
+
+                // spline out
                 .setReversed(true)
-                .splineTo(new Vector2d(-15, 47), Math.toRadians(200)) // reversed
-        .build();
+                .splineTo(new Vector2d(-16, -45), Math.toRadians(-200)) // reversed
+                .build();
 
         TrajectorySequence Trajectory4 = drive.trajectorySequenceBuilder(Trajectory3.end())
+                // spline in
                 .setReversed(false)
-                .splineTo(new Vector2d(20, 71), Math.toRadians(0), Trajectories.splineInConstraint, Trajectories.accelConstraint)
+                .splineTo(new Vector2d(20, -74), Math.toRadians(0), Trajectories.splineInConstraint, Trajectories.accelConstraint)
+
+                //back forth
+                .addDisplacementMarker(() -> intakeInCommand.start())
                 .addDisplacementMarker(() -> colorSensorCommand.start())
-                .forward(35)
-                .back(35)
+                .forward(40, Trajectories.warehouseInConstraint, Trajectories.accelConstraint)
+
+//                // move out arm after 10 inches
+//                .addDisplacementMarker(() -> armCycleCommand.start())
+
+                .back(40,  Trajectories.warehouseOutConstraint, Trajectories.accelConstraint)
+                .addDisplacementMarker(() -> armCycleCommand.start())
+
                 .addDisplacementMarker(() -> intakeStopCommand.start())
+
+
+
+
+                // spline out
                 .setReversed(true)
-                .splineTo(new Vector2d(-15, 49), Math.toRadians(200)) // reversed
+                .splineTo(new Vector2d(-16, -47), Math.toRadians(-200)) // reversed
                 .build();
 
 
 
         // Run trajectory 1
+//        colorSensorCommand.start();
+//        sleep(10000);
+
         drive.followTrajectorySequence((Trajectory1));
+        dropSequence();
+
+
+        drive.followTrajectorySequence((Trajectory2));
+        dropSequence();
+
+        drive.followTrajectorySequence((Trajectory3));
+        dropSequence();
+
+        while (opModeIsActive()) {
+            drive.followTrajectorySequence((Trajectory4));
+            dropSequence();
+        }
+
+    }
+    public void dropSequence() {
         sleep((long)CYCLE_DROP_WAIT);
         dropCommand.start();
         sleep((long)CYCLE_DROP_WAIT2);
         armInCommand.start();
-        intakeInCommand.start();
-
-        drive.followTrajectorySequence((Trajectory2));
-        armCycleCommand.start();
-        sleep((long)CYCLE_DROP_WAIT);
-        intakeInCommand.start();
-
-        drive.followTrajectorySequence((Trajectory3));
-        armCycleCommand.start();
-        sleep((long)CYCLE_DROP_WAIT);
-        intakeInCommand.start();
-        drive.followTrajectorySequence((Trajectory4));
-        armCycleCommand.start();
-        sleep((long)CYCLE_DROP_WAIT);
-        intakeInCommand.start();
-        drive.followTrajectorySequence((Trajectory4));
-        armCycleCommand.start();
-        sleep((long)CYCLE_DROP_WAIT);
-        intakeInCommand.start();
-        drive.followTrajectorySequence((Trajectory4));
-        armCycleCommand.start();
-        sleep((long)CYCLE_DROP_WAIT);
-        intakeInCommand.start();
     }
 }
 

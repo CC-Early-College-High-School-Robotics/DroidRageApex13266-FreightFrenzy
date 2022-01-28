@@ -19,7 +19,7 @@ public class ArmSubsystem extends BaseSubsystem {
     public static double ARM_INTAKE_POS = 0; //-0.03             // 0.04 //-0.09
 //    public static double ARM_NEUTRAL_POS = -0.003;
     public static double ARM_LOW_POS = -.47; //0.132 //0.035
-    public static double ARM_MID_POS = -.41; //0.25 //0.17
+//    public static double ARM_MID_POS = -.41; //0.25 //0.17
     public static double ARM_HIGH_POS = -.315; //0.36 //0.27
     public static double ARM_INTERMEDIATE_POS = -0.15; //0.36 //0.27
 

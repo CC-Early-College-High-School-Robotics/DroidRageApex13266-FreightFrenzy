@@ -20,6 +20,7 @@ public class Trajectories {
     public static double splineInSpeed = 0.5;
     public static double warehouseOutSpeed = 0.5;
     public static double splineOutSpeed = 0.5;
+    public static double splineStartSpeed = 0.5;
 
     public static MinVelocityConstraint velConstraint = new MinVelocityConstraint(Arrays.asList(
             new AngularVelocityConstraint(MAX_ANG_VEL),
@@ -39,6 +40,10 @@ public class Trajectories {
     public static MinVelocityConstraint splineOutConstraint = new MinVelocityConstraint(Arrays.asList(
             new AngularVelocityConstraint(MAX_ANG_VEL),
             new TankVelocityConstraint(MAX_VEL * splineOutSpeed, TRACK_WIDTH)
+    ));
+    public static MinVelocityConstraint splineStartConstraint = new MinVelocityConstraint(Arrays.asList(
+            new AngularVelocityConstraint(MAX_ANG_VEL),
+            new TankVelocityConstraint(MAX_VEL * splineStartSpeed, TRACK_WIDTH)
     ));
 
 

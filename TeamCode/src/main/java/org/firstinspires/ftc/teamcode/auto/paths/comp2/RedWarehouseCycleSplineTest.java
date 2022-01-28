@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.auto.paths.comp2;
 
+import static org.firstinspires.ftc.teamcode.auto.paths.comp2.AutoValues.CYCLE_DROP_WAIT;
+
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
@@ -19,7 +21,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 @Config
 @Autonomous(name="Red warehouse cycle spline test Roadrunner Path", group="Roadrunner Paths")
 public class RedWarehouseCycleSplineTest extends LinearOpMode {
-    public static long CYCLE_DROP_WAIT = 1000;
+//    public static long CYCLE_DROP_WAIT = 1000;
 
 
     // Declare subsystems
@@ -127,7 +129,6 @@ public class RedWarehouseCycleSplineTest extends LinearOpMode {
         TrajectorySequence Trajectory3 = drive.trajectorySequenceBuilder(Trajectory2.end())
                 .setReversed(false)
                 .splineTo(new Vector2d(20, -65), Math.toRadians(0))
-                .intake()
                 .forward(24)
                 .back(24)
                 .setReversed(true)
@@ -137,7 +138,6 @@ public class RedWarehouseCycleSplineTest extends LinearOpMode {
         TrajectorySequence Trajectory4 = drive.trajectorySequenceBuilder(Trajectory3.end())
                 .setReversed(false)
                 .splineTo(new Vector2d(20, -65), Math.toRadians(0))
-                .intake()
                 .forward(24)
                 .back(24)
                 .setReversed(true)
@@ -156,24 +156,24 @@ public class RedWarehouseCycleSplineTest extends LinearOpMode {
 
         drive.followTrajectorySequence((Trajectory2));
         AutoBooleans.armToAllianceHubRed = true;
-        sleep(CYCLE_DROP_WAIT);
+        sleep((long)CYCLE_DROP_WAIT);
         AutoBooleans.armIntake = true;
 
         drive.followTrajectorySequence((Trajectory3));
         AutoBooleans.armToAllianceHubRed = true;
-        sleep(CYCLE_DROP_WAIT);
+        sleep((long)CYCLE_DROP_WAIT);
         AutoBooleans.armIntake = true;
         drive.followTrajectorySequence((Trajectory4));
         AutoBooleans.armToAllianceHubRed = true;
-        sleep(CYCLE_DROP_WAIT);
+        sleep((long)CYCLE_DROP_WAIT);
         AutoBooleans.armIntake = true;
         drive.followTrajectorySequence((Trajectory4));
         AutoBooleans.armToAllianceHubRed = true;
-        sleep(CYCLE_DROP_WAIT);
+        sleep((long)CYCLE_DROP_WAIT);
         AutoBooleans.armIntake = true;
         drive.followTrajectorySequence((Trajectory4));
         AutoBooleans.armToAllianceHubRed = true;
-        sleep(CYCLE_DROP_WAIT);
+        sleep((long)CYCLE_DROP_WAIT);
         AutoBooleans.armIntake = true;
     }
 }
