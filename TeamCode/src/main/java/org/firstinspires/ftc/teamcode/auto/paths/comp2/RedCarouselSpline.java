@@ -145,10 +145,6 @@ public class RedCarouselSpline extends LinearOpMode {
                 .turn(Math.toRadians(-60))
                 .forward(25, Trajectories.warehouseConstraint, Trajectories.accelConstraint)
                 .forward(5, Trajectories.imDyingItsSoSlowSpeedConstraint, Trajectories.accelConstraint)
-//                .setReversed(false)
-//                .splineTo(new Vector2d(-61, 55), Math.toRadians(180), Trajectories.WarehouseConstraint, Trajectories.accelConstraint)
-
-//                .addCommand(() -> command.carouselBlueRun.start())
                 .waitSeconds(0.5)
                 .addCommand(() -> command.carouselStop.start())
 
@@ -162,15 +158,6 @@ public class RedCarouselSpline extends LinearOpMode {
 
                 .back(24 + preLoadDropBackAmount, Trajectories.warehouseSLowConstraint, Trajectories.accelConstraint)
 
-//                .addCommand(() -> command.drop.start())
-//                .waitSeconds(2)
-//                .addCommand(() -> command.drop.start())
-
-//                .setReversed(false)
-//                .addCommand(() -> command.armIn.start())
-//                .splineTo(new Vector2d(-60, 38), Math.toRadians(90), Trajectories.WarehouseConstraint, Trajectories.accelConstraint)
-
-//                .waitSeconds(5)
                 .build();
         TrajectorySequence Trajectory2 = drive.trajectorySequenceBuilder(Trajectory1.end())
                 .setReversed(false)
