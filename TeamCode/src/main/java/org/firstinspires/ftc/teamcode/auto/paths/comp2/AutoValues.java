@@ -20,8 +20,8 @@ public class AutoValues {
 //    public static Vector2d RED_WAREHOUSE_MID = -2;
 //    public static double RED_CAROUSEL_MID = -2;
 
-    public static double BLUE_CAROUSEL_MID = -2;
-    public static double BLUE_CAROUSEL_LOW = -4;
+    public static double BLUE_CAROUSEL_MID = -7;
+    public static double BLUE_CAROUSEL_LOW = -7;
 
 //    public static double RED_CAROUSEL_MID = -2;
 //    public static double RED_CAROUSEL_MID = -2;

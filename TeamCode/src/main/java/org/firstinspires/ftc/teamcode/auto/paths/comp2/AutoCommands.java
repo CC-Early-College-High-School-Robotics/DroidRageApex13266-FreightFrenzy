@@ -29,6 +29,8 @@ public class AutoCommands {
         this.carousel = carousel;
     }
     Thread armHigh = new Thread(() -> {
+        if (opMode.isStopRequested()) return;
+
         double targetTime = runtime.seconds() + 2;
         arm.armUp(ArmSubsystem.ARM_HIGH_POS, BoxSubsystem.BOX_HIGH, AutoValues.AUTO_TURRET_RED_WAREHOUSE_START, false);
         while (targetTime > runtime.seconds()) {
@@ -36,6 +38,8 @@ public class AutoCommands {
         }
     });
     Thread armMid = new Thread(() -> {
+        if (opMode.isStopRequested()) return;
+
         double targetTime = runtime.seconds() + 2;
         arm.armUp(ArmSubsystem.ARM_MID_POS, BoxSubsystem.BOX_MID, AutoValues.AUTO_TURRET_RED_WAREHOUSE_START, false);
         while (targetTime > runtime.seconds()) {
@@ -43,6 +47,8 @@ public class AutoCommands {
         }
     });
     Thread armLow = new Thread(() -> {
+        if (opMode.isStopRequested()) return;
+
         double targetTime = runtime.seconds() + 2;
         arm.armUp(ArmSubsystem.ARM_LOW_POS, BoxSubsystem.BOX_LOW, AutoValues.AUTO_TURRET_RED_WAREHOUSE_START, false);
         while (targetTime > runtime.seconds()) {
@@ -51,6 +57,8 @@ public class AutoCommands {
     });
 
     Thread armIn = new Thread(() -> {
+        if (opMode.isStopRequested()) return;
+
         double targetTime = runtime.seconds() + 3;
         arm.sensorIsDisabled = false;
         arm.armReset();
@@ -60,6 +68,8 @@ public class AutoCommands {
     });
 
     Thread armCycle = new Thread(() -> {
+        if (opMode.isStopRequested()) return;
+
         double targetTime = runtime.seconds() + 2;
         arm.armUp(ArmSubsystem.ARM_HIGH_POS, BoxSubsystem.BOX_HIGH, AutoValues.AUTO_TURRET_POSITION_RED,true);
         while (targetTime > runtime.seconds()) {
@@ -77,6 +87,8 @@ public class AutoCommands {
 //    Thread intakeStopCommand = new Thread(intakeStop);
 
     Thread colorSensorRun = new Thread(() -> {
+        if (opMode.isStopRequested()) return;
+
         arm.detected = false;
         while (!arm.detected) {
             if (distanceSensor.distanceSensor.getDistance(DistanceUnit.MM) < DistanceSensorSubsystem.DISTANCE_THRESHOLD && !arm.sensorIsDisabled) {

@@ -25,8 +25,8 @@ import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
 @Config
-@Autonomous(name="Blue Carousel Spline", group="Roadrunner Paths")
-public class BlueCarouselSpline extends LinearOpMode {
+@Autonomous(name="Red Carousel Spline", group="Roadrunner Paths")
+public class RedCarouselSpline extends LinearOpMode {
     ArmSubsystem arm                            = new ArmSubsystem                          ();
     BoxSubsystem box                            = new BoxSubsystem                          ();
     CarouselSubsystem carousel                  = new CarouselSubsystem                     ();
@@ -134,7 +134,7 @@ public class BlueCarouselSpline extends LinearOpMode {
             preLoadArmCommand = command.armLow;
         }
 
-        Pose2d startPose = new Pose2d(-40, 62.5, Math.toRadians(90));
+        Pose2d startPose = new Pose2d(-40, -62.5, Math.toRadians(-90));
 
         drive.setPoseEstimate(startPose);
 
@@ -142,7 +142,7 @@ public class BlueCarouselSpline extends LinearOpMode {
 
                 .back(15)
                 .addDisplacementMarker(20, () -> command.carouselBlueRun.start())
-                .turn(Math.toRadians(65))
+                .turn(Math.toRadians(-60))
                 .forward(25, Trajectories.warehouseConstraint, Trajectories.accelConstraint)
                 .forward(5, Trajectories.imDyingItsSoSlowSpeedConstraint, Trajectories.accelConstraint)
 //                .setReversed(false)
@@ -152,15 +152,15 @@ public class BlueCarouselSpline extends LinearOpMode {
                 .waitSeconds(0.5)
                 .addCommand(() -> command.carouselStop.start())
 
-                .turn(Math.toRadians(-25))
+                .turn(Math.toRadians(50))
 
 
                 .setReversed(true)
 
                 .addDisplacementMarker(58, () -> preLoadArmCommand.start())
-                .splineTo(new Vector2d(-57, 24), Math.toRadians(0), Trajectories.warehouseConstraint, Trajectories.accelConstraint)
+                .splineTo(new Vector2d(-57, -24), Math.toRadians(0), Trajectories.warehouseConstraint, Trajectories.accelConstraint)
 
-                .back(21 + preLoadDropBackAmount, Trajectories.warehouseSLowConstraint, Trajectories.accelConstraint)
+                .back(24 + preLoadDropBackAmount, Trajectories.warehouseSLowConstraint, Trajectories.accelConstraint)
 
 //                .addCommand(() -> command.drop.start())
 //                .waitSeconds(2)
@@ -175,7 +175,7 @@ public class BlueCarouselSpline extends LinearOpMode {
         TrajectorySequence Trajectory2 = drive.trajectorySequenceBuilder(Trajectory1.end())
                 .setReversed(false)
                 .addCommand(() -> command.armIn.start())
-                .splineTo(new Vector2d(-60, 38), Math.toRadians(90), Trajectories.warehouseConstraint, Trajectories.accelConstraint)
+                .splineTo(new Vector2d(-60, -38), Math.toRadians(-90), Trajectories.warehouseConstraint, Trajectories.accelConstraint)
                 .build();
 
 
