@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.auto.pipeline;
+package org.firstinspires.ftc.teamcode.auto.pipeline.comp2;
 
 import com.acmerobotics.dashboard.config.Config;
 
@@ -11,9 +11,9 @@ import org.opencv.imgproc.Imgproc;
 import org.openftc.easyopencv.OpenCvPipeline;
 
 @Config
-public class 一DefaultDetection extends OpenCvPipeline {
+public class 一DefaultNewDetection extends OpenCvPipeline {
 
-    public 一DefaultDetection() {
+    public 一DefaultNewDetection() {
     }
 
     public static int point1x = 0;

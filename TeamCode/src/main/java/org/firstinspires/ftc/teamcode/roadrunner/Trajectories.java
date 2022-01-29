@@ -21,6 +21,10 @@ public class Trajectories {
     public static double warehouseOutSpeed = 0.5;
     public static double splineOutSpeed = 0.5;
     public static double splineStartSpeed = 0.5;
+    public static double warehouseSpeed = 0.3;
+    public static double warehouseSlowSpeed = 0.2;
+    public static double imDyingItsSoSlowSpeed = 0.035;
+    public static double basicallyZero = 0.01;
 
     public static MinVelocityConstraint velConstraint = new MinVelocityConstraint(Arrays.asList(
             new AngularVelocityConstraint(MAX_ANG_VEL),
@@ -44,6 +48,23 @@ public class Trajectories {
     public static MinVelocityConstraint splineStartConstraint = new MinVelocityConstraint(Arrays.asList(
             new AngularVelocityConstraint(MAX_ANG_VEL),
             new TankVelocityConstraint(MAX_VEL * splineStartSpeed, TRACK_WIDTH)
+    ));
+    public static MinVelocityConstraint warehouseConstraint = new MinVelocityConstraint(Arrays.asList(
+            new AngularVelocityConstraint(MAX_ANG_VEL),
+            new TankVelocityConstraint(MAX_VEL * warehouseSpeed, TRACK_WIDTH)
+    ));
+    public static MinVelocityConstraint warehouseSLowConstraint = new MinVelocityConstraint(Arrays.asList(
+            new AngularVelocityConstraint(MAX_ANG_VEL),
+            new TankVelocityConstraint(MAX_VEL * warehouseSlowSpeed, TRACK_WIDTH)
+    ));
+
+    public static MinVelocityConstraint imDyingItsSoSlowSpeedConstraint = new MinVelocityConstraint(Arrays.asList(
+            new AngularVelocityConstraint(MAX_ANG_VEL),
+            new TankVelocityConstraint(MAX_VEL * imDyingItsSoSlowSpeed, TRACK_WIDTH)
+    ));
+    public static MinVelocityConstraint basicallyZeroConstraint = new MinVelocityConstraint(Arrays.asList(
+            new AngularVelocityConstraint(MAX_ANG_VEL),
+            new TankVelocityConstraint(MAX_VEL * basicallyZero, TRACK_WIDTH)
     ));
 
 

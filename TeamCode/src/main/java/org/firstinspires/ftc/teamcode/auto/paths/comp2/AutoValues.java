@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.auto.paths.comp2;
 
 import com.acmerobotics.dashboard.config.Config;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
 
 @Config
 public class AutoValues {
@@ -13,4 +14,15 @@ public class AutoValues {
     public static double CYCLE_DROP_WAIT = 500;
     public static double CYCLE_DROP_WAIT2 = 500;
 
+    public static double RED_CAROUSEL_MID = -2;
+    public static double RED_CAROUSEL_LOW = -2;
+
+//    public static Vector2d RED_WAREHOUSE_MID = -2;
+//    public static double RED_CAROUSEL_MID = -2;
+
+    public static double BLUE_CAROUSEL_MID = -2;
+    public static double BLUE_CAROUSEL_LOW = -4;
+
+//    public static double RED_CAROUSEL_MID = -2;
+//    public static double RED_CAROUSEL_MID = -2;
 }

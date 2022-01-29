@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.teamcode.auto.pipeline.一DefaultDetection;
+import org.firstinspires.ftc.teamcode.auto.pipeline.comp2.一DefaultNewDetection;
 import org.firstinspires.ftc.teamcode.roadrunner.drive.Robot;
 import org.firstinspires.ftc.teamcode.roadrunner.trajectorysequenceimproved.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.teleop.testing.TuningStart;
@@ -55,7 +55,7 @@ public class RedWarehouseCycleSplineTest extends LinearOpMode {
 
         /* Open CV */
 
-        一DefaultDetection detector = new 一DefaultDetection();
+        一DefaultNewDetection detector = new 一DefaultNewDetection();
 
 
         // Obtain camera id to allow for camera preview

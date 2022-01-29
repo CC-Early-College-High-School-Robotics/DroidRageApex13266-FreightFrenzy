@@ -2,9 +2,11 @@ package org.firstinspires.ftc.teamcode.auto.paths;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.checkerframework.checker.interning.qual.InternedDistinct;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.auto.pipeline.一BlueWarehouseDuckDetection;
 import org.firstinspires.ftc.teamcode.hardware.一AutoValues;
@@ -17,6 +19,7 @@ import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
 @Autonomous(name="Blue Warehouse (Top) Roadrunner Path", group="Roadrunner Paths")
+@Disabled
 public class BlueWarehouse extends LinearOpMode {
     @Override
     public void runOpMode() {
@@ -70,7 +73,7 @@ public class BlueWarehouse extends LinearOpMode {
         sleep(robot.CAMERA_WAIT_TIME);
         // camera dection print
         telemetry.addData("Duck position", detector.getAnalysis());
-        telemetry.addData("hi", "hi");
+//        telemetry.addData("hi", "hi");
 
         // Before start
 

@@ -520,6 +520,10 @@ class TrajectorySequenceBuilder(
         return this.addDisplacementMarker(currentDisplacement, callback)
     }
 
+    fun addCommand(callback: MarkerCallback?): TrajectorySequenceBuilder {
+        return this.addDisplacementMarker(currentDisplacement, callback)
+    }
+
     fun UNSTABLE_addDisplacementMarkerOffset(
         offset: Double,
         callback: MarkerCallback?

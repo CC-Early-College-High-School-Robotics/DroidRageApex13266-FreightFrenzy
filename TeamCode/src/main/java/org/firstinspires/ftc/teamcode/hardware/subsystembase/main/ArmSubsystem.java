@@ -18,7 +18,9 @@ public class ArmSubsystem extends BaseSubsystem {
     // Values
     public static double ARM_INTAKE_POS = 0; //-0.03             // 0.04 //-0.09
 //    public static double ARM_NEUTRAL_POS = -0.003;
-    public static double ARM_LOW_POS = -.47; //0.132 //0.035
+    public static double ARM_SHARED_POS = -.47; //0.132 //0.035
+    public static double ARM_LOW_POS = -.65; //0.132 //0.035
+    public static double ARM_MID_POS = -.55; //0.132 //0.035
 //    public static double ARM_MID_POS = -.41; //0.25 //0.17
     public static double ARM_HIGH_POS = -.315; //0.36 //0.27
     public static double ARM_INTERMEDIATE_POS = -0.15; //0.36 //0.27
@@ -162,7 +164,7 @@ public class ArmSubsystem extends BaseSubsystem {
             setArmPosition();
             box.boxServo.setPosition(BoxSubsystem.BOX_HIGH);
         } else if ((gamepad2.left_trigger >= ControllerSubsystem.TRIGGER_THRESHOLD) && armIsUp) {
-            armTargetPos = ARM_LOW_POS;
+            armTargetPos = ARM_SHARED_POS;
             setArmPosition();
             box.boxServo.setPosition(BoxSubsystem.BOX_SHARED);
         }
@@ -234,11 +236,11 @@ public class ArmSubsystem extends BaseSubsystem {
 //        }
 
         if (-gamepad2.left_stick_y > ControllerSubsystem.TRIGGER_THRESHOLD && gamepad2.left_trigger >= ControllerSubsystem.TRIGGER_THRESHOLD && armIsUp) {
-            ARM_LOW_POS+= ARM_POS_CHANGE_SPEED;
+            ARM_SHARED_POS += ARM_POS_CHANGE_SPEED;
             setArmPosition();
         }
         if (-gamepad2.left_stick_y < -ControllerSubsystem.TRIGGER_THRESHOLD && gamepad2.left_trigger >= ControllerSubsystem.TRIGGER_THRESHOLD && armIsUp) {
-            ARM_LOW_POS -= ARM_POS_CHANGE_SPEED;
+            ARM_SHARED_POS -= ARM_POS_CHANGE_SPEED;
             setArmPosition();
         }
         if (distanceSensor.distanceSensor.getDistance(DistanceUnit.MM) < DistanceSensorSubsystem.DISTANCE_THRESHOLD && !sensorIsDisabled) {
@@ -440,8 +442,11 @@ public class ArmSubsystem extends BaseSubsystem {
     public void armReset() {
         if (!armIsMoving) {
             if (armIsUp) {
-                if (armTargetPos == ARM_LOW_POS) {
+                if (armTargetPos == ARM_SHARED_POS) {
                     armResetWaitLong = ARM_RESET_WAIT_EXTRA;
+                }
+                if (armTargetPos < ARM_SHARED_POS) {
+                    armResetWaitLong = ARM_RESET_WAIT_EXTRA + 0.6;
                 } else {
                     armResetWaitLong = 0;
                 }

@@ -13,6 +13,8 @@ public class BoxSubsystem extends BaseSubsystem {
     // Values
     public static double BOX_HIGH = 0.892;
     public static double BOX_SHARED = 1.0;
+    public static double BOX_LOW = 0.9;
+    public static double BOX_MID = 0.9;
 //    public static double BOX_AUTO_APPROACH_HUB = 0.500;
     public static double BOX_DOWN_SLIGHTLY_FORWARD = 0.1;
     public static double BOX_DOWN = 0.05;
